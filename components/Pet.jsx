@@ -65,15 +65,20 @@ export default function Pet() {
   };
 
   return (
-    <div id='pet' className='bg-gray-200 w-full h-screen font-mono select-none'>
+    <div id='pet' className='bg-white w-full h-screen font-mono select-none'>
       <div className="w-full h-full flex flex-col items-center justify-center text-center">
         <div className='border-8 border-black'>
-          <div className="select-none w-[50vw] h-[50vh] flex bg-white items-end justify-center">
-            <div>
-              <Image src={animations[currentAnimation].sequence[frameIndex]} alt="Pet" width={200} height={200} unoptimized={true} />
+          <div className="w-[50vw] h-[50vh] flex bg-white items-end justify-center">
+
+            <div className='z-10 relative w-full h-full'>
+              <Image src={"/assets/backgrounds/livingroom/01/livingroom-01.png"} width={800} height={400} />
+              <div className='z-20 absolute bottom-0 left-1/2 transform -translate-x-1/2'>
+                <Image src={animations[currentAnimation].sequence[frameIndex]} alt="Pet" width={200} height={200} unoptimized={true} />
+              </div>
             </div>
+
           </div>
-          <div className='w-[50vw] h-[10vh] bg-black' />
+          <div className='w-[50vw] h-[5vh] bg-black' />
         </div>
         <div onClick={feedPet} className='fixed bottom-0 h-[15vh] w-[25vh] bg-white hover:bg-white/80 hover:cursor-pointer border-8 border-black ease-in duration-100 z-50'>
           <div className='flex items-center justify-center h-full w-full text-center text-black font-bold text-3xl'>
