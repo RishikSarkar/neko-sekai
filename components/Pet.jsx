@@ -6,59 +6,74 @@ import Image from 'next/image';
 export default function Pet() {
   const [frameIndex, setFrameIndex] = useState(0);
   const [idleCount, setIdleCount] = useState(0);
-  const [isFeeding, setIsFeeding] = useState(false);
+  const [currentAnimation, setCurrentAnimation] = useState('idle');
 
-  const generateSequence = (basePath, count) => {
-    return Array.from({ length: count }, (_, i) => `${basePath}${i + 1}.png`);
+  const animations = {
+    idle: {
+      sequence: generateSequence("/assets/sprites/cat/01/cat-01-idle/cat-01-idle", 10),
+      loopCount: 5,
+    },
+    yawn: {
+      sequence: generateSequence("/assets/sprites/cat/01/cat-01-yawn/cat-01-yawn", 14),
+      loopCount: 1,
+    },
+    eat: {
+      sequence: generateSequence("/assets/sprites/cat/01/cat-01-eat/cat-01-eat", 35),
+    }
   };
 
-  const idleSequence = generateSequence("/assets/sprites/cat/01/cat-01-idle/cat-01-idle", 10);
-  const yawnSequence = generateSequence("/assets/sprites/cat/01/cat-01-yawn/cat-01-yawn", 14);
-  const eatSequence = generateSequence("/assets/sprites/cat/01/cat-01-eat/cat-01-eat", 35);
+  function generateSequence(basePath, count) {
+    return Array.from({ length: count }, (_, i) => `${basePath}${i + 1}.png`);
+  }
 
-  const [currentSequence, setCurrentSequence] = useState(idleSequence);
-
+  // Update frame and handle animation transitions
   useEffect(() => {
-    const updateFrame = () => {
-      setFrameIndex((prevIndex) => {
+    const currentSequence = animations[currentAnimation].sequence;
+    const intervalId = setInterval(() => {
+      setFrameIndex(prevIndex => {
         const nextIndex = (prevIndex + 1) % currentSequence.length;
-        console.log(idleCount);
-        if (currentSequence === idleSequence && nextIndex === 0) {
-          setIdleCount((prevCount) => prevCount + 1);
+        if (nextIndex === 0) { // Completed a loop of the current animation
+          handleAnimationLoopEnd();
         }
         return nextIndex;
       });
-    };
-
-    const intervalId = setInterval(updateFrame, 100);
+    }, 100);
 
     return () => clearInterval(intervalId);
-  }, [currentSequence]);
+  }, [currentAnimation]);
 
-  useEffect(() => {
-    if (idleCount === 5) {
-      setCurrentSequence(yawnSequence);
-      setIdleCount(0);
-    } else if (currentSequence === yawnSequence && frameIndex === yawnSequence.length - 1) {
-      setCurrentSequence(idleSequence);
+  // Handle the end of an animation loop
+  const handleAnimationLoopEnd = () => {
+    if (currentAnimation === 'idle') {
+      if (idleCount + 1 < animations.idle.loopCount) {
+        setIdleCount(idleCount + 1);
+      } else {
+        setCurrentAnimation('yawn');
+        setIdleCount(0); // Reset idle count
+        setFrameIndex(0); // Start yawn animation from first frame
+      }
+    } else if (currentAnimation === 'yawn') {
+      setCurrentAnimation('idle');
+      setFrameIndex(0); // Start idle animation from first frame
     }
-  }, [idleCount, currentSequence, frameIndex]);
+  };
 
+  // Feed pet and switch to eat animation
   const feedPet = () => {
-    setIsFeeding(true);
-    setCurrentSequence(eatSequence);
+    setCurrentAnimation('eat');
+    setFrameIndex(0); // Start eat animation from first frame
 
     setTimeout(() => {
-      setIsFeeding(false);
-      setCurrentSequence(idleSequence);
-    }, eatSequence.length * 100);
+      setCurrentAnimation('idle');
+      setFrameIndex(0); // Return to idle animation starting frame
+    }, animations.eat.sequence.length * 100);
   };
 
   return (
     <div id='pet' className='bg-gray-200 w-full h-screen font-mono select-none'>
       <div className="w-full h-full flex flex-col items-center justify-center text-center">
         <div className="select-none mt-20 py-20 px-40 pb-0 bg-white/50">
-          <Image src={currentSequence[frameIndex]} alt="Pet" width={200} height={200} unoptimized={true} />
+          <Image src={animations[currentAnimation].sequence[frameIndex]} alt="Pet" width={200} height={200} unoptimized={true} />
         </div>
         <div onClick={feedPet} className='text-2xl text-black text-center m-12 py-4 px-6 bg-white/50 hover:bg-white/80 hover:cursor-pointer ease-in duration-200'>
           feed
