@@ -1,7 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import NavBar from "@/components/NavBar";
+import TopBar from "@/components/TopBar";
 import { Nova_Mono } from "next/font/google";
+import BottomBar from "@/components/BottomBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +21,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${novaMono.variable} font-sans`}>
       <body className={inter.className}>
-        {/* <NavBar /> */}
+        <TopBar />
         {children}
+        <BottomBar />
       </body>
     </html>
   );
