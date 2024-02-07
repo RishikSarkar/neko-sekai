@@ -68,14 +68,14 @@ export default function Pet() {
     <div id='pet' className='bg-gray-200 w-full h-screen font-mono select-none'>
       <div className="w-full h-full flex flex-col items-center justify-center text-center">
         <div className='border-8 border-black'>
-          <div className="select-none w-[50vw] h-[50vh] flex bg-white/50 items-end justify-center">
+          <div className="select-none w-[50vw] h-[50vh] flex bg-white items-end justify-center">
             <div>
               <Image src={animations[currentAnimation].sequence[frameIndex]} alt="Pet" width={200} height={200} unoptimized={true} />
             </div>
           </div>
           <div className='w-[50vw] h-[10vh] bg-black' />
         </div>
-        <div onClick={feedPet} className='fixed bottom-0 h-[15vh] w-[25vh] bg-white hover:bg-white/80 hover:cursor-pointer border-8 border-black ease-in duration-200 z-50'>
+        <div onClick={feedPet} className='fixed bottom-0 h-[15vh] w-[25vh] bg-white hover:bg-white/80 hover:cursor-pointer border-8 border-black ease-in duration-100 z-50'>
           <div className='flex items-center justify-center h-full w-full text-center text-black font-bold text-3xl'>
             feed
           </div>
