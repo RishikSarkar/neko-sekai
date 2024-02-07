@@ -8,6 +8,10 @@ export default function Pet() {
   const [idleCount, setIdleCount] = useState(0);
   const [currentAnimation, setCurrentAnimation] = useState('idle');
 
+  function generateSequence(basePath, count) {
+    return Array.from({ length: count }, (_, i) => `${basePath}${i + 1}.png`);
+  }
+
   const animations = {
     idle: {
       sequence: generateSequence("/assets/sprites/cat/01/cat-01-idle/cat-01-idle", 10),
@@ -22,19 +26,11 @@ export default function Pet() {
     }
   };
 
-  function generateSequence(basePath, count) {
-    return Array.from({ length: count }, (_, i) => `${basePath}${i + 1}.png`);
-  }
-
-  // Update frame and handle animation transitions
   useEffect(() => {
     const currentSequence = animations[currentAnimation].sequence;
     const intervalId = setInterval(() => {
       setFrameIndex(prevIndex => {
         const nextIndex = (prevIndex + 1) % currentSequence.length;
-        if (nextIndex === 0) { // Completed a loop of the current animation
-          handleAnimationLoopEnd();
-        }
         return nextIndex;
       });
     }, 100);
@@ -42,30 +38,29 @@ export default function Pet() {
     return () => clearInterval(intervalId);
   }, [currentAnimation]);
 
-  // Handle the end of an animation loop
-  const handleAnimationLoopEnd = () => {
-    if (currentAnimation === 'idle') {
-      if (idleCount + 1 < animations.idle.loopCount) {
-        setIdleCount(idleCount + 1);
-      } else {
-        setCurrentAnimation('yawn');
-        setIdleCount(0); // Reset idle count
-        setFrameIndex(0); // Start yawn animation from first frame
+  useEffect(() => {
+    if (frameIndex === animations[currentAnimation].sequence.length - 1) {
+      if (currentAnimation === 'idle') {
+        if (idleCount + 1 < animations.idle.loopCount) {
+          setIdleCount(count => count + 1);
+        } else {
+          setCurrentAnimation('yawn');
+          setIdleCount(0);
+        }
+      } else if (currentAnimation === 'yawn') {
+        setCurrentAnimation('idle');
       }
-    } else if (currentAnimation === 'yawn') {
-      setCurrentAnimation('idle');
-      setFrameIndex(0); // Start idle animation from first frame
+      setFrameIndex(0); // Reset frame index for the new animation
     }
-  };
+  }, [frameIndex, currentAnimation, idleCount]);
 
-  // Feed pet and switch to eat animation
   const feedPet = () => {
     setCurrentAnimation('eat');
-    setFrameIndex(0); // Start eat animation from first frame
+    setFrameIndex(0); // Start the eat animation from the first frame
 
     setTimeout(() => {
       setCurrentAnimation('idle');
-      setFrameIndex(0); // Return to idle animation starting frame
+      setFrameIndex(0); // Return to the idle animation at the first frame
     }, animations.eat.sequence.length * 100);
   };
 
@@ -82,6 +77,8 @@ export default function Pet() {
     </div>
   );
 }
+
+
 
 // "use client";
 
