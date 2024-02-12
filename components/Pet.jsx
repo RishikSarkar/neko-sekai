@@ -7,7 +7,10 @@ export default function Pet() {
   const [frameIndex, setFrameIndex] = useState(0);
   const [idleCount, setIdleCount] = useState(0);
   const [currentAnimation, setCurrentAnimation] = useState('idle');
-  const [showFood, setShowFood] = useState(false); // New state to control food animation visibility
+  const [showFood, setShowFood] = useState(false);
+
+  const [currBg, setCurrBg] = useState("livingroom/01/livingroom-01.gif");
+  const [currFood, setCurrFood] = useState("onigiri");
 
   function generateSequence(basePath, count) {
     return Array.from({ length: count }, (_, i) => `${basePath}${i + 1}.png`);
@@ -26,7 +29,7 @@ export default function Pet() {
       sequence: generateSequence("/assets/sprites/cat/01/cat-01-eat/cat-01-eat", 35),
     },
     food: {
-      sequence: generateSequence("/assets/food/onigiri/onigiri", 35),
+      sequence: generateSequence("/assets/food/" + currFood + "/" + currFood, 35),
     }
   };
 
@@ -79,7 +82,7 @@ export default function Pet() {
           <div className="w-[50vw] h-[50vh] flex bg-white items-end justify-center">
 
             <div className='z-10 relative w-full h-full'>
-              <Image src={"/assets/backgrounds/livingroom/01/livingroom-01.gif"} layout="fill" objectFit="fill" />
+              <Image src={"/assets/backgrounds/" + currBg} layout="fill" objectFit="fill" />
               <div className='z-20 absolute bottom-1 left-1/2 transform -translate-x-1/2'>
                 <Image src={animations[currentAnimation].sequence[frameIndex]} alt="Pet" width={200} height={200} unoptimized={true} />
               </div>
