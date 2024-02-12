@@ -7,6 +7,7 @@ export default function Pet() {
   const [frameIndex, setFrameIndex] = useState(0);
   const [idleCount, setIdleCount] = useState(0);
   const [currentAnimation, setCurrentAnimation] = useState('idle');
+  const [showFood, setShowFood] = useState(false); // New state to control food animation visibility
 
   function generateSequence(basePath, count) {
     return Array.from({ length: count }, (_, i) => `${basePath}${i + 1}.png`);
@@ -25,7 +26,7 @@ export default function Pet() {
       sequence: generateSequence("/assets/sprites/cat/01/cat-01-eat/cat-01-eat", 35),
     },
     food: {
-      sequence: generateSequence("/assets/food/onigiri", 35),
+      sequence: generateSequence("/assets/food/onigiri/onigiri", 35),
     }
   };
 
@@ -52,6 +53,8 @@ export default function Pet() {
         }
       } else if (currentAnimation === 'yawn') {
         setCurrentAnimation('idle');
+      } else if (currentAnimation === 'eat') {
+        setShowFood(false);
       }
       setFrameIndex(0); // Reset frame index for the new animation
     }
@@ -60,10 +63,12 @@ export default function Pet() {
   const feedPet = () => {
     setCurrentAnimation('eat');
     setFrameIndex(0); // Start the eat animation from the first frame
+    setShowFood(true);
 
     setTimeout(() => {
       setCurrentAnimation('idle');
       setFrameIndex(0); // Return to the idle animation at the first frame
+      setShowFood(false);
     }, animations.eat.sequence.length * 100);
   };
 
@@ -78,9 +83,11 @@ export default function Pet() {
               <div className='z-20 absolute bottom-1 left-1/2 transform -translate-x-1/2'>
                 <Image src={animations[currentAnimation].sequence[frameIndex]} alt="Pet" width={200} height={200} unoptimized={true} />
               </div>
-              {/* <div className='z-40 absolute bottom-0 left-1/2 transform -translate-x-1/2'>
-                <Image src={animations['food'].sequence[frameIndex]} width={200} height={200} unoptimized={true} />
-              </div> */}
+              {showFood && (
+                <div className='z-40 absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50 text-black'>
+                  <Image src={animations.food.sequence[frameIndex]} alt="Food" width={200} height={200} unoptimized={true} />
+                </div>
+              )}
             </div>
 
           </div>
