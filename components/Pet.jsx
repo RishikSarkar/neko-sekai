@@ -23,6 +23,9 @@ export default function Pet() {
     },
     eat: {
       sequence: generateSequence("/assets/sprites/cat/01/cat-01-eat/cat-01-eat", 35),
+    },
+    food: {
+      sequence: generateSequence("/assets/food/onigiri", 35),
     }
   };
 
@@ -71,10 +74,13 @@ export default function Pet() {
           <div className="w-[50vw] h-[50vh] flex bg-white items-end justify-center">
 
             <div className='z-10 relative w-full h-full'>
-              <Image src={"/assets/backgrounds/livingroom/01/livingroom-01.gif"} width={800} height={400} />
-              <div className='z-20 absolute bottom-0 left-1/2 transform -translate-x-1/2'>
+              <Image src={"/assets/backgrounds/livingroom/01/livingroom-01.gif"} layout="fill" objectFit="fill" />
+              <div className='z-20 absolute bottom-1 left-1/2 transform -translate-x-1/2'>
                 <Image src={animations[currentAnimation].sequence[frameIndex]} alt="Pet" width={200} height={200} unoptimized={true} />
               </div>
+              {/* <div className='z-40 absolute bottom-0 left-1/2 transform -translate-x-1/2'>
+                <Image src={animations['food'].sequence[frameIndex]} width={200} height={200} unoptimized={true} />
+              </div> */}
             </div>
 
           </div>
