@@ -9,6 +9,8 @@ export default function Pet() {
   const [currentAnimation, setCurrentAnimation] = useState('idle');
   const [showFood, setShowFood] = useState(false);
 
+  const [isFeeding, setIsFeeding] = useState(false);
+
   const [currBg, setCurrBg] = useState("livingroom/01/livingroom-01.gif");
   const [currFood, setCurrFood] = useState("onigiri");
 
@@ -58,21 +60,26 @@ export default function Pet() {
         setCurrentAnimation('idle');
       } else if (currentAnimation === 'eat') {
         setShowFood(false);
+        setIsFeeding(false);
       }
       setFrameIndex(0); // Reset frame index for the new animation
     }
   }, [frameIndex, currentAnimation, idleCount]);
 
   const feedPet = () => {
-    setCurrentAnimation('eat');
-    setFrameIndex(0); // Start the eat animation from the first frame
-    setShowFood(true);
+    if (!isFeeding) {
+      setIsFeeding(true);
+      setCurrentAnimation('eat');
+      setFrameIndex(0); // Start the eat animation from the first frame
+      setShowFood(true);
 
-    setTimeout(() => {
-      setCurrentAnimation('idle');
-      setFrameIndex(0); // Return to the idle animation at the first frame
-      setShowFood(false);
-    }, animations.eat.sequence.length * 100);
+      setTimeout(() => {
+        setCurrentAnimation('idle');
+        setFrameIndex(0); // Return to the idle animation at the first frame
+        setShowFood(false);
+        setIsFeeding(false);
+      }, animations.eat.sequence.length * 100);
+    }
   };
 
   return (
@@ -96,7 +103,7 @@ export default function Pet() {
           </div>
           <div className='w-[50vw] h-[5vh] bg-black' />
         </div>
-        <div onClick={feedPet} className='fixed bottom-0 h-[15vh] w-[25vh] bg-white hover:bg-white/80 hover:cursor-pointer border-8 border-black ease-in duration-100 z-50'>
+        <div onClick={feedPet} className={`fixed bottom-0 h-[15vh] w-[25vh] ${isFeeding ? 'bg-white/80 cursor-not-allowed' : 'bg-white hover:bg-white/80 hover:cursor-pointer'} border-8 border-black ease-in duration-100 z-50`}>
           <div className='flex items-center justify-center h-full w-full text-center text-black font-bold text-3xl'>
             feed
           </div>
