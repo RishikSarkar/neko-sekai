@@ -12,7 +12,7 @@ export default function Pet() {
   const [isFeeding, setIsFeeding] = useState(false);
 
   const [currBg, setCurrBg] = useState("livingroom/01/livingroom-01.gif");
-  const [currFood, setCurrFood] = useState("onigiri");
+  const [currFood, setCurrFood] = useState("nigiri");
 
   function generateSequence(basePath, count) {
     return Array.from({ length: count }, (_, i) => `${basePath}${i + 1}.png`);
