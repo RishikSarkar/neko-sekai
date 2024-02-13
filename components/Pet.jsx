@@ -13,9 +13,9 @@ export default function Pet() {
   const [isFeeding, setIsFeeding] = useState(false);
 
   const [currBg, setCurrBg] = useState("livingroom/01/livingroom-01.gif");
-  const [currFood, setCurrFood] = useState("nigiri");
-  const [foodOptions, setFoodOptions] = useState(["maki", "nigiri", "onigiri"]);
-  const [foodIndex, setFoodIndex] = useState(1); // starts with "nigiri"
+  const [currFood, setCurrFood] = useState("onigiri");
+  const [foodOptions, setFoodOptions] = useState(["onigiri", "maki", "nigiri"]);
+  const [foodIndex, setFoodIndex] = useState(0);
 
   function generateSequence(basePath, count) {
     return Array.from({ length: count }, (_, i) => `${basePath}${i + 1}.png`);
