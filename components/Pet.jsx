@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
 
 export default function Pet() {
   const [frameIndex, setFrameIndex] = useState(0);
@@ -13,6 +14,8 @@ export default function Pet() {
 
   const [currBg, setCurrBg] = useState("livingroom/01/livingroom-01.gif");
   const [currFood, setCurrFood] = useState("nigiri");
+  const [foodOptions, setFoodOptions] = useState(["maki", "nigiri", "onigiri"]);
+  const [foodIndex, setFoodIndex] = useState(1); // starts with "nigiri"
 
   function generateSequence(basePath, count) {
     return Array.from({ length: count }, (_, i) => `${basePath}${i + 1}.png`);
@@ -66,6 +69,10 @@ export default function Pet() {
     }
   }, [frameIndex, currentAnimation, idleCount]);
 
+  useEffect(() => {
+    setCurrFood(foodOptions[foodIndex]);
+  }, [foodIndex, foodOptions]);
+
   const feedPet = () => {
     if (!isFeeding) {
       setIsFeeding(true);
@@ -82,6 +89,13 @@ export default function Pet() {
     }
   };
 
+  const changeFood = (direction) => {
+    setFoodIndex(prevIndex => {
+      const newIndex = (prevIndex + direction + foodOptions.length) % foodOptions.length;
+      return newIndex;
+    });
+  };
+
   return (
     <div id='pet' className='bg-white w-full h-screen font-mono select-none'>
       <div className="w-full h-full flex flex-col items-center justify-center text-center">
@@ -89,7 +103,7 @@ export default function Pet() {
           <div className="w-[50vw] h-[50vh] flex bg-white items-end justify-center">
 
             <div className='z-10 relative w-full h-full'>
-              <Image src={"/assets/backgrounds/" + currBg} layout="fill" objectFit="fill" />
+              <Image src={"/assets/backgrounds/" + currBg} layout="fill" />
               <div className='z-20 absolute bottom-1 left-1/2 transform -translate-x-1/2'>
                 <Image src={animations[currentAnimation].sequence[frameIndex]} alt="Pet" width={200} height={200} unoptimized={true} />
               </div>
@@ -103,71 +117,36 @@ export default function Pet() {
           </div>
           <div className='w-[50vw] h-[5vh] bg-black' />
         </div>
-        <div onClick={feedPet} className={`fixed bottom-0 h-[15vh] w-[25vh] ${isFeeding ? 'bg-white/80 cursor-not-allowed' : 'bg-white hover:bg-white/80 hover:cursor-pointer'} border-8 border-black ease-in duration-100 z-50`}>
-          <div className='flex items-center justify-center h-full w-full text-center text-black font-bold text-3xl'>
+
+        <div className='fixed bottom-0 h-[15vh] w-[40vw] grid grid-cols-3 gap-2 border-8 border-black z-50'>
+          <div className='col-span-1'>
+
+          </div>
+
+          <div onClick={feedPet} className={`${isFeeding ? 'bg-white/80 cursor-not-allowed' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 flex justify-center items-center text-black font-bold text-3xl`}>
             feed
           </div>
+
+          <div className='col-span-1 flex justify-between items-center bg-black'>
+            <div onClick={() => { if (!isFeeding) { changeFood(-1); } }} className={`${isFeeding ? 'cursor-not-allowed' : 'cursor-pointer'} flex justify-start pl-4 w-full`}>
+              <FaCaretLeft className='text-white' size={20} />
+            </div>
+            <div className='text-center'>
+              <Image
+                src={`/assets/food/icons/${foodOptions[foodIndex]}.png`}
+                alt={foodOptions[foodIndex]}
+                width={400}
+                height={400}
+                unoptimized={true}
+              />
+            </div>
+            <div onClick={() => { if (!isFeeding) { changeFood(1); } }} className={`${isFeeding ? 'cursor-not-allowed' : 'cursor-pointer'} flex justify-end pr-4 w-full`}>
+              <FaCaretRight className='text-white' size={20} />
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   );
 }
-
-
-
-// "use client";
-
-// import { useEffect, useState } from 'react';
-// import Image from 'next/image';
-
-// export default function Pet() {
-//   const [gifVersion, setGifVersion] = useState(0);
-//   const [isFeeding, setIsFeeding] = useState(false);
-
-//   const idleGif = "/assets/sprites/cat/01/gifs/cat-01-idle.gif";
-//   const yawnGif = "/assets/sprites/cat/01/gifs/cat-01-yawn.gif";
-//   const eatGif = "/assets/sprites/cat/01/gifs/cat-01-eat.gif";
-
-//   const [currentGif, setCurrentGif] = useState(idleGif);
-
-//   useEffect(() => {
-//     setGifSrc(`${currentGif}?v=${gifVersion}`);
-//   }, [currentGif, gifVersion]);
-
-//   useEffect(() => {
-//     if (!isFeeding) {
-//       const timeoutDuration = currentGif === idleGif ? 6000 : 1400;
-//       const timeoutId = setTimeout(() => {
-//         const nextGif = currentGif === idleGif ? yawnGif : idleGif;
-//         setCurrentGif(nextGif);
-//         setGifVersion(v => v + 1);
-//       }, timeoutDuration);
-
-//       return () => clearTimeout(timeoutId);
-//     }
-//   }, [currentGif, isFeeding]);
-
-//   const [gifSrc, setGifSrc] = useState(`${idleGif}?v=${gifVersion}`);
-
-//   const feedPet = () => {
-//     setIsFeeding(true);
-//     setCurrentGif(eatGif);
-//     setTimeout(() => {
-//       setIsFeeding(false);
-//       setGifVersion(v => v + 1);
-//     }, 3500);
-//   };
-
-//   return (
-//     <div id='pet' className='bg-gray-300 w-full h-screen font-mono select-none'>
-//       <div className="w-full h-full flex flex-col items-center justify-center text-center">
-//         <div className="select-none mt-20 py-20 px-40 pb-0 bg-white/50">
-//           <Image src={gifSrc} alt="Pet" width={200} height={200} unoptimized={true} />
-//         </div>
-//         <div onClick={feedPet} className='text-2xl text-black text-center m-12 py-4 px-6 bg-white/50 hover:bg-white/70 hover:cursor-pointer ease-in duration-200'>
-//           feed
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
