@@ -10,9 +10,6 @@ export default function Pet() {
   const [currentAnimation, setCurrentAnimation] = useState('idle');
   const [showFood, setShowFood] = useState(false);
 
-  const [showMessage, setShowMessage] = useState(false); // Yasmina
-  const [msgDisabled, setMsgDisabled] = useState(false); // Yasmina
-
   const [isFeeding, setIsFeeding] = useState(false);
 
   const [currBg, setCurrBg] = useState("livingroom/01/livingroom-01.gif");
@@ -92,18 +89,6 @@ export default function Pet() {
     }
   };
 
-  const toggleMessageVisibility = () => {
-    if (!msgDisabled) {
-      setShowMessage(true);
-      setMsgDisabled(true);
-
-      setTimeout(() => {
-        setShowMessage(false);
-        setMsgDisabled(false);
-      }, 5000);
-    }
-  };
-
   const changeFood = (direction) => {
     setFoodIndex(prevIndex => {
       const newIndex = (prevIndex + direction + foodOptions.length) % foodOptions.length;
@@ -121,14 +106,6 @@ export default function Pet() {
               <Image src={"/assets/backgrounds/" + currBg} layout="fill" />
               <div className='z-20 absolute bottom-1 left-1/2 transform -translate-x-1/2'>
                 <Image src={animations[currentAnimation].sequence[frameIndex]} alt="Pet" width={200} height={200} unoptimized={true} />
-
-                {/* Yasmina */}
-                {showMessage && (
-                  <div className='absolute bottom-0 -right-10 transform translate-x-1/2 -translate-y-1/2'>
-                    <Image src="/assets/miscellaneous/valentine.png" alt="Happy Valentine's Day!" width={400} height={400} />
-                  </div>
-                )}
-
               </div>
               {showFood && (
                 <div className='z-40 absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50 text-black'>
@@ -143,9 +120,8 @@ export default function Pet() {
 
         <div className='fixed bottom-0 h-[15vh] w-[40vw] grid grid-cols-3 gap-2 border-8 border-black z-50'>
 
-          {/* Yasmina */}
-          <div onClick={toggleMessageVisibility} className={`${isFeeding ? 'bg-white/80 cursor-not-allowed' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 flex justify-center items-center text-black font-bold text-2xl`}>
-            click me!
+          <div className='col-span-1'>
+
           </div>
 
           <div onClick={feedPet} className={`${isFeeding ? 'bg-white/80 cursor-not-allowed' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 flex justify-center items-center text-black font-bold text-3xl`}>
