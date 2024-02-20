@@ -9,6 +9,9 @@ module.exports = {
     extend: {
       fontFamily: {
         mono: ["var(--font-nova-mono)"],
+        'roboto': ['Roboto', 'sans-serif'],
+        'marcellus': ['Marcellus', 'serif'],
+        'montserrat': ['Montserrat', 'sans-serif']
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

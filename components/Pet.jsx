@@ -140,13 +140,13 @@ export default function Pet() {
   };
 
   return (
-    <div id='pet' className='bg-white w-full h-screen font-mono select-none'>
+    <div id='pet' className='bg-white w-full h-screen font-montserrat select-none'>
       <div className="w-full h-full flex flex-col items-center justify-center text-center">
         <div className='w-full h-[60vh] items-center justify-center text-center grid grid-cols-4 gap-8'>
 
           <div className='h-full col-span-1 bg-black/90 border-8 border-black ml-8 items-center justify-center text-black rounded-xl'>
             <div className='h-full px-4'>
-              <div className='text-2xl font-bold text-black bg-white py-4 my-4 rounded-xl flex items-center justify-between'>
+              <div className='text-2xl text-black bg-white py-4 my-4 rounded-xl flex items-center justify-between'>
                 {editing ? (
                   <input type="text" value={tempPetName} onChange={handleNameChange} onBlur={handleBlur} autoFocus className="text-2xl text-center mx-4 w-full animate-pulse" onKeyDown={(event) => { if (event.key === 'Enter') { handleBlur(); } }} />
                 ) : (
@@ -195,7 +195,7 @@ export default function Pet() {
 
           <div className='h-full col-span-1 bg-black/90 border-8 border-black mr-8 items-center justify-center text-black rounded-xl'>
             <div className='h-full px-4'>
-              <div className='text-2xl bg-white py-2 my-4 rounded-xl font-bold'>
+              <div className='text-2xl bg-white py-2 my-4 rounded-xl'>
                 Tasks
               </div>
 
@@ -255,7 +255,7 @@ export default function Pet() {
 
           </div>
 
-          <div onClick={feedPet} className={`${isFeeding ? 'bg-white/80 cursor-not-allowed' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 flex justify-center items-center text-black font-bold text-3xl rounded-xl ease-in duration-100`}>
+          <div onClick={feedPet} className={`${isFeeding ? 'bg-white/80 cursor-not-allowed' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 flex justify-center items-center text-black text-3xl rounded-xl ease-in duration-100`}>
             feed
           </div>
 
