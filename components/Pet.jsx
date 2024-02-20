@@ -144,7 +144,7 @@ export default function Pet() {
       <div className="w-full h-full flex flex-col items-center justify-center text-center">
         <div className='w-full h-[60vh] items-center justify-center text-center grid grid-cols-4 gap-8'>
 
-          <div className='h-full col-span-1 bg-black border-8 border-black ml-8 items-center justify-center text-black rounded-xl'>
+          <div className='h-full col-span-1 bg-black/90 border-8 border-black ml-8 items-center justify-center text-black rounded-xl'>
             <div className='h-full px-4'>
               <div className='text-2xl font-bold text-black bg-white py-4 my-4 rounded-xl flex items-center justify-between'>
                 {editing ? (
@@ -193,8 +193,58 @@ export default function Pet() {
             <div className='w-full h-[10%] bg-black' />
           </div>
 
-          <div className='h-full col-span-1 bg-white border-8 border-black mr-8 rounded-xl'>
+          <div className='h-full col-span-1 bg-black/90 border-8 border-black mr-8 items-center justify-center text-black rounded-xl'>
+            <div className='h-full px-4'>
+              <div className='text-2xl bg-white py-2 my-4 rounded-xl font-bold'>
+                Tasks
+              </div>
 
+              <div className='grid grid-cols-5 gap-2'>
+                <div className='col-span-4 text-lg text-left bg-white/90 py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center'>
+                  task 1
+                </div>
+                <div className='col-span-1 text-sm text-center bg-white py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center cursor-pointer hover:bg-white/80 ease-in duration-100'>
+                  +10
+                </div>
+              </div>
+
+              <div className='grid grid-cols-5 gap-2'>
+                <div className='col-span-4 text-lg text-left bg-white/90 py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center'>
+                  task 2
+                </div>
+                <div className='col-span-1 text-sm text-center bg-white py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center cursor-pointer hover:bg-white/80 ease-in duration-100'>
+                  +10
+                </div>
+              </div>
+
+              <div className='grid grid-cols-5 gap-2'>
+                <div className='col-span-4 text-lg text-left bg-white/90 py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center'>
+                  task 3
+                </div>
+                <div className='col-span-1 text-sm text-center bg-white py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center cursor-pointer hover:bg-white/80 ease-in duration-100'>
+                  +10
+                </div>
+              </div>
+
+              <div className='grid grid-cols-5 gap-2'>
+                <div className='col-span-4 text-lg text-left bg-white/90 py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center'>
+                  task 4
+                </div>
+                <div className='col-span-1 text-sm text-center bg-white py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center cursor-pointer hover:bg-white/80 ease-in duration-100'>
+                  +10
+                </div>
+              </div>
+
+              <div className='grid grid-cols-5 gap-2'>
+                <div className='col-span-4 text-lg text-left bg-white/90 py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center'>
+                  task 5
+                </div>
+                <div className='col-span-1 text-sm text-center bg-white py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center cursor-pointer hover:bg-white/80 ease-in duration-100'>
+                  +10
+                </div>
+              </div>
+
+            </div>
           </div>
 
         </div>
