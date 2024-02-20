@@ -148,7 +148,7 @@ export default function Pet() {
             <div className='h-full px-4'>
               <div className='text-2xl font-bold text-black bg-white py-4 my-4 rounded-xl flex items-center justify-between'>
                 {editing ? (
-                  <input type="text" value={tempPetName} onChange={handleNameChange} onBlur={handleBlur} autoFocus className="text-2xl text-center mx-4 w-full animate-pulse" />
+                  <input type="text" value={tempPetName} onChange={handleNameChange} onBlur={handleBlur} autoFocus className="text-2xl text-center mx-4 w-full animate-pulse" onKeyDown={(event) => { if (event.key === 'Enter') { handleBlur(); } }} />
                 ) : (
                   <>
                     <span className="flex-1 text-center ml-16 mr-8 truncate">{petName}</span>
