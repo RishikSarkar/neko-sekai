@@ -3,9 +3,18 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
-import { MdEdit } from "react-icons/md";
+import { FaCheck } from "react-icons/fa6";
+import { RiMoneyDollarCircleFill, RiMoneyDollarBoxFill } from "react-icons/ri";
+import { MdEdit, MdOutlineAttachMoney } from "react-icons/md";
 
 export default function Pet() {
+  const [currUser, setCurrUser] = useState('friendlyBOT');
+
+  const [currCoins, setCurrCoins] = useState(0);
+  const [targetCoins, setTargetCoins] = useState(0);
+  const [coinIncrease, setCoinIncrease] = useState(0);
+  const [coinCurrentlyIncreasing, setCoinCurrentlyIncreasing] = useState(false);
+
   const [petName, setPetName] = useState('Poofy');
   const [editing, setEditing] = useState(false);
   const [tempPetName, setTempPetName] = useState(petName);
@@ -25,6 +34,18 @@ export default function Pet() {
 
   const [currLevel, setCurrLevel] = useState(1);
   const [levelProgress, setLevelProgress] = useState(0);
+
+  const [task1, setTask1] = useState('task 1');
+  const [task2, setTask2] = useState('task 2');
+  const [task3, setTask3] = useState('task 3');
+  const [task4, setTask4] = useState('task 4');
+  const [task5, setTask5] = useState('task 5');
+
+  const [task1Completed, setTask1Completed] = useState(false);
+  const [task2Completed, setTask2Completed] = useState(false);
+  const [task3Completed, setTask3Completed] = useState(false);
+  const [task4Completed, setTask4Completed] = useState(false);
+  const [task5Completed, setTask5Completed] = useState(false);
 
   const [frameIndex, setFrameIndex] = useState(0);
   const [idleCount, setIdleCount] = useState(0);
@@ -96,6 +117,18 @@ export default function Pet() {
     setCurrFood(foodOptions[foodIndex]);
   }, [foodIndex, foodOptions]);
 
+  useEffect(() => {
+    if (currCoins < targetCoins) {
+      const timer = setTimeout(() => {
+        setCurrCoins(currCoins + 1);
+      }, 50);
+
+      return () => clearTimeout(timer);
+    }
+
+    setCoinCurrentlyIncreasing(false);
+  }, [currCoins, targetCoins]);
+
   const feedPet = () => {
     if (!isFeeding) {
       setIsFeeding(true);
@@ -121,6 +154,35 @@ export default function Pet() {
     });
   };
 
+  const increaseCoins = (coins) => {
+    setCoinIncrease(coins);
+    setCoinCurrentlyIncreasing(true);
+    setTargetCoins(currCoins + coins);
+  };
+
+  const completeTask = (taskNum) => {
+    if (taskNum === 1) {
+      increaseCoins(10);
+      setTask1Completed(true);
+    }
+    else if (taskNum === 2) {
+      increaseCoins(10);
+      setTask2Completed(true);
+    }
+    else if (taskNum === 3) {
+      increaseCoins(10);
+      setTask3Completed(true);
+    }
+    else if (taskNum === 4) {
+      increaseCoins(10);
+      setTask4Completed(true);
+    }
+    else if (taskNum === 5) {
+      increaseCoins(10);
+      setTask5Completed(true);
+    }
+  };
+
   const increaseLevel = (food) => {
     if (food === favoriteFood) {
       setLevelProgress(levelProgress + 20);
@@ -142,6 +204,34 @@ export default function Pet() {
   return (
     <div id='pet' className='bg-white w-full h-screen font-square select-none'>
       <div className="w-full h-full flex flex-col items-center justify-center text-center">
+
+
+        <div className='fixed top-0 right-0 h-[15vh] w-[40vw] grid grid-cols-3 border-8 border-black z-50'>
+
+          <div className='col-span-1 px-8 flex justify-center items-center text-white text-xl'>
+            set tasks&emsp;<MdEdit size={20} />
+          </div>
+
+          <div className='col-span-1 px-8 flex justify-center bg-white/10 items-center text-white text-xl border-l-8 border-r-8 border-white/10 grid grid-cols-5'>
+            <div className='col-span-1'>
+              <MdOutlineAttachMoney size={30} />
+            </div>
+            <div className='col-span-3'>
+              {`${currCoins}`}
+            </div>
+            <div className='col-span-1'>
+              <span className={`${coinCurrentlyIncreasing ? 'block' : 'hidden'} text-sm text-white/50`}>
+                +{`${coinIncrease}`}
+              </span>
+            </div>
+          </div>
+
+          <div className='col-span-1 px-8 flex justify-center items-center text-white text-xl'>
+            {`${currUser}`}
+          </div>
+        </div>
+
+
         <div className='w-full h-[60vh] items-center justify-center text-center grid grid-cols-4 gap-8'>
 
           <div className='h-full col-span-1 bg-black/90 border-8 border-black ml-8 items-center justify-center text-black rounded-xl'>
@@ -177,7 +267,7 @@ export default function Pet() {
 
             <div className='h-[90%] flex bg-white items-end justify-center'>
 
-              <div className='z-10 relative w-full h-full'>
+              <div className='z-10 relative w-full h-full bg-black/20'>
                 <Image src={"/assets/backgrounds/" + currBg} layout="fill" />
                 <div className='z-20 absolute bottom-1 left-1/2 transform -translate-x-1/2'>
                   <Image src={animations[currentAnimation].sequence[frameIndex]} alt="Pet" width={200} height={200} unoptimized={true} />
@@ -200,47 +290,72 @@ export default function Pet() {
               </div>
 
               <div className='grid grid-cols-5 gap-2'>
-                <div className='col-span-4 text-lg text-left bg-white/90 py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center'>
-                  task 1
+                <div className={`${task1Completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center ease-in duration-100`}>
+                  {`${task1}`}
                 </div>
-                <div className='col-span-1 text-sm text-center bg-white py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center cursor-pointer hover:bg-white/80 ease-in duration-100'>
-                  +10
-                </div>
-              </div>
-
-              <div className='grid grid-cols-5 gap-2'>
-                <div className='col-span-4 text-lg text-left bg-white/90 py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center'>
-                  task 2
-                </div>
-                <div className='col-span-1 text-sm text-center bg-white py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center cursor-pointer hover:bg-white/80 ease-in duration-100'>
-                  +10
+                <div onClick={() => { if (!coinCurrentlyIncreasing && !task1Completed) { completeTask(1) } }} className={`${task1Completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
+                  <span className={`${task1Completed ? 'hidden' : 'block'}`}>
+                    +10
+                  </span>
+                  <span className={`${task1Completed ? 'block' : 'hidden'}`}>
+                    <FaCheck size={15} />
+                  </span>
                 </div>
               </div>
 
               <div className='grid grid-cols-5 gap-2'>
-                <div className='col-span-4 text-lg text-left bg-white/90 py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center'>
-                  task 3
+                <div className={`${task2Completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center ease-in duration-100`}>
+                  {`${task2}`}
                 </div>
-                <div className='col-span-1 text-sm text-center bg-white py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center cursor-pointer hover:bg-white/80 ease-in duration-100'>
-                  +10
-                </div>
-              </div>
-
-              <div className='grid grid-cols-5 gap-2'>
-                <div className='col-span-4 text-lg text-left bg-white/90 py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center'>
-                  task 4
-                </div>
-                <div className='col-span-1 text-sm text-center bg-white py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center cursor-pointer hover:bg-white/80 ease-in duration-100'>
-                  +10
+                <div onClick={() => { if (!coinCurrentlyIncreasing && !task2Completed) { completeTask(2) } }} className={`${task2Completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
+                  <span className={`${task2Completed ? 'hidden' : 'block'}`}>
+                    +10
+                  </span>
+                  <span className={`${task2Completed ? 'block' : 'hidden'}`}>
+                    <FaCheck size={15} />
+                  </span>
                 </div>
               </div>
 
               <div className='grid grid-cols-5 gap-2'>
-                <div className='col-span-4 text-lg text-left bg-white/90 py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center'>
-                  task 5
+                <div className={`${task3Completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center ease-in duration-100`}>
+                  {`${task3}`}
                 </div>
-                <div className='col-span-1 text-sm text-center bg-white py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center cursor-pointer hover:bg-white/80 ease-in duration-100'>
-                  +10
+                <div onClick={() => { if (!coinCurrentlyIncreasing && !task3Completed) { completeTask(3) } }} className={`${task3Completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
+                  <span className={`${task3Completed ? 'hidden' : 'block'}`}>
+                    +10
+                  </span>
+                  <span className={`${task3Completed ? 'block' : 'hidden'}`}>
+                    <FaCheck size={15} />
+                  </span>
+                </div>
+              </div>
+
+              <div className='grid grid-cols-5 gap-2'>
+                <div className={`${task4Completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center ease-in duration-100`}>
+                  {`${task4}`}
+                </div>
+                <div onClick={() => { if (!coinCurrentlyIncreasing && !task4Completed) { completeTask(4) } }} className={`${task4Completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
+                  <span className={`${task4Completed ? 'hidden' : 'block'}`}>
+                    +10
+                  </span>
+                  <span className={`${task4Completed ? 'block' : 'hidden'}`}>
+                    <FaCheck size={15} />
+                  </span>
+                </div>
+              </div>
+
+              <div className='grid grid-cols-5 gap-2'>
+                <div className={`${task5Completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center ease-in duration-100`}>
+                  {`${task5}`}
+                </div>
+                <div onClick={() => { if (!coinCurrentlyIncreasing && !task5Completed) { completeTask(5) } }} className={`${task5Completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
+                  <span className={`${task5Completed ? 'hidden' : 'block'}`}>
+                    +10
+                  </span>
+                  <span className={`${task5Completed ? 'block' : 'hidden'}`}>
+                    <FaCheck size={15} />
+                  </span>
                 </div>
               </div>
 
@@ -248,6 +363,7 @@ export default function Pet() {
           </div>
 
         </div>
+
 
         <div className='fixed bottom-0 h-[15vh] w-[40vw] grid grid-cols-3 gap-2 border-8 border-black z-50'>
 
