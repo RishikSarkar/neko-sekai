@@ -43,20 +43,6 @@ export default function Pet() {
     { id: 5, name: 'task 5', completed: false, editing: false, tempName: 'Task 5' },
   ]);
 
-  const [task1, setTask1] = useState('task 1');
-  const [task2, setTask2] = useState('task 2');
-  const [task3, setTask3] = useState('task 3');
-  const [task4, setTask4] = useState('task 4');
-  const [task5, setTask5] = useState('task 5');
-
-  const [tempTask, setTempTask] = useState('enter task');
-
-  const [task1Completed, setTask1Completed] = useState(false);
-  const [task2Completed, setTask2Completed] = useState(false);
-  const [task3Completed, setTask3Completed] = useState(false);
-  const [task4Completed, setTask4Completed] = useState(false);
-  const [task5Completed, setTask5Completed] = useState(false);
-
   const [frameIndex, setFrameIndex] = useState(0);
   const [idleCount, setIdleCount] = useState(0);
   const [currentAnimation, setCurrentAnimation] = useState('idle');
