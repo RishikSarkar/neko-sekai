@@ -211,6 +211,48 @@ export default function Pet() {
     }
   };
 
+  const [timeLeft, setTimeLeft] = useState('');
+  const [currentDay, setCurrentDay] = useState(new Date().toLocaleDateString());
+
+  const calculateTimeLeft = () => {
+    const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+    const difference = tomorrow - now;
+
+    const hours = Math.floor((difference / (1000 * 60 * 60)) % 24).toString().padStart(2, '0');
+    const minutes = Math.floor((difference / (1000 * 60)) % 60).toString().padStart(2, '0');
+    const seconds = Math.floor((difference / 1000) % 60).toString().padStart(2, '0');
+
+    return `${hours}:${minutes}:${seconds}`;
+  };
+
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      const newTimeLeft = calculateTimeLeft();
+      setTimeLeft(newTimeLeft);
+
+      const newCurrentDay = new Date().toLocaleDateString();
+      if (currentDay !== newCurrentDay) {
+        resetTasksForNewDay();
+        setCurrentDay(newCurrentDay);
+      }
+    }, 1000);
+
+    return () => clearInterval(timerId);
+  }, [currentDay]);
+
+  const resetTasksForNewDay = () => {
+    setTasks(tasks.map(task => ({
+      ...task,
+      name: `task ${task.id}`,
+      completed: false,
+      editing: false,
+      tempName: `task ${task.id}`
+    })));
+  };
+
   return (
     <div id='pet' className='bg-white w-full h-screen font-square select-none'>
       <div className="w-full h-full flex flex-col items-center justify-center text-center">
@@ -218,8 +260,8 @@ export default function Pet() {
 
         <div className='fixed top-0 right-0 h-[15vh] w-[40vw] grid grid-cols-3 gap-2 border-8 border-black z-50'>
 
-          <div className='col-span-1 px-8 flex justify-center items-center text-white text-xl hover:bg-white/10 rounded-xl cursor-pointer'>
-            set tasks&ensp;<MdEdit size={20} />
+          <div onClick={resetTasksForNewDay} className='col-span-1 px-8 flex justify-center items-center text-white text-xl'>
+            {timeLeft}
           </div>
 
           <div className='col-span-1 px-8 flex justify-center bg-white/10 items-center text-white text-xl border-l-8 border-r-8 border-white/10 grid grid-cols-5'>
