@@ -8,10 +8,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        mono: ["var(--font-nova-mono)"],
-        'roboto': ['Roboto', 'sans-serif'],
-        'marcellus': ['Marcellus', 'serif'],
-        'montserrat': ['Montserrat', 'sans-serif']
+        nova: ["var(--font-nova-mono)"],
+        square: ["var(--font-nova-square)"],
+        'anta': ['Anta', 'sans-serif'],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

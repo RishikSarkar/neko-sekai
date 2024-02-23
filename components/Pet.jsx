@@ -140,7 +140,7 @@ export default function Pet() {
   };
 
   return (
-    <div id='pet' className='bg-white w-full h-screen font-montserrat select-none'>
+    <div id='pet' className='bg-white w-full h-screen font-square select-none'>
       <div className="w-full h-full flex flex-col items-center justify-center text-center">
         <div className='w-full h-[60vh] items-center justify-center text-center grid grid-cols-4 gap-8'>
 
