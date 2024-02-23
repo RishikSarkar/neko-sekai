@@ -43,6 +43,33 @@ export default function Pet() {
     { id: 5, name: 'task 5', completed: false, editing: false, tempName: 'task 5' },
   ]);
 
+  const handleTaskNameChange = (event, taskId) => {
+    setTasks(tasks.map(task => {
+      if (task.id === taskId) {
+        return { ...task, tempName: event.target.value };
+      }
+      return task;
+    }));
+  };
+
+  const handleTaskBlur = (taskId) => {
+    setTasks(tasks.map(task => {
+      if (task.id === taskId && task.tempName !== '') {
+        return { ...task, name: task.tempName, editing: false };
+      }
+      return task;
+    }));
+  };
+
+  const toggleTaskEditMode = (taskId) => {
+    setTasks(tasks.map(task => {
+      if (task.id === taskId) {
+        return { ...task, editing: true };
+      }
+      return task;
+    }));
+  };
+
   const [frameIndex, setFrameIndex] = useState(0);
   const [idleCount, setIdleCount] = useState(0);
   const [currentAnimation, setCurrentAnimation] = useState('idle');
@@ -274,16 +301,21 @@ export default function Pet() {
 
               {tasks.map((task) => (
                 <div key={task.id} className='grid grid-cols-5 gap-2'>
-                  <div className={`${task.completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center ease-in duration-100`}>
-                    {task.name}
+                  <div className={`${task.completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-2 my-2 rounded-xl rounded-r-none flex items-center ease-in duration-100`}>
+                    {task.editing ? (
+                      <input type="text" className="w-full bg-transparent px-2" value={task.tempName} onChange={(e) => handleTaskNameChange(e, task.id)} onBlur={() => handleTaskBlur(task.id)} onKeyDown={(e) => { if (e.key === 'Enter') { handleTaskBlur(task.id); } }} autoFocus />
+                    ) : (
+                      <span className='px-2'>{task.name}</span>
+                    )}
                   </div>
-                  <div onClick={() => { if (!task.completed && !coinCurrentlyIncreasing) { completeTask(task.id) } }} className={`${task.completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
-                    <span className={`${task.completed ? 'block' : 'hidden'}`}>
+                  <div onClick={() => { if (task.name === `task ${task.id}`) { toggleTaskEditMode(task.id); } else if (!task.completed && !coinCurrentlyIncreasing) { completeTask(task.id); } }} className={`${task.completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
+                    {task.name === `task ${task.id}` && !task.completed ? (
+                      <MdEdit size={15} />
+                    ) : task.completed ? (
                       <FaCheck size={15} />
-                    </span>
-                    <span className={`${!task.completed ? 'block' : 'hidden'}`}>
-                      +10
-                    </span>
+                    ) : (
+                      '+10'
+                    )}
                   </div>
                 </div>
               ))}
