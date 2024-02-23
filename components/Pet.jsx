@@ -260,7 +260,7 @@ export default function Pet() {
 
         <div className='fixed top-0 right-0 h-[15vh] w-[40vw] grid grid-cols-3 gap-2 border-8 border-black z-50'>
 
-          <div onClick={resetTasksForNewDay} className='col-span-1 px-8 flex justify-center items-center text-white text-xl'>
+          <div className='col-span-1 px-8 flex justify-center items-center text-white text-xl'>
             {timeLeft}
           </div>
 
