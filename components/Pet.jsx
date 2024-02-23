@@ -36,11 +36,11 @@ export default function Pet() {
   const [levelProgress, setLevelProgress] = useState(0);
 
   const [tasks, setTasks] = useState([
-    { id: 1, name: 'task 1', completed: false, editing: false, tempName: 'Task 1' },
-    { id: 2, name: 'task 2', completed: false, editing: false, tempName: 'Task 2' },
-    { id: 3, name: 'task 3', completed: false, editing: false, tempName: 'Task 3' },
-    { id: 4, name: 'task 4', completed: false, editing: false, tempName: 'Task 4' },
-    { id: 5, name: 'task 5', completed: false, editing: false, tempName: 'Task 5' },
+    { id: 1, name: 'task 1', completed: false, editing: false, tempName: 'task 1' },
+    { id: 2, name: 'task 2', completed: false, editing: false, tempName: 'task 2' },
+    { id: 3, name: 'task 3', completed: false, editing: false, tempName: 'task 3' },
+    { id: 4, name: 'task 4', completed: false, editing: false, tempName: 'task 4' },
+    { id: 5, name: 'task 5', completed: false, editing: false, tempName: 'task 5' },
   ]);
 
   const [frameIndex, setFrameIndex] = useState(0);
@@ -277,7 +277,7 @@ export default function Pet() {
                   <div className={`${task.completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center ease-in duration-100`}>
                     {task.name}
                   </div>
-                  <div onClick={() => { if (!task.completed) { completeTask(task.id) } }} className={`${task.completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
+                  <div onClick={() => { if (!task.completed && !coinCurrentlyIncreasing) { completeTask(task.id) } }} className={`${task.completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
                     <span className={`${task.completed ? 'block' : 'hidden'}`}>
                       <FaCheck size={15} />
                     </span>
