@@ -173,7 +173,7 @@ export default function Pet() {
             </div>
           </div>
 
-          <div className='h-full border-8 col-span-2 border-black rounded-xl'>
+          <div className='h-full border-[20px] col-span-2 border-black rounded-xl'>
 
             <div className='h-[90%] flex bg-white items-end justify-center'>
 
