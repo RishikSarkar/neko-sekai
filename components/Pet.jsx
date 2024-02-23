@@ -16,30 +16,40 @@ export default function Pet() {
   const [coinCurrentlyIncreasing, setCoinCurrentlyIncreasing] = useState(false);
 
   const [petName, setPetName] = useState('Poofy');
-  const [editing, setEditing] = useState(false);
+  const [petNameEditing, setPetNameEditing] = useState(false);
   const [tempPetName, setTempPetName] = useState(petName);
 
-  const handleNameChange = (event) => {
+  const handlePetNameChange = (event) => {
     setTempPetName(event.target.value);
   };
 
-  const handleBlur = () => {
+  const handlePetBlur = () => {
     setPetName(tempPetName);
-    setEditing(false);
+    setPetNameEditing(false);
   };
 
-  const toggleEditMode = () => {
-    setEditing(true);
+  const togglePetEditMode = () => {
+    setPetNameEditing(true);
   };
 
   const [currLevel, setCurrLevel] = useState(1);
   const [levelProgress, setLevelProgress] = useState(0);
+
+  const [tasks, setTasks] = useState([
+    { id: 1, name: 'task 1', completed: false, editing: false, tempName: 'Task 1' },
+    { id: 2, name: 'task 2', completed: false, editing: false, tempName: 'Task 2' },
+    { id: 3, name: 'task 3', completed: false, editing: false, tempName: 'Task 3' },
+    { id: 4, name: 'task 4', completed: false, editing: false, tempName: 'Task 4' },
+    { id: 5, name: 'task 5', completed: false, editing: false, tempName: 'Task 5' },
+  ]);
 
   const [task1, setTask1] = useState('task 1');
   const [task2, setTask2] = useState('task 2');
   const [task3, setTask3] = useState('task 3');
   const [task4, setTask4] = useState('task 4');
   const [task5, setTask5] = useState('task 5');
+
+  const [tempTask, setTempTask] = useState('enter task');
 
   const [task1Completed, setTask1Completed] = useState(false);
   const [task2Completed, setTask2Completed] = useState(false);
@@ -109,7 +119,7 @@ export default function Pet() {
         setShowFood(false);
         setIsFeeding(false);
       }
-      setFrameIndex(0); // Reset frame index for the new animation
+      setFrameIndex(0);
     }
   }, [frameIndex, currentAnimation, idleCount]);
 
@@ -133,14 +143,14 @@ export default function Pet() {
     if (!isFeeding) {
       setIsFeeding(true);
       setCurrentAnimation('eat');
-      setFrameIndex(0); // Start the eat animation from the first frame
+      setFrameIndex(0);
       setShowFood(true);
 
       increaseLevel(currFood);
 
       setTimeout(() => {
         setCurrentAnimation('idle');
-        setFrameIndex(0); // Return to the idle animation at the first frame
+        setFrameIndex(0);
         setShowFood(false);
         setIsFeeding(false);
       }, animations.eat.sequence.length * 100);
@@ -160,27 +170,14 @@ export default function Pet() {
     setTargetCoins(currCoins + coins);
   };
 
-  const completeTask = (taskNum) => {
-    if (taskNum === 1) {
-      increaseCoins(10);
-      setTask1Completed(true);
-    }
-    else if (taskNum === 2) {
-      increaseCoins(10);
-      setTask2Completed(true);
-    }
-    else if (taskNum === 3) {
-      increaseCoins(10);
-      setTask3Completed(true);
-    }
-    else if (taskNum === 4) {
-      increaseCoins(10);
-      setTask4Completed(true);
-    }
-    else if (taskNum === 5) {
-      increaseCoins(10);
-      setTask5Completed(true);
-    }
+  const completeTask = (taskId) => {
+    setTasks(tasks.map(task => {
+      if (task.id === taskId) {
+        increaseCoins(10);
+        return { ...task, completed: true };
+      }
+      return task;
+    }));
   };
 
   const increaseLevel = (food) => {
@@ -206,10 +203,10 @@ export default function Pet() {
       <div className="w-full h-full flex flex-col items-center justify-center text-center">
 
 
-        <div className='fixed top-0 right-0 h-[15vh] w-[40vw] grid grid-cols-3 border-8 border-black z-50'>
+        <div className='fixed top-0 right-0 h-[15vh] w-[40vw] grid grid-cols-3 gap-2 border-8 border-black z-50'>
 
-          <div className='col-span-1 px-8 flex justify-center items-center text-white text-xl'>
-            set tasks&emsp;<MdEdit size={20} />
+          <div className='col-span-1 px-8 flex justify-center items-center text-white text-xl hover:bg-white/10 rounded-xl cursor-pointer'>
+            set tasks&ensp;<MdEdit size={20} />
           </div>
 
           <div className='col-span-1 px-8 flex justify-center bg-white/10 items-center text-white text-xl border-l-8 border-r-8 border-white/10 grid grid-cols-5'>
@@ -237,18 +234,18 @@ export default function Pet() {
           <div className='h-full col-span-1 bg-black/90 border-8 border-black ml-8 items-center justify-center text-black rounded-xl'>
             <div className='h-full px-4'>
               <div className='text-2xl text-black bg-white py-4 my-4 rounded-xl flex items-center justify-between'>
-                {editing ? (
-                  <input type="text" value={tempPetName} onChange={handleNameChange} onBlur={handleBlur} autoFocus className="text-2xl text-center mx-4 w-full animate-pulse" onKeyDown={(event) => { if (event.key === 'Enter') { handleBlur(); } }} />
+                {petNameEditing ? (
+                  <input type="text" value={tempPetName} onChange={handlePetNameChange} onBlur={handlePetBlur} autoFocus className="text-2xl text-center mx-4 w-full animate-pulse font-bold" onKeyDown={(event) => { if (event.key === 'Enter') { handlePetBlur(); } }} />
                 ) : (
                   <>
-                    <span className="flex-1 text-center ml-16 mr-8 truncate">{petName}</span>
-                    <MdEdit onClick={toggleEditMode} className="mr-4 cursor-pointer" size={16} />
+                    <span className="flex-1 text-center ml-16 mr-8 truncate font-bold">{petName}</span>
+                    <MdEdit onClick={togglePetEditMode} className="mr-4 cursor-pointer" size={16} />
                   </>
                 )}
               </div>
               <div className='text-lg bg-white py-4 px-4 my-4 rounded-xl'>
                 level {currLevel}
-                <div className='w-full bg-white border-4 border-black mt-2'>
+                <div className='w-full bg-white border-4 border-black bg-black/10 mt-2'>
                   <div className='bg-black/50 text-[10px] leading-none py-1 text-center text-white ease-in duration-200' style={{ width: `${levelProgress}%` }}>
                     {/* {`${levelProgress}%`} */}
                   </div>
@@ -289,75 +286,21 @@ export default function Pet() {
                 Tasks
               </div>
 
-              <div className='grid grid-cols-5 gap-2'>
-                <div className={`${task1Completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center ease-in duration-100`}>
-                  {`${task1}`}
+              {tasks.map((task) => (
+                <div key={task.id} className='grid grid-cols-5 gap-2'>
+                  <div className={`${task.completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center ease-in duration-100`}>
+                    {task.name}
+                  </div>
+                  <div onClick={() => { if (!task.completed) { completeTask(task.id) } }} className={`${task.completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
+                    <span className={`${task.completed ? 'block' : 'hidden'}`}>
+                      <FaCheck size={15} />
+                    </span>
+                    <span className={`${!task.completed ? 'block' : 'hidden'}`}>
+                      +10
+                    </span>
+                  </div>
                 </div>
-                <div onClick={() => { if (!coinCurrentlyIncreasing && !task1Completed) { completeTask(1) } }} className={`${task1Completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
-                  <span className={`${task1Completed ? 'hidden' : 'block'}`}>
-                    +10
-                  </span>
-                  <span className={`${task1Completed ? 'block' : 'hidden'}`}>
-                    <FaCheck size={15} />
-                  </span>
-                </div>
-              </div>
-
-              <div className='grid grid-cols-5 gap-2'>
-                <div className={`${task2Completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center ease-in duration-100`}>
-                  {`${task2}`}
-                </div>
-                <div onClick={() => { if (!coinCurrentlyIncreasing && !task2Completed) { completeTask(2) } }} className={`${task2Completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
-                  <span className={`${task2Completed ? 'hidden' : 'block'}`}>
-                    +10
-                  </span>
-                  <span className={`${task2Completed ? 'block' : 'hidden'}`}>
-                    <FaCheck size={15} />
-                  </span>
-                </div>
-              </div>
-
-              <div className='grid grid-cols-5 gap-2'>
-                <div className={`${task3Completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center ease-in duration-100`}>
-                  {`${task3}`}
-                </div>
-                <div onClick={() => { if (!coinCurrentlyIncreasing && !task3Completed) { completeTask(3) } }} className={`${task3Completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
-                  <span className={`${task3Completed ? 'hidden' : 'block'}`}>
-                    +10
-                  </span>
-                  <span className={`${task3Completed ? 'block' : 'hidden'}`}>
-                    <FaCheck size={15} />
-                  </span>
-                </div>
-              </div>
-
-              <div className='grid grid-cols-5 gap-2'>
-                <div className={`${task4Completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center ease-in duration-100`}>
-                  {`${task4}`}
-                </div>
-                <div onClick={() => { if (!coinCurrentlyIncreasing && !task4Completed) { completeTask(4) } }} className={`${task4Completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
-                  <span className={`${task4Completed ? 'hidden' : 'block'}`}>
-                    +10
-                  </span>
-                  <span className={`${task4Completed ? 'block' : 'hidden'}`}>
-                    <FaCheck size={15} />
-                  </span>
-                </div>
-              </div>
-
-              <div className='grid grid-cols-5 gap-2'>
-                <div className={`${task5Completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-4 my-2 rounded-xl rounded-r-none flex items-center ease-in duration-100`}>
-                  {`${task5}`}
-                </div>
-                <div onClick={() => { if (!coinCurrentlyIncreasing && !task5Completed) { completeTask(5) } }} className={`${task5Completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
-                  <span className={`${task5Completed ? 'hidden' : 'block'}`}>
-                    +10
-                  </span>
-                  <span className={`${task5Completed ? 'block' : 'hidden'}`}>
-                    <FaCheck size={15} />
-                  </span>
-                </div>
-              </div>
+              ))}
 
             </div>
           </div>
