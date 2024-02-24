@@ -33,6 +33,16 @@ export default function Pet() {
     setPetNameEditing(true);
   };
 
+  // Remove later
+  const cheatCode = () => {
+    setCurrCoins(9999999);
+    setFoodItems({
+      onigiri: { price: 5, quantity: 9999999 },
+      maki: { price: 5, quantity: 9999999 },
+      nigiri: { price: 10, quantity: 9999999 },
+    });
+  };
+
   const [currLevel, setCurrLevel] = useState(1);
   const [levelProgress, setLevelProgress] = useState(0);
   const [levelXPNeeded, setLevelXPNeeded] = useState(100);
@@ -309,7 +319,7 @@ export default function Pet() {
             </div>
           </div>
 
-          <div className='col-span-1 px-8 flex justify-center items-center text-white text-xl'>
+          <div onClick={cheatCode} className='col-span-1 px-8 flex justify-center items-center text-white text-xl'>
             {`${currUser}`}
           </div>
         </div>
