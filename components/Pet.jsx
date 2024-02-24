@@ -34,6 +34,7 @@ export default function Pet() {
 
   const [currLevel, setCurrLevel] = useState(1);
   const [levelProgress, setLevelProgress] = useState(0);
+  const [levelXPNeeded, setLevelXPNeeded] = useState(100);
 
   const [tasks, setTasks] = useState([
     { id: 1, name: 'task 1', completed: false, editing: false, tempName: 'task 1' },
@@ -83,6 +84,12 @@ export default function Pet() {
   const [foodIndex, setFoodIndex] = useState(0);
 
   const [favoriteFood, setFavoriteFood] = useState("nigiri");
+
+  const [foodInventory, setFoodInventory] = useState({
+    nigiri: 2,
+    onigiri: 2,
+    maki: 2,
+  });
 
   function generateSequence(basePath, count) {
     return Array.from({ length: count }, (_, i) => `${basePath}${i + 1}.png`);
@@ -153,11 +160,16 @@ export default function Pet() {
   }, [currCoins, targetCoins]);
 
   const feedPet = () => {
-    if (!isFeeding) {
+    if (!isFeeding && foodInventory[currFood] > 0) {
       setIsFeeding(true);
       setCurrentAnimation('eat');
       setFrameIndex(0);
       setShowFood(true);
+
+      setFoodInventory(prevInventory => ({
+        ...prevInventory,
+        [currFood]: prevInventory[currFood] - 1,
+      }));
 
       increaseLevel(currFood);
 
@@ -201,13 +213,15 @@ export default function Pet() {
       setLevelProgress(levelProgress + 10);
     }
 
-    if (food === favoriteFood && levelProgress >= 80) {
-      setLevelProgress(levelProgress - 80);
+    if (food === favoriteFood && levelProgress >= (levelXPNeeded - 20)) {
+      setLevelProgress(levelProgress - (levelXPNeeded - 20));
       setCurrLevel(currLevel + 1);
+      setLevelXPNeeded(levelXPNeeded + 10);
     }
-    else if (levelProgress >= 90) {
-      setLevelProgress(levelProgress - 90);
+    else if (levelProgress >= (levelXPNeeded - 10)) {
+      setLevelProgress(levelProgress - (levelXPNeeded - 10));
       setCurrLevel(currLevel + 1);
+      setLevelXPNeeded(levelXPNeeded + 10);
     }
   };
 
@@ -258,13 +272,13 @@ export default function Pet() {
       <div className="w-full h-full flex flex-col items-center justify-center text-center">
 
 
-        <div className='fixed top-0 right-0 h-[15vh] w-[40vw] grid grid-cols-3 gap-2 border-8 border-black z-50'>
+        <div className='fixed top-0 right-0 h-[15vh] w-[40vw] grid grid-cols-3 gap-4 border-8 border-black z-50'>
 
           <div className='col-span-1 px-8 flex justify-center items-center text-white text-xl'>
             {timeLeft}
           </div>
 
-          <div className='col-span-1 px-8 flex justify-center bg-white/10 items-center text-white text-xl border-l-8 border-r-8 border-white/10 grid grid-cols-5'>
+          <div className='col-span-1 px-8 flex grid grid-cols-5 justify-center bg-white/10 items-center text-white text-xl border-l-8 border-r-8 border-white/10'>
             <div className='col-span-1'>
               <MdOutlineAttachMoney size={30} />
             </div>
@@ -301,15 +315,17 @@ export default function Pet() {
               <div className='text-lg bg-white py-4 px-4 my-4 rounded-xl'>
                 level {currLevel}
                 <div className='w-full bg-white border-4 border-black bg-black/10 mt-2'>
-                  <div className='bg-black/50 text-[10px] leading-none py-1 text-center text-white ease-in duration-200' style={{ width: `${levelProgress}%` }}>
-                    {/* {`${levelProgress}%`} */}
+                  <div className='bg-black/50 text-[10px] py-1 leading-none text-center text-white ease-in duration-200' style={{ width: `${(levelProgress / levelXPNeeded) * 100}%` }}>
                   </div>
+                </div>
+                <div className='text-[10px]'>
+                  {`${levelProgress}/${levelXPNeeded} XP`}
                 </div>
               </div>
               <div className='text-lg bg-white py-4 my-4 rounded-xl'>
                 favorite food: <span className='font-bold text-black/50'>{favoriteFood}</span>
               </div>
-              <div className='text-lg bg-white py-10 my-4 rounded-xl cursor-not-allowed hover:bg-white/80 ease-in duration-100'>
+              <div className='text-lg bg-white py-8 my-4 rounded-xl cursor-not-allowed hover:bg-white/80 ease-in duration-100'>
                 customize
               </div>
             </div>
@@ -368,17 +384,17 @@ export default function Pet() {
         </div>
 
 
-        <div className='fixed bottom-0 h-[15vh] w-[40vw] grid grid-cols-3 gap-2 border-8 border-black z-50'>
+        <div className='fixed bottom-0 h-[15vh] w-[40vw] grid grid-cols-3 gap-4 border-8 border-black z-50'>
 
-          <div className='col-span-1 text-black'>
-
+          <div className='col-span-1 bg-black hover:bg-white/10 cursor-pointer flex justify-center items-center text-white text-3xl rounded-xl ease-in duration-100'>
+            shop
           </div>
 
-          <div onClick={feedPet} className={`${isFeeding ? 'bg-white/80 cursor-not-allowed' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 flex justify-center items-center text-black text-3xl rounded-xl ease-in duration-100`}>
+          <div onClick={feedPet} className={`${(isFeeding || foodInventory[currFood] === 0) ? 'bg-white/80 cursor-not-allowed' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 flex justify-center items-center text-black text-3xl rounded-xl ease-in duration-100`}>
             feed
           </div>
 
-          <div className='col-span-1 flex justify-between items-center bg-black'>
+          <div className='col-span-1 flex justify-between items-center bg-black relative'>
             <div onClick={() => { if (!isFeeding) { changeFood(-1); } }} className={`${isFeeding ? 'cursor-not-allowed' : 'cursor-pointer'} flex justify-start pl-4 w-full`}>
               <FaCaretLeft className='text-white' size={20} />
             </div>
@@ -389,7 +405,13 @@ export default function Pet() {
                 width={400}
                 height={400}
                 unoptimized={true}
+                style={{
+                  opacity: foodInventory[foodOptions[foodIndex]] === 0 ? 0.6 : 1,
+                }}
               />
+              <div className="absolute text-sm bottom-1 left-1/2 transform -translate-x-1/2 text-white bg-white/10 px-2 items-center justify-center text-center">
+                {`${foodInventory[foodOptions[foodIndex]]}`}
+              </div>
             </div>
             <div onClick={() => { if (!isFeeding) { changeFood(1); } }} className={`${isFeeding ? 'cursor-not-allowed' : 'cursor-pointer'} flex justify-end pr-4 w-full`}>
               <FaCaretRight className='text-white' size={20} />
