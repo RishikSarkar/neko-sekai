@@ -6,6 +6,7 @@ import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
 import { FaCheck } from "react-icons/fa6";
 import { RiMoneyDollarCircleFill, RiMoneyDollarBoxFill } from "react-icons/ri";
 import { MdEdit, MdOutlineAttachMoney } from "react-icons/md";
+import { Shop } from './Shop';
 
 export default function Pet() {
   const [currUser, setCurrUser] = useState('friendlyBOT');
@@ -79,17 +80,30 @@ export default function Pet() {
   const [isFeeding, setIsFeeding] = useState(false);
 
   const [currBg, setCurrBg] = useState("livingroom/01/livingroom-01.gif");
-  const [currFood, setCurrFood] = useState("onigiri");
-  const [foodOptions, setFoodOptions] = useState(["onigiri", "maki", "nigiri"]);
-  const [foodIndex, setFoodIndex] = useState(0);
 
+  const [foodItems, setFoodItems] = useState({
+    onigiri: { price: 5, quantity: 2 },
+    maki: { price: 5, quantity: 2 },
+    nigiri: { price: 10, quantity: 2 },
+  });
+
+  const [currFood, setCurrFood] = useState("onigiri");
+  const [foodOptions, setFoodOptions] = useState([]);
+  const [foodInventory, setFoodInventory] = useState({});
+
+  const [foodIndex, setFoodIndex] = useState(0);
   const [favoriteFood, setFavoriteFood] = useState("nigiri");
 
-  const [foodInventory, setFoodInventory] = useState({
-    nigiri: 2,
-    onigiri: 2,
-    maki: 2,
-  });
+  useEffect(() => {
+    setFoodOptions(Object.keys(foodItems));
+    setFoodInventory(
+      Object.fromEntries(
+        Object.entries(foodItems).map(([key, value]) => [key, value.quantity])
+      )
+    );
+  }, [foodItems]);
+
+  const [showShop, setShowShop] = useState(false);
 
   function generateSequence(basePath, count) {
     return Array.from({ length: count }, (_, i) => `${basePath}${i + 1}.png`);
@@ -166,9 +180,12 @@ export default function Pet() {
       setFrameIndex(0);
       setShowFood(true);
 
-      setFoodInventory(prevInventory => ({
-        ...prevInventory,
-        [currFood]: prevInventory[currFood] - 1,
+      setFoodItems(prevItems => ({
+        ...prevItems,
+        [currFood]: {
+          ...prevItems[currFood],
+          quantity: prevItems[currFood].quantity - 1,
+        },
       }));
 
       increaseLevel(currFood);
@@ -386,7 +403,7 @@ export default function Pet() {
 
         <div className='fixed bottom-0 h-[15vh] w-[40vw] grid grid-cols-3 gap-4 border-8 border-black z-50'>
 
-          <div className='col-span-1 bg-black hover:bg-white/10 cursor-pointer flex justify-center items-center text-white text-3xl rounded-xl ease-in duration-100'>
+          <div onClick={() => setShowShop(true)} className='col-span-1 bg-black hover:bg-white/10 cursor-pointer flex justify-center items-center text-white text-3xl rounded-xl ease-in duration-100'>
             shop
           </div>
 
@@ -420,6 +437,17 @@ export default function Pet() {
         </div>
 
       </div>
+
+      {showShop &&
+        <Shop onClose={() => setShowShop(false)}
+          currCoins={currCoins}
+          setCurrCoins={setCurrCoins}
+          setTargetCoins={setTargetCoins}
+          foodItems={foodItems}
+          setFoodItems={setFoodItems}
+        />
+      }
+
     </div>
   );
 }
