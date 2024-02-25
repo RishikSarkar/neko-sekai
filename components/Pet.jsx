@@ -247,7 +247,7 @@ export default function Pet() {
 
     if (newProgress >= levelXPNeeded) {
       setCurrLevel(currLevel + 1);
-      setLevelXPNeeded(levelXPNeeded + 100);
+      setLevelXPNeeded(levelXPNeeded + 10);
       setLevelProgress(newProgress - levelXPNeeded);
     } else {
       setLevelProgress(newProgress);
@@ -370,8 +370,8 @@ export default function Pet() {
                   <Image
                     src={animations[currentAnimation].sequence[frameIndex]}
                     alt="Pet"
-                    width={currLevel >= 6 ? 200 : 180}
-                    height={currLevel >= 6 ? 200 : 180}
+                    width={currLevel >= 5 ? 200 : 180}
+                    height={currLevel >= 5 ? 200 : 180}
                     unoptimized={true}
                   />
                 </div>
