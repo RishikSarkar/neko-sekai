@@ -72,7 +72,7 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
 
     return (
         <div className="fixed bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-screen h-screen bg-black/90 z-50">
-            <div className="fixed bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-[90vw] h-[90vh] bg-black/90 z-[51] rounded-xl flex justify-center items-center text-center border-8 border-white">
+            <div className="fixed bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-[80vw] h-[90vh] bg-black/90 z-[51] rounded-xl flex justify-center items-center text-center border-8 border-white">
 
                 <div onClick={onClose} className="fixed top-2 right-2 p-4 rounded-full cursor-pointer hover:bg-white/10">
                     <ImCross size={20} />
@@ -99,9 +99,9 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
 
                 {currentSection === SHOP_SECTIONS.MAIN &&
                     (
-                        <div className="flex w-[70vw] h-[60vh] grid grid-cols-3 items-center justify-center text-center text-2xl border-2 border-white rounded-xl bg-white/10">
+                        <div className="flex w-[60vw] h-[50vh] grid grid-cols-3 gap-8 items-center justify-center text-center text-2xl rounded-xl">
                             {Object.values(SHOP_SECTIONS).filter(section => section !== SHOP_SECTIONS.MAIN).map((section) => (
-                                <div key={section} onClick={() => handleChangeSection(section)} className="col-span-1 flex w-full h-full border-2 border-white items-center justify-center text-center cursor-pointer hover:bg-black ease-in duration-100">
+                                <div key={section} onClick={() => handleChangeSection(section)} className="col-span-1 flex w-full h-full border-4 border-black/10 rounded-xl items-center justify-center text-center cursor-pointer bg-white text-black hover:bg-white/80 ease-in duration-100">
                                     {section.toLowerCase()}
                                 </div>
                             ))}
@@ -110,9 +110,9 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                 }
 
                 {currentSection === SHOP_SECTIONS.FOOD && (
-                    <div className="flex w-[70vw] h-auto max-h-[60vh] overflow-y-scroll grid grid-cols-4 gap-4 p-4 items-center justify-center text-center text-2xl border-4 border-white rounded-xl bg-white/10">
+                    <div className="flex w-[60vw] h-auto max-h-[50vh] overflow-y-scroll grid grid-cols-4 gap-4 p-4 items-center justify-center text-center text-2xl border-4 border-black/10 rounded-xl bg-white">
                         {Object.entries(foodItems).map(([itemName, itemDetails]) => (
-                            <div key={itemName} className="relative col-span-1 flex flex-col items-center justify-center text-center bg-black border-4 border-white rounded-xl p-8">
+                            <div key={itemName} className="relative col-span-1 flex flex-col items-center justify-center text-center bg-black border-4 border-white/90 rounded-xl p-8">
                                 <Image
                                     src={`/assets/food/icons/${itemName}.png`}
                                     alt={itemName}
@@ -123,7 +123,10 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                                 <span className="text-white text-xl pb-2 font-bold">{itemName}</span>
                                 <span className="text-white text-sm pb-1">Price: ${itemDetails.price}</span>
                                 <span className="text-white text-sm">Owned: {itemDetails.quantity}</span>
-                                <button onClick={() => handleFoodPurchase(itemName)} className="absolute top-1 right-1 rounded-full hover:bg-white/20 m-2 text-white transition duration-100 ease-in">
+                                <button
+                                    onClick={() => { if (!coinCurrentlyDecreasing) { handleFoodPurchase(itemName) } }}
+                                    className="absolute top-1 right-1 rounded-full hover:bg-white/20 m-2 text-white transition duration-100 ease-in"
+                                >
                                     <LuPlusCircle size={40} />
                                 </button>
                             </div>

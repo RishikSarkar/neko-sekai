@@ -40,6 +40,7 @@ export default function Pet() {
       onigiri: { price: 5, quantity: 9999999 },
       maki: { price: 5, quantity: 9999999 },
       nigiri: { price: 10, quantity: 9999999 },
+      chicken: { price: 7, quantity: 9999999 },
     });
   };
 
@@ -95,6 +96,7 @@ export default function Pet() {
     onigiri: { price: 5, quantity: 2 },
     maki: { price: 5, quantity: 2 },
     nigiri: { price: 10, quantity: 2 },
+    chicken: { price: 7, quantity: 2 },
   });
 
   const [currFood, setCurrFood] = useState("onigiri");
@@ -331,7 +333,7 @@ export default function Pet() {
             <div className='h-full px-4'>
               <div className='text-2xl text-black bg-white py-4 my-4 rounded-xl flex items-center justify-between'>
                 {petNameEditing ? (
-                  <input type="text" value={tempPetName} onChange={handlePetNameChange} onBlur={handlePetBlur} autoFocus className="text-2xl text-center mx-4 w-full animate-pulse font-bold" onKeyDown={(event) => { if (event.key === 'Enter') { handlePetBlur(); } }} />
+                  <input type="text" value={tempPetName} onChange={handlePetNameChange} onBlur={handlePetBlur} autoFocus className="text-2xl text-center mx-4 w-full animate-pulse font-bold selection:text-white selection:bg-black focus:outline-none" onKeyDown={(event) => { if (event.key === 'Enter') { handlePetBlur(); } }} />
                 ) : (
                   <>
                     <span className="flex-1 text-center ml-16 mr-8 truncate font-bold">{petName}</span>
@@ -365,11 +367,23 @@ export default function Pet() {
               <div className='z-10 relative w-full h-full bg-black/20'>
                 <Image src={"/assets/backgrounds/" + currBg} layout="fill" />
                 <div className='z-20 absolute bottom-1 left-1/2 transform -translate-x-1/2'>
-                  <Image src={animations[currentAnimation].sequence[frameIndex]} alt="Pet" width={200} height={200} unoptimized={true} />
+                  <Image
+                    src={animations[currentAnimation].sequence[frameIndex]}
+                    alt="Pet"
+                    width={currLevel >= 6 ? 200 : 180}
+                    height={currLevel >= 6 ? 200 : 180}
+                    unoptimized={true}
+                  />
                 </div>
                 {showFood && (
                   <div className='z-40 absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50 text-black'>
-                    <Image src={animations.food.sequence[frameIndex]} alt="Food" width={200} height={200} unoptimized={true} />
+                    <Image
+                      src={animations.food.sequence[frameIndex]}
+                      alt="Food"
+                      width={200}
+                      height={200}
+                      unoptimized={true}
+                    />
                   </div>
                 )}
               </div>
@@ -388,7 +402,7 @@ export default function Pet() {
                 <div key={task.id} className='grid grid-cols-5 gap-2'>
                   <div className={`${task.completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-2 my-2 rounded-xl rounded-r-none flex items-center ease-in duration-100`}>
                     {task.editing ? (
-                      <input type="text" className="w-full bg-transparent px-2" value={task.tempName} onChange={(e) => handleTaskNameChange(e, task.id)} onBlur={() => handleTaskBlur(task.id)} onKeyDown={(e) => { if (e.key === 'Enter') { handleTaskBlur(task.id); } }} autoFocus />
+                      <input type="text" className="w-full bg-transparent px-2 selection:text-white selection:bg-black focus:outline-none" value={task.tempName} onChange={(e) => handleTaskNameChange(e, task.id)} onBlur={() => handleTaskBlur(task.id)} onKeyDown={(e) => { if (e.key === 'Enter') { handleTaskBlur(task.id); } }} autoFocus />
                     ) : (
                       <span className='px-2'>{task.name}</span>
                     )}
