@@ -7,6 +7,7 @@ import { FaCheck } from "react-icons/fa6";
 import { RiMoneyDollarCircleFill, RiMoneyDollarBoxFill } from "react-icons/ri";
 import { MdEdit, MdOutlineAttachMoney } from "react-icons/md";
 import { Shop } from './Shop';
+import { Customize } from './Customize';
 
 export default function Pet() {
   const [currUser, setCurrUser] = useState('friendlyBOT');
@@ -20,6 +21,7 @@ export default function Pet() {
   const [petNameEditing, setPetNameEditing] = useState(false);
   const [tempPetName, setTempPetName] = useState(petName);
 
+  // Allow pet name to be changed
   const handlePetNameChange = (event) => {
     setTempPetName(event.target.value);
   };
@@ -29,6 +31,7 @@ export default function Pet() {
     setPetNameEditing(false);
   };
 
+  // Enables edit mode for pet name
   const togglePetEditMode = () => {
     setPetNameEditing(true);
   };
@@ -51,6 +54,7 @@ export default function Pet() {
   const [levelProgress, setLevelProgress] = useState(0);
   const [levelXPNeeded, setLevelXPNeeded] = useState(100);
 
+  // List of tasks
   const [tasks, setTasks] = useState([
     { id: 1, name: 'task 1', completed: false, editing: false, tempName: 'task 1' },
     { id: 2, name: 'task 2', completed: false, editing: false, tempName: 'task 2' },
@@ -59,6 +63,7 @@ export default function Pet() {
     { id: 5, name: 'task 5', completed: false, editing: false, tempName: 'task 5' },
   ]);
 
+  // Allow task text to be changed
   const handleTaskNameChange = (event, taskId) => {
     setTasks(tasks.map(task => {
       if (task.id === taskId) {
@@ -77,6 +82,7 @@ export default function Pet() {
     }));
   };
 
+  // Enables edit mode for task
   const toggleTaskEditMode = (taskId) => {
     setTasks(tasks.map(task => {
       if (task.id === taskId) {
@@ -96,11 +102,13 @@ export default function Pet() {
   const [currBg, setCurrBg] = useState("livingroom/01/livingroom-01");
   const [bgTime, setBgTime] = useState("morning");
 
+  // List of locations
   const [locations, setLocations] = useState({
     livingroom: { name: 'living room', price: 0, owned: true, bg: 'livingroom/01/livingroom-01' },
     city: { name: 'city', price: 100, owned: false, bg: 'city/01/city-01' },
   })
 
+  // Update the background time of day based on user time
   useEffect(() => {
     const updateBackgroundTime = () => {
       const hour = new Date().getHours();
@@ -117,19 +125,42 @@ export default function Pet() {
       setBgTime(newBgTime);
     };
 
-    updateBackgroundTime();
-    const interval = setInterval(updateBackgroundTime, 60 * 60 * 1000);
+    const calculateNextUpdateDelay = () => {
+      const now = new Date();
 
-    return () => clearInterval(interval);
+      const nextUpdate = new Date(now);
+      if (now.getHours() < 6) {
+        nextUpdate.setHours(6, 0, 0, 0);
+      } else if (now.getHours() < 12) {
+        nextUpdate.setHours(12, 0, 0, 0);
+      } else if (now.getHours() < 18) {
+        nextUpdate.setHours(18, 0, 0, 0);
+      } else {
+        nextUpdate.setDate(nextUpdate.getDate() + 1);
+        nextUpdate.setHours(6, 0, 0, 0);
+      }
+      return nextUpdate.getTime() - now.getTime();
+    };
+
+    updateBackgroundTime();
+
+    const delayUntilNextPeriod = calculateNextUpdateDelay();
+    const timeoutId = setTimeout(() => {
+      updateBackgroundTime();
+      setInterval(updateBackgroundTime, 60 * 60 * 1000);
+    }, delayUntilNextPeriod);
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
+  // List of food items
   const [foodItems, setFoodItems] = useState({
-    onigiri: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room' },
-    maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room' },
-    chicken: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room' },
-    akami: { price: 10, quantity: 2, xp: 20, owned: true, location: 'living room' },
-    uni: { price: 7, quantity: 2, xp: 20, owned: false, location: 'city' },
-    tamago: { price: 10, quantity: 2, xp: 25, owned: false, location: 'city' },
+    onigiri: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', show: true },
+    maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', show: true },
+    chicken: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', show: true },
+    akami: { price: 10, quantity: 2, xp: 20, owned: true, location: 'living room', show: true },
+    uni: { price: 7, quantity: 2, xp: 20, owned: false, location: 'city', show: true },
+    tamago: { price: 10, quantity: 2, xp: 25, owned: false, location: 'city', show: true },
   });
 
   const [currFood, setCurrFood] = useState("onigiri");
@@ -139,6 +170,7 @@ export default function Pet() {
   const [foodIndex, setFoodIndex] = useState(0);
   const [favoriteFood, setFavoriteFood] = useState("akami");
 
+  // Update food lists for display. Ensures that only owned items are displayed
   useEffect(() => {
     const ownedFoodOptions = Object.entries(foodItems)
       .filter(([_, itemDetails]) => itemDetails.owned)
@@ -156,11 +188,14 @@ export default function Pet() {
   }, [foodItems]);
 
   const [showShop, setShowShop] = useState(false);
+  const [showCustomize, setShowCustomize] = useState(false);
 
+  // Functions for animating sequences
   function generateSequence(basePath, count) {
     return Array.from({ length: count }, (_, i) => `${basePath}${i + 1}.png`);
   }
 
+  // List of animations
   const animations = {
     idle: {
       sequence: generateSequence("/assets/sprites/cat/01/cat-01-idle/cat-01-idle", 10),
@@ -178,6 +213,7 @@ export default function Pet() {
     }
   };
 
+  // Constant looping of current animation
   useEffect(() => {
     const currentSequence = animations[currentAnimation].sequence;
     const intervalId = setInterval(() => {
@@ -190,6 +226,7 @@ export default function Pet() {
     return () => clearInterval(intervalId);
   }, [currentAnimation]);
 
+  // Enables animation switching
   useEffect(() => {
     if (frameIndex === animations[currentAnimation].sequence.length - 1) {
       if (currentAnimation === 'idle') {
@@ -209,10 +246,12 @@ export default function Pet() {
     }
   }, [frameIndex, currentAnimation, idleCount]);
 
+  // Updates current food to selected item in carousel
   useEffect(() => {
     setCurrFood(foodOptions[foodIndex]);
   }, [foodIndex, foodOptions]);
 
+  // Animation for currency increase
   useEffect(() => {
     if (currCoins < targetCoins) {
       const timer = setTimeout(() => {
@@ -225,6 +264,7 @@ export default function Pet() {
     setCoinCurrentlyIncreasing(false);
   }, [currCoins, targetCoins]);
 
+  // Feed pet with currently selected food
   const feedPet = () => {
     if (!isFeeding && foodInventory[currFood] > 0) {
       setIsFeeding(true);
@@ -251,6 +291,7 @@ export default function Pet() {
     }
   };
 
+  // Switches carousel display
   const changeFood = (direction) => {
     setFoodIndex(prevIndex => {
       const newIndex = (prevIndex + direction + foodOptions.length) % foodOptions.length;
@@ -258,12 +299,14 @@ export default function Pet() {
     });
   };
 
+  // Enables currency increase
   const increaseCoins = (coins) => {
     setCoinIncrease(coins);
     setCoinCurrentlyIncreasing(true);
     setTargetCoins(currCoins + coins);
   };
 
+  // Marks respective task as complete and initiates currency increase
   const completeTask = (taskId) => {
     setTasks(tasks.map(task => {
       if (task.id === taskId) {
@@ -274,6 +317,7 @@ export default function Pet() {
     }));
   };
 
+  // Enables level increase based on gained XP
   const increaseLevel = (food) => {
     const foodXP = foodItems[food].xp;
     let newProgress = levelProgress + foodXP;
@@ -294,6 +338,7 @@ export default function Pet() {
   const [timeLeft, setTimeLeft] = useState('');
   const [currentDay, setCurrentDay] = useState(new Date().toLocaleDateString());
 
+  // Display time left until 12 AM (user time zone)
   const calculateTimeLeft = () => {
     const now = new Date();
     const tomorrow = new Date(now);
@@ -308,6 +353,7 @@ export default function Pet() {
     return `${hours}:${minutes}:${seconds}`;
   };
 
+  // Initiates task reset and favorite food randomization on new day
   useEffect(() => {
     const timerId = setInterval(() => {
       const newTimeLeft = calculateTimeLeft();
@@ -326,6 +372,7 @@ export default function Pet() {
     return () => clearInterval(timerId);
   }, [currentDay, foodOptions]);
 
+  // Reset tasks and mark as incomplete
   const resetTasksForNewDay = () => {
     setTasks(tasks.map(task => ({
       ...task,
@@ -394,7 +441,7 @@ export default function Pet() {
               <div className='text-lg bg-white py-4 my-4 rounded-xl bg-white/90'>
                 favorite food: <span className='font-bold text-black/80 animate-pulse'>{favoriteFood}</span>
               </div>
-              <div className='text-lg bg-white py-8 my-4 rounded-xl cursor-not-allowed hover:bg-white/80 ease-in duration-100'>
+              <div onClick={() => setShowCustomize(true)} className='text-lg bg-white py-8 my-4 rounded-xl cursor-pointer hover:bg-white/80 ease-in duration-100'>
                 customize
               </div>
             </div>
@@ -504,6 +551,20 @@ export default function Pet() {
 
       {showShop &&
         <Shop onClose={() => setShowShop(false)}
+          currCoins={currCoins}
+          setCurrCoins={setCurrCoins}
+          setTargetCoins={setTargetCoins}
+          foodItems={foodItems}
+          setFoodItems={setFoodItems}
+          favoriteFood={favoriteFood}
+          locations={locations}
+          setLocations={setLocations}
+          setCurrBg={setCurrBg}
+        />
+      }
+
+      {showCustomize &&
+        <Customize onClose={() => setShowCustomize(false)}
           currCoins={currCoins}
           setCurrCoins={setCurrCoins}
           setTargetCoins={setTargetCoins}
