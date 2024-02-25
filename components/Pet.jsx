@@ -128,7 +128,8 @@ export default function Pet() {
     maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room' },
     chicken: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room' },
     akami: { price: 10, quantity: 2, xp: 20, owned: true, location: 'living room' },
-    tamago: { price: 10, quantity: 2, xp: 20, owned: false, location: 'city' },
+    uni: { price: 7, quantity: 2, xp: 20, owned: false, location: 'city' },
+    tamago: { price: 10, quantity: 2, xp: 25, owned: false, location: 'city' },
   });
 
   const [currFood, setCurrFood] = useState("onigiri");
