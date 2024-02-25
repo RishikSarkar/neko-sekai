@@ -35,12 +35,15 @@ export default function Pet() {
 
   // Remove later
   const cheatCode = () => {
-    setCurrCoins(9999999);
-    setFoodItems({
-      onigiri: { price: 5, quantity: 9999999 },
-      maki: { price: 5, quantity: 9999999 },
-      nigiri: { price: 10, quantity: 9999999 },
-      chicken: { price: 7, quantity: 9999999 },
+    setCurrCoins(999999);
+    setFoodItems(prevItems => {
+      const updatedItems = Object.fromEntries(
+        Object.entries(prevItems).map(([key, value]) => [
+          key,
+          { ...value, quantity: 999999 },
+        ])
+      );
+      return updatedItems;
     });
   };
 
@@ -93,10 +96,10 @@ export default function Pet() {
   const [currBg, setCurrBg] = useState("livingroom/01/livingroom-01.gif");
 
   const [foodItems, setFoodItems] = useState({
-    onigiri: { price: 5, quantity: 2 },
-    maki: { price: 5, quantity: 2 },
-    nigiri: { price: 10, quantity: 2 },
-    chicken: { price: 7, quantity: 2 },
+    onigiri: { price: 5, quantity: 2, xp: 10 },
+    maki: { price: 5, quantity: 2, xp: 10 },
+    chicken: { price: 7, quantity: 2, xp: 15 },
+    nigiri: { price: 10, quantity: 2, xp: 20 },
   });
 
   const [currFood, setCurrFood] = useState("onigiri");
@@ -235,22 +238,19 @@ export default function Pet() {
   };
 
   const increaseLevel = (food) => {
+    const foodXP = foodItems[food].xp;
+    let newProgress = levelProgress + foodXP;
+
     if (food === favoriteFood) {
-      setLevelProgress(levelProgress + 20);
-    }
-    else {
-      setLevelProgress(levelProgress + 10);
+      newProgress += foodXP;
     }
 
-    if (food === favoriteFood && levelProgress >= (levelXPNeeded - 20)) {
-      setLevelProgress(levelProgress - (levelXPNeeded - 20));
+    if (newProgress >= levelXPNeeded) {
       setCurrLevel(currLevel + 1);
-      setLevelXPNeeded(levelXPNeeded + 10);
-    }
-    else if (levelProgress >= (levelXPNeeded - 10)) {
-      setLevelProgress(levelProgress - (levelXPNeeded - 10));
-      setCurrLevel(currLevel + 1);
-      setLevelXPNeeded(levelXPNeeded + 10);
+      setLevelXPNeeded(levelXPNeeded + 100);
+      setLevelProgress(newProgress - levelXPNeeded);
+    } else {
+      setLevelProgress(newProgress);
     }
   };
 
