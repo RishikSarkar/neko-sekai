@@ -163,7 +163,7 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                             <div key={itemName} className="relative col-span-1 flex flex-col items-center justify-center text-center bg-black border-4 border-white/90 rounded-xl p-8">
                                 <div className={`${itemDetails.owned ? 'opacity-50' : 'opacity-100'} bg-white/90 rounded-xl overflow-hidden border-4 border-white/90`}>
                                     <Image
-                                        src={`/assets/backgrounds/${itemDetails.bg}-morning.gif`}
+                                        src={`/assets/backgrounds/${itemDetails.bg}-sunset.gif`}
                                         alt={itemName}
                                         width={300}
                                         height={300}
