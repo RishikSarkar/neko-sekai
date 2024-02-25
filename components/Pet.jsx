@@ -94,11 +94,11 @@ export default function Pet() {
   const [isFeeding, setIsFeeding] = useState(false);
 
   const [currBg, setCurrBg] = useState("livingroom/01/livingroom-01");
-  const [bgTime, setBgTime] = useState("night");
+  const [bgTime, setBgTime] = useState("morning");
 
   const [locations, setLocations] = useState({
-    livingroom: { name: 'Living Room', price: 0, owned: true, bg: 'livingroom/01/livingroom-01' },
-    city: { name: 'City', price: 100, owned: false, bg: 'city/01/city-01' },
+    livingroom: { name: 'living room', price: 0, owned: true, bg: 'livingroom/01/livingroom-01' },
+    city: { name: 'city', price: 100, owned: false, bg: 'city/01/city-01' },
   })
 
   useEffect(() => {
@@ -124,10 +124,11 @@ export default function Pet() {
   }, []);
 
   const [foodItems, setFoodItems] = useState({
-    onigiri: { price: 5, quantity: 2, xp: 10 },
-    maki: { price: 5, quantity: 2, xp: 10 },
-    chicken: { price: 7, quantity: 2, xp: 15 },
-    nigiri: { price: 10, quantity: 2, xp: 20 },
+    onigiri: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room' },
+    maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room' },
+    chicken: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room' },
+    akami: { price: 10, quantity: 2, xp: 20, owned: true, location: 'living room' },
+    tamago: { price: 10, quantity: 2, xp: 20, owned: false, location: 'city' },
   });
 
   const [currFood, setCurrFood] = useState("onigiri");
@@ -135,15 +136,22 @@ export default function Pet() {
   const [foodInventory, setFoodInventory] = useState({});
 
   const [foodIndex, setFoodIndex] = useState(0);
-  const [favoriteFood, setFavoriteFood] = useState("nigiri");
+  const [favoriteFood, setFavoriteFood] = useState("akami");
 
   useEffect(() => {
-    setFoodOptions(Object.keys(foodItems));
-    setFoodInventory(
-      Object.fromEntries(
-        Object.entries(foodItems).map(([key, value]) => [key, value.quantity])
-      )
-    );
+    const ownedFoodOptions = Object.entries(foodItems)
+      .filter(([_, itemDetails]) => itemDetails.owned)
+      .map(([itemName, _]) => itemName);
+
+    setFoodOptions(ownedFoodOptions);
+
+    const ownedFoodInventory = ownedFoodOptions.reduce((acc, itemName) => {
+      acc[itemName] = foodItems[itemName].quantity;
+      return acc;
+    }, {});
+
+    setFoodInventory(ownedFoodInventory);
+
   }, [foodItems]);
 
   const [showShop, setShowShop] = useState(false);
@@ -503,6 +511,7 @@ export default function Pet() {
           favoriteFood={favoriteFood}
           locations={locations}
           setLocations={setLocations}
+          setCurrBg={setCurrBg}
         />
       }
 

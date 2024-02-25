@@ -4,6 +4,7 @@ import { ImCross } from "react-icons/im";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { LuPlusCircle } from "react-icons/lu";
 import { MdOutlineAttachMoney } from 'react-icons/md';
+import { FaLock } from "react-icons/fa";
 
 const SHOP_SECTIONS = {
     MAIN: 'MAIN',
@@ -15,7 +16,7 @@ const SHOP_SECTIONS = {
     CURRENCY: 'CURRENCY',
 };
 
-export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodItems, setFoodItems, favoriteFood, locations, setLocations }) => {
+export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodItems, setFoodItems, favoriteFood, locations, setLocations, setCurrBg }) => {
     const [coinDecrease, setCoinDecrease] = useState(0);
     const [tempCoins, setTempCoins] = useState(currCoins);
     const [tempTargetCoins, setTempTargetCoins] = useState(currCoins);
@@ -51,18 +52,33 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
         };
     };
 
-    const handleLocationPurchase = (itemName) => {
-        const itemPrice = locations[itemName].price;
-        if (currCoins >= itemPrice) {
+    const handleLocationPurchase = (locationName) => {
+        const itemPrice = locations[locationName].price;
+        if (currCoins >= itemPrice && !locations[locationName].owned) {
             decreaseCoins(itemPrice);
+
             const newLocations = {
                 ...locations,
-                [itemName]: {
-                    ...locations[itemName],
+                [locationName]: {
+                    ...locations[locationName],
                     owned: true,
                 },
             };
+
             setLocations(newLocations);
+            setCurrBg(locations[locationName].bg);
+
+            const newFoodItems = Object.keys(foodItems).reduce((acc, itemName) => {
+                const item = foodItems[itemName];
+                if (item.location === locationName) {
+                    acc[itemName] = { ...item, owned: true };
+                } else {
+                    acc[itemName] = item;
+                }
+                return acc;
+            }, {});
+
+            setFoodItems(newFoodItems);
         };
     }
 
@@ -148,10 +164,16 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                                 <span className="text-white text-sm">Owned: {itemDetails.quantity}</span>
                                 <button
                                     onClick={() => { if (!coinCurrentlyDecreasing) { handleFoodPurchase(itemName) } }}
-                                    className="absolute top-1 right-1 rounded-full hover:bg-white/20 m-2 text-white transition duration-100 ease-in"
+                                    className={`${itemDetails.owned ? 'block' : 'hidden'} absolute top-1 right-1 rounded-full hover:bg-white/20 m-2 text-white transition duration-100 ease-in`}
                                 >
                                     <LuPlusCircle size={40} />
                                 </button>
+                                {!itemDetails.owned && (
+                                    <div className="absolute top-0 left-0 w-full h-full bg-black/80 flex flex-col items-center justify-center rounded-xl">
+                                        <FaLock className='my-4' size={30} />
+                                        <span className="text-white text-xl">Unlock {itemDetails.location}</span>
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>
@@ -163,7 +185,7 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                             <div key={itemName} className="relative col-span-1 flex flex-col items-center justify-center text-center bg-black border-4 border-white/90 rounded-xl p-8">
                                 <div className={`${itemDetails.owned ? 'opacity-50' : 'opacity-100'} bg-white/90 rounded-xl overflow-hidden border-4 border-white/90`}>
                                     <Image
-                                        src={`/assets/backgrounds/${itemDetails.bg}-sunset.gif`}
+                                        src={`/assets/backgrounds/${itemDetails.bg}-morning.gif`}
                                         alt={itemName}
                                         width={300}
                                         height={300}
