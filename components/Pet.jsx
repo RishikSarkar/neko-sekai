@@ -93,7 +93,35 @@ export default function Pet() {
 
   const [isFeeding, setIsFeeding] = useState(false);
 
-  const [currBg, setCurrBg] = useState("livingroom/01/livingroom-01.gif");
+  const [currBg, setCurrBg] = useState("livingroom/01/livingroom-01");
+  const [bgTime, setBgTime] = useState("night");
+
+  const [locations, setLocations] = useState({
+    livingroom: { name: 'Living Room', price: 0, owned: true, bg: 'livingroom/01/livingroom-01' },
+    city: { name: 'City', price: 100, owned: false, bg: 'city/01/city-01' },
+  })
+
+  useEffect(() => {
+    const updateBackgroundTime = () => {
+      const hour = new Date().getHours();
+      let newBgTime;
+
+      if (hour >= 6 && hour < 12) {
+        newBgTime = "morning";
+      } else if (hour >= 12 && hour < 18) {
+        newBgTime = "sunset";
+      } else {
+        newBgTime = "night";
+      }
+
+      setBgTime(newBgTime);
+    };
+
+    updateBackgroundTime();
+    const interval = setInterval(updateBackgroundTime, 60 * 60 * 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const [foodItems, setFoodItems] = useState({
     onigiri: { price: 5, quantity: 2, xp: 10 },
@@ -180,7 +208,7 @@ export default function Pet() {
     if (currCoins < targetCoins) {
       const timer = setTimeout(() => {
         setCurrCoins(currCoins + 1);
-      }, 50);
+      }, 500 / coinIncrease);
 
       return () => clearTimeout(timer);
     }
@@ -280,11 +308,14 @@ export default function Pet() {
       if (currentDay !== newCurrentDay) {
         resetTasksForNewDay();
         setCurrentDay(newCurrentDay);
+
+        const newFavoriteFood = foodOptions[Math.floor(Math.random() * foodOptions.length)];
+        setFavoriteFood(newFavoriteFood);
       }
     }, 1000);
 
     return () => clearInterval(timerId);
-  }, [currentDay]);
+  }, [currentDay, foodOptions]);
 
   const resetTasksForNewDay = () => {
     setTasks(tasks.map(task => ({
@@ -341,9 +372,9 @@ export default function Pet() {
                   </>
                 )}
               </div>
-              <div className='text-lg bg-white py-4 px-4 my-4 rounded-xl'>
+              <div className='text-lg bg-white/90 py-4 px-4 my-4 rounded-xl'>
                 level {currLevel}
-                <div className='w-full bg-white border-4 border-black bg-black/10 mt-2'>
+                <div className='w-full border-4 border-black bg-black/10 mt-2'>
                   <div className='bg-black/50 text-[10px] py-1 leading-none text-center text-white ease-in duration-200' style={{ width: `${(levelProgress / levelXPNeeded) * 100}%` }}>
                   </div>
                 </div>
@@ -351,8 +382,8 @@ export default function Pet() {
                   {`${levelProgress}/${levelXPNeeded} XP`}
                 </div>
               </div>
-              <div className='text-lg bg-white py-4 my-4 rounded-xl'>
-                favorite food: <span className='font-bold text-black/50'>{favoriteFood}</span>
+              <div className='text-lg bg-white py-4 my-4 rounded-xl bg-white/90'>
+                favorite food: <span className='font-bold text-black/80 animate-pulse'>{favoriteFood}</span>
               </div>
               <div className='text-lg bg-white py-8 my-4 rounded-xl cursor-not-allowed hover:bg-white/80 ease-in duration-100'>
                 customize
@@ -365,7 +396,7 @@ export default function Pet() {
             <div className='h-[90%] flex bg-white items-end justify-center'>
 
               <div className='z-10 relative w-full h-full bg-black/20'>
-                <Image src={"/assets/backgrounds/" + currBg} layout="fill" />
+                <Image src={`/assets/backgrounds/${currBg}-${bgTime}.gif`} fill />
                 <div className='z-20 absolute bottom-1 left-1/2 transform -translate-x-1/2'>
                   <Image
                     src={animations[currentAnimation].sequence[frameIndex]}
@@ -469,6 +500,9 @@ export default function Pet() {
           setTargetCoins={setTargetCoins}
           foodItems={foodItems}
           setFoodItems={setFoodItems}
+          favoriteFood={favoriteFood}
+          locations={locations}
+          setLocations={setLocations}
         />
       }
 

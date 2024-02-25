@@ -12,10 +12,10 @@ const SHOP_SECTIONS = {
     TOYS: 'TOYS',
     FASHION: 'FASHION',
     SPECIAL: 'SPECIAL',
-    COINS: 'COINS',
+    CURRENCY: 'CURRENCY',
 };
 
-export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodItems, setFoodItems }) => {
+export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodItems, setFoodItems, favoriteFood, locations, setLocations }) => {
     const [coinDecrease, setCoinDecrease] = useState(0);
     const [tempCoins, setTempCoins] = useState(currCoins);
     const [tempTargetCoins, setTempTargetCoins] = useState(currCoins);
@@ -51,15 +51,32 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
         };
     };
 
+    const handleLocationPurchase = (itemName) => {
+        const itemPrice = locations[itemName].price;
+        if (currCoins >= itemPrice) {
+            decreaseCoins(itemPrice);
+            const newLocations = {
+                ...locations,
+                [itemName]: {
+                    ...locations[itemName],
+                    owned: true,
+                },
+            };
+            setLocations(newLocations);
+        };
+    }
+
     const handleShowMainShop = () => {
         setCurrentSection(SHOP_SECTIONS.MAIN);
     }
 
     useEffect(() => {
+        let coinDiff = currCoins - tempTargetCoins;
+
         if (tempCoins > tempTargetCoins) {
             const timer = setTimeout(() => {
                 setTempCoins(tempCoins - 1);
-            }, 50);
+            }, 500 / coinDiff);
 
             return () => clearTimeout(timer);
         }
@@ -120,12 +137,44 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                                     height={100}
                                     unoptimized={true}
                                 />
-                                <span className="text-white text-xl pb-2 font-bold">{itemName}</span>
+                                <span className='text-white text-xl pb-2 font-bold'>{itemName}</span>
                                 <span className="text-white text-sm pb-1">Price: ${itemDetails.price}</span>
+                                <span className="text-white text-sm pb-1">
+                                    XP: {itemName === favoriteFood ? `${itemDetails.xp} ` : itemDetails.xp}
+                                    {itemName === favoriteFood && (
+                                        <span className="text-white/80 animate-pulse"> (x2)</span>
+                                    )}
+                                </span>
                                 <span className="text-white text-sm">Owned: {itemDetails.quantity}</span>
                                 <button
                                     onClick={() => { if (!coinCurrentlyDecreasing) { handleFoodPurchase(itemName) } }}
                                     className="absolute top-1 right-1 rounded-full hover:bg-white/20 m-2 text-white transition duration-100 ease-in"
+                                >
+                                    <LuPlusCircle size={40} />
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {currentSection === SHOP_SECTIONS.LOCATIONS && (
+                    <div className="flex w-[60vw] h-auto max-h-[50vh] overflow-y-scroll grid grid-cols-2 gap-4 p-4 items-center justify-center text-center text-2xl border-4 border-black/10 rounded-xl bg-white">
+                        {Object.entries(locations).map(([itemName, itemDetails]) => (
+                            <div key={itemName} className="relative col-span-1 flex flex-col items-center justify-center text-center bg-black border-4 border-white/90 rounded-xl p-8">
+                                <div className={`${itemDetails.owned ? 'opacity-50' : 'opacity-100'} bg-white/90 rounded-xl overflow-hidden border-4 border-white/90`}>
+                                    <Image
+                                        src={`/assets/backgrounds/${itemDetails.bg}-morning.gif`}
+                                        alt={itemName}
+                                        width={300}
+                                        height={300}
+                                        unoptimized={true}
+                                    />
+                                </div>
+                                <span className='text-white text-xl pt-4 py-2 font-bold'>{itemDetails.name}</span>
+                                <span className="text-white text-sm">{itemDetails.owned ? 'owned' : `Price: ${itemDetails.price}`}</span>
+                                <button
+                                    onClick={() => { if (!coinCurrentlyDecreasing) { handleLocationPurchase(itemName) } }}
+                                    className={`${itemDetails.owned ? 'hidden' : 'block'} absolute top-1 right-1 rounded-full hover:bg-white/20 m-2 text-white transition duration-100 ease-in`}
                                 >
                                     <LuPlusCircle size={40} />
                                 </button>
