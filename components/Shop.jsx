@@ -153,15 +153,15 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                                     height={100}
                                     unoptimized={true}
                                 />
-                                <span className='text-white text-xl pb-2 font-bold'>{itemName}</span>
+                                <span className='text-white text-lg pb-2 font-bold'>{itemName}</span>
                                 <span className="text-white text-sm pb-1">Price: ${itemDetails.price}</span>
-                                <span className="text-white text-sm pb-1">
+                                <span className="text-white text-xs pb-1">
                                     XP: {itemName === favoriteFood ? `${itemDetails.xp} ` : itemDetails.xp}
                                     {itemName === favoriteFood && (
                                         <span className="text-white/80 animate-pulse"> (x2)</span>
                                     )}
                                 </span>
-                                <span className="text-white text-sm">Owned: {itemDetails.quantity}</span>
+                                <span className="text-white text-xs">Owned: {itemDetails.quantity}</span>
                                 <button
                                     onClick={() => { if (!coinCurrentlyDecreasing) { handleFoodPurchase(itemName) } }}
                                     className={`${itemDetails.owned ? 'block' : 'hidden'} absolute top-1 right-1 rounded-full hover:bg-white/20 m-2 text-white transition duration-100 ease-in`}
@@ -192,8 +192,8 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                                         unoptimized={true}
                                     />
                                 </div>
-                                <span className='text-white text-xl pt-4 py-2 font-bold'>{itemDetails.name}</span>
-                                <span className="text-white text-sm">{itemDetails.owned ? 'owned' : `Price: ${itemDetails.price}`}</span>
+                                <span className='text-white text-lg pt-4 py-2 font-bold'>{itemDetails.name}</span>
+                                <span className="text-white text-sm">{itemDetails.owned ? 'owned' : `Price: $${itemDetails.price}`}</span>
                                 <button
                                     onClick={() => { if (!coinCurrentlyDecreasing) { handleLocationPurchase(itemName) } }}
                                     className={`${itemDetails.owned ? 'hidden' : 'block'} absolute top-1 right-1 rounded-full hover:bg-white/20 m-2 text-white transition duration-100 ease-in`}
@@ -202,6 +202,38 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                                 </button>
                             </div>
                         ))}
+                    </div>
+                )}
+
+                {currentSection === SHOP_SECTIONS.TOYS && (
+                    <div className='flex flex-col w-full h-full items-center justify-center text-center'>
+                        <div className='py-4 text-2xl'>
+                            coming soon!
+                        </div>
+                    </div>
+                )}
+
+                {currentSection === SHOP_SECTIONS.FASHION && (
+                    <div className='flex flex-col w-full h-full items-center justify-center text-center'>
+                        <div className='py-4 text-2xl'>
+                            coming soon!
+                        </div>
+                    </div>
+                )}
+
+                {currentSection === SHOP_SECTIONS.SPECIAL && (
+                    <div className='flex flex-col w-full h-full items-center justify-center text-center'>
+                        <div className='py-4 text-2xl'>
+                            coming soon!
+                        </div>
+                    </div>
+                )}
+
+                {currentSection === SHOP_SECTIONS.CURRENCY && (
+                    <div className='flex flex-col w-full h-full items-center justify-center text-center'>
+                        <div className='py-4 text-2xl'>
+                            coming soon!
+                        </div>
                     </div>
                 )}
 

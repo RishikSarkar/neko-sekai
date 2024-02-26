@@ -174,21 +174,20 @@ export default function Pet() {
   const [foodIndex, setFoodIndex] = useState(0);
   const [favoriteFood, setFavoriteFood] = useState("akami");
 
-  // Update food lists for display. Ensures that only owned items are displayed
+  // Update food lists for display. Ensures that only owned and showed items are displayed
   useEffect(() => {
-    const ownedFoodOptions = Object.entries(foodItems)
-      .filter(([_, itemDetails]) => itemDetails.owned)
+    const filteredFoodOptions = Object.entries(foodItems)
+      .filter(([_, itemDetails]) => itemDetails.owned && itemDetails.show)
       .map(([itemName, _]) => itemName);
 
-    setFoodOptions(ownedFoodOptions);
+    setFoodOptions(filteredFoodOptions);
 
-    const ownedFoodInventory = ownedFoodOptions.reduce((acc, itemName) => {
+    const filteredFoodInventory = filteredFoodOptions.reduce((acc, itemName) => {
       acc[itemName] = foodItems[itemName].quantity;
       return acc;
     }, {});
 
-    setFoodInventory(ownedFoodInventory);
-
+    setFoodInventory(filteredFoodInventory);
   }, [foodItems]);
 
   const [showShop, setShowShop] = useState(false);
@@ -569,14 +568,12 @@ export default function Pet() {
 
       {showCustomize &&
         <Customize onClose={() => setShowCustomize(false)}
-          currCoins={currCoins}
-          setCurrCoins={setCurrCoins}
-          setTargetCoins={setTargetCoins}
           foodItems={foodItems}
           setFoodItems={setFoodItems}
           favoriteFood={favoriteFood}
           locations={locations}
           setLocations={setLocations}
+          currBg={currBg}
           setCurrBg={setCurrBg}
         />
       }
