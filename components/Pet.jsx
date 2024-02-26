@@ -108,15 +108,19 @@ export default function Pet() {
     city: { name: 'city', price: 100, owned: false, bg: 'city/01/city-01' },
   })
 
+  const morningTime = 6;
+  const sunsetTime = 12;
+  const nightTime = 18;
+
   // Update the background time of day based on user time
   useEffect(() => {
     const updateBackgroundTime = () => {
       const hour = new Date().getHours();
       let newBgTime;
 
-      if (hour >= 6 && hour < 12) {
+      if (hour >= morningTime && hour < sunsetTime) {
         newBgTime = "morning";
-      } else if (hour >= 12 && hour < 18) {
+      } else if (hour >= sunsetTime && hour < nightTime) {
         newBgTime = "sunset";
       } else {
         newBgTime = "night";
@@ -129,15 +133,15 @@ export default function Pet() {
       const now = new Date();
 
       const nextUpdate = new Date(now);
-      if (now.getHours() < 6) {
-        nextUpdate.setHours(6, 0, 0, 0);
-      } else if (now.getHours() < 12) {
-        nextUpdate.setHours(12, 0, 0, 0);
-      } else if (now.getHours() < 18) {
-        nextUpdate.setHours(18, 0, 0, 0);
+      if (now.getHours() < morningTime) {
+        nextUpdate.setHours(morningTime, 0, 0, 0);
+      } else if (now.getHours() < sunsetTime) {
+        nextUpdate.setHours(sunsetTime, 0, 0, 0);
+      } else if (now.getHours() < nightTime) {
+        nextUpdate.setHours(nightTime, 0, 0, 0);
       } else {
         nextUpdate.setDate(nextUpdate.getDate() + 1);
-        nextUpdate.setHours(6, 0, 0, 0);
+        nextUpdate.setHours(morningTime, 0, 0, 0);
       }
       return nextUpdate.getTime() - now.getTime();
     };
