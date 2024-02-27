@@ -11,7 +11,7 @@ const CUSTOMIZE_SECTIONS = {
     FOOD: 'FOOD',
     LOCATIONS: 'LOCATIONS',
     TOYS: 'TOYS',
-    FASHION: 'FASHION',
+    COSMETICS: 'COSMETICS',
 };
 
 export const Customize = ({ onClose, foodItems, setFoodItems, favoriteFood, locations, setLocations, currBg, setCurrBg }) => {
@@ -153,7 +153,7 @@ export const Customize = ({ onClose, foodItems, setFoodItems, favoriteFood, loca
                     </div>
                 )}
 
-                {currentSection === CUSTOMIZE_SECTIONS.FASHION && (
+                {currentSection === CUSTOMIZE_SECTIONS.COSMETICS && (
                     <div className='flex flex-col w-full h-full items-center justify-center text-center'>
                         <div className='py-4 text-2xl'>
                             coming soon!

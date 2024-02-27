@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
-import { FaCheck } from "react-icons/fa6";
-import { RiMoneyDollarCircleFill, RiMoneyDollarBoxFill } from "react-icons/ri";
-import { MdEdit, MdOutlineAttachMoney } from "react-icons/md";
+import { FaCheck } from 'react-icons/fa6';
+import { RiMoneyDollarCircleFill, RiMoneyDollarBoxFill } from 'react-icons/ri';
+import { MdEdit, MdOutlineAttachMoney } from 'react-icons/md';
 import { Shop } from './Shop';
 import { Customize } from './Customize';
 
@@ -53,14 +53,15 @@ export default function Pet() {
   const [currLevel, setCurrLevel] = useState(1);
   const [levelProgress, setLevelProgress] = useState(0);
   const [levelXPNeeded, setLevelXPNeeded] = useState(100);
+  const [levelStatus, setLevelStatus] = useState('');
 
   // List of tasks
   const [tasks, setTasks] = useState([
-    { id: 1, name: 'task 1', completed: false, editing: false, tempName: 'task 1' },
-    { id: 2, name: 'task 2', completed: false, editing: false, tempName: 'task 2' },
-    { id: 3, name: 'task 3', completed: false, editing: false, tempName: 'task 3' },
-    { id: 4, name: 'task 4', completed: false, editing: false, tempName: 'task 4' },
-    { id: 5, name: 'task 5', completed: false, editing: false, tempName: 'task 5' },
+    { id: 1, name: 'task 1', completed: false, editing: false, tempName: 'task 1', coins: 10 },
+    { id: 2, name: 'task 2', completed: false, editing: false, tempName: 'task 2', coins: 10 },
+    { id: 3, name: 'task 3', completed: false, editing: false, tempName: 'task 3', coins: 10 },
+    { id: 4, name: 'task 4', completed: false, editing: false, tempName: 'task 4', coins: 10 },
+    { id: 5, name: 'task 5', completed: false, editing: false, tempName: 'task 5', coins: 10 },
   ]);
 
   // Allow task text to be changed
@@ -99,8 +100,8 @@ export default function Pet() {
 
   const [isFeeding, setIsFeeding] = useState(false);
 
-  const [currBg, setCurrBg] = useState("livingroom/01/livingroom-01");
-  const [bgTime, setBgTime] = useState("morning");
+  const [currBg, setCurrBg] = useState('livingroom/01/livingroom-01');
+  const [bgTime, setBgTime] = useState('morning');
 
   // List of locations
   const [locations, setLocations] = useState({
@@ -119,11 +120,11 @@ export default function Pet() {
       let newBgTime;
 
       if (hour >= morningTime && hour < sunsetTime) {
-        newBgTime = "morning";
+        newBgTime = 'morning';
       } else if (hour >= sunsetTime && hour < nightTime) {
-        newBgTime = "sunset";
+        newBgTime = 'sunset';
       } else {
-        newBgTime = "night";
+        newBgTime = 'night';
       }
 
       setBgTime(newBgTime);
@@ -159,20 +160,21 @@ export default function Pet() {
 
   // List of food items
   const [foodItems, setFoodItems] = useState({
-    onigiri: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', show: true },
-    maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', show: true },
-    chicken: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', show: true },
-    akami: { price: 10, quantity: 2, xp: 20, owned: true, location: 'living room', show: true },
-    uni: { price: 7, quantity: 2, xp: 20, owned: false, location: 'city', show: true },
-    tamago: { price: 10, quantity: 2, xp: 25, owned: false, location: 'city', show: true },
+    onigiri: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, show: true },
+    maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, show: true },
+    tori: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, show: true },
+    akami: { price: 10, quantity: 2, xp: 20, owned: true, location: 'living room', level: 0, show: true },
+    uni: { price: 10, quantity: 2, xp: 20, owned: false, location: 'city', level: 0, show: true },
+    tamago: { price: 15, quantity: 2, xp: 25, owned: false, location: 'city', level: 0, show: true },
+    saba: { price: 10, quantity: 2, xp: 25, owned: false, location: 'all', level: 5, show: true },
   });
 
-  const [currFood, setCurrFood] = useState("onigiri");
+  const [currFood, setCurrFood] = useState('onigiri');
   const [foodOptions, setFoodOptions] = useState([]);
   const [foodInventory, setFoodInventory] = useState({});
 
   const [foodIndex, setFoodIndex] = useState(0);
-  const [favoriteFood, setFavoriteFood] = useState("akami");
+  const [favoriteFood, setFavoriteFood] = useState('akami');
 
   // Update food lists for display. Ensures that only owned and showed items are displayed
   useEffect(() => {
@@ -201,18 +203,18 @@ export default function Pet() {
   // List of animations
   const animations = {
     idle: {
-      sequence: generateSequence("/assets/sprites/cat/01/cat-01-idle/cat-01-idle", 10),
+      sequence: generateSequence('/assets/sprites/cat/01/cat-01-idle/cat-01-idle', 10),
       loopCount: 10,
     },
     yawn: {
-      sequence: generateSequence("/assets/sprites/cat/01/cat-01-yawn/cat-01-yawn", 14),
+      sequence: generateSequence('/assets/sprites/cat/01/cat-01-yawn/cat-01-yawn', 14),
       loopCount: 1,
     },
     eat: {
-      sequence: generateSequence("/assets/sprites/cat/01/cat-01-eat/cat-01-eat", 35),
+      sequence: generateSequence('/assets/sprites/cat/01/cat-01-eat/cat-01-eat', 35),
     },
     food: {
-      sequence: generateSequence("/assets/food/" + currFood + "/" + currFood, 35),
+      sequence: generateSequence('/assets/food/' + currFood + '/' + currFood, 35),
     }
   };
 
@@ -313,11 +315,61 @@ export default function Pet() {
   const completeTask = (taskId) => {
     setTasks(tasks.map(task => {
       if (task.id === taskId) {
-        increaseCoins(10);
+        increaseCoins(task.coins);
         return { ...task, completed: true };
       }
       return task;
     }));
+  };
+
+  const levelRewards = {
+    5: {
+      food: 'saba',
+      location: null,
+      fashion: null,
+    },
+  };
+
+  const obtainLevelRewards = (level) => {
+    increaseCoins((level - 1) * 5 + 20)
+
+    const rewards = levelRewards[level];
+    console.log(level);
+
+    let status = 'unlocked ';
+
+    if (rewards) {
+      if (rewards.food) {
+        setFoodItems(prevItems => ({
+          ...prevItems,
+          [rewards.food]: {
+            ...prevItems[rewards.food],
+            owned: true,
+          },
+        }));
+
+        status += "new food";
+      }
+
+      if (rewards.location) {
+        setLocations(prevLocations => ({
+          ...prevLocations,
+          [rewards.location]: {
+            ...prevLocations[rewards.location],
+            owned: true,
+          },
+        }));
+
+        status += "new location";
+      }
+
+      status += "!"
+      setLevelStatus(status);
+
+      setTimeout(() => {
+        setLevelStatus('');
+      }, 2000);
+    }
   };
 
   // Enables level increase based on gained XP
@@ -331,6 +383,8 @@ export default function Pet() {
 
     if (newProgress >= levelXPNeeded) {
       setCurrLevel(currLevel + 1);
+      obtainLevelRewards(currLevel + 1)
+
       setLevelXPNeeded(levelXPNeeded + 10);
       setLevelProgress(newProgress - levelXPNeeded);
     } else {
@@ -388,7 +442,7 @@ export default function Pet() {
 
   return (
     <div id='pet' className='bg-white w-full h-screen font-square select-none'>
-      <div className="w-full h-full flex flex-col items-center justify-center text-center">
+      <div className='w-full h-full flex flex-col items-center justify-center text-center'>
 
 
         <div className='fixed top-0 right-0 h-[15vh] w-[40vw] grid grid-cols-3 gap-4 border-8 border-black z-50'>
@@ -423,25 +477,24 @@ export default function Pet() {
             <div className='h-full px-4'>
               <div className='text-2xl text-black bg-white py-4 my-4 rounded-xl flex items-center justify-between'>
                 {petNameEditing ? (
-                  <input type="text" value={tempPetName} onChange={handlePetNameChange} onBlur={handlePetBlur} autoFocus className="text-2xl text-center mx-4 w-full animate-pulse font-bold selection:text-white selection:bg-black focus:outline-none" onKeyDown={(event) => { if (event.key === 'Enter') { handlePetBlur(); } }} />
+                  <input type='text' value={tempPetName} onChange={handlePetNameChange} onBlur={handlePetBlur} autoFocus className='text-2xl text-center mx-4 w-full animate-pulse font-bold selection:text-white selection:bg-black focus:outline-none' onKeyDown={(event) => { if (event.key === 'Enter') { handlePetBlur(); } }} />
                 ) : (
                   <>
-                    <span className="flex-1 text-center ml-16 mr-8 truncate font-bold">{petName}</span>
-                    <MdEdit onClick={togglePetEditMode} className="mr-4 cursor-pointer" size={16} />
+                    <span className='flex-1 text-center ml-16 mr-8 truncate font-bold'>{petName}</span>
+                    <MdEdit onClick={togglePetEditMode} className='mr-4 cursor-pointer' size={16} />
                   </>
                 )}
               </div>
-              <div className='text-lg bg-white/90 py-4 px-4 my-4 rounded-xl'>
+              <div className='text-lg bg-white py-4 px-4 my-4 rounded-xl'>
                 level {currLevel}
                 <div className='w-full border-4 border-black bg-black/10 mt-2'>
-                  <div className='bg-black/50 text-[10px] py-1 leading-none text-center text-white ease-in duration-200' style={{ width: `${(levelProgress / levelXPNeeded) * 100}%` }}>
-                  </div>
+                  <div className='bg-black/50 text-[10px] py-1 leading-none text-center text-white ease-in duration-200' style={{ width: `${(levelProgress / levelXPNeeded) * 100}%` }} />
                 </div>
-                <div className='text-[10px]'>
-                  {`${levelProgress}/${levelXPNeeded} XP`}
+                <div className='text-xs py-1'>
+                  {levelStatus || `${levelProgress}/${levelXPNeeded} XP`}
                 </div>
               </div>
-              <div className='text-lg bg-white py-4 my-4 rounded-xl bg-white/90'>
+              <div className='text-lg bg-white py-4 my-4 rounded-xl bg-white'>
                 favorite food: <span className='font-bold text-black/80 animate-pulse'>{favoriteFood}</span>
               </div>
               <div onClick={() => setShowCustomize(true)} className='text-lg bg-white py-8 my-4 rounded-xl cursor-pointer hover:bg-white/80 ease-in duration-100'>
@@ -459,7 +512,7 @@ export default function Pet() {
                 <div className='z-20 absolute bottom-1 left-1/2 transform -translate-x-1/2'>
                   <Image
                     src={animations[currentAnimation].sequence[frameIndex]}
-                    alt="Pet"
+                    alt='Pet'
                     width={currLevel >= 5 ? 200 : 180}
                     height={currLevel >= 5 ? 200 : 180}
                     unoptimized={true}
@@ -469,7 +522,7 @@ export default function Pet() {
                   <div className='z-40 absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50 text-black'>
                     <Image
                       src={animations.food.sequence[frameIndex]}
-                      alt="Food"
+                      alt='Food'
                       width={200}
                       height={200}
                       unoptimized={true}
@@ -492,7 +545,7 @@ export default function Pet() {
                 <div key={task.id} className='grid grid-cols-5 gap-2'>
                   <div className={`${task.completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-2 my-2 rounded-xl rounded-r-none flex items-center ease-in duration-100`}>
                     {task.editing ? (
-                      <input type="text" className="w-full bg-transparent px-2 selection:text-white selection:bg-black focus:outline-none" value={task.tempName} onChange={(e) => handleTaskNameChange(e, task.id)} onBlur={() => handleTaskBlur(task.id)} onKeyDown={(e) => { if (e.key === 'Enter') { handleTaskBlur(task.id); } }} autoFocus />
+                      <input type='text' className='w-full bg-transparent px-2 selection:text-white selection:bg-black focus:outline-none' value={task.tempName} onChange={(e) => handleTaskNameChange(e, task.id)} onBlur={() => handleTaskBlur(task.id)} onKeyDown={(e) => { if (e.key === 'Enter') { handleTaskBlur(task.id); } }} autoFocus />
                     ) : (
                       <span className='px-2'>{task.name}</span>
                     )}
@@ -503,7 +556,7 @@ export default function Pet() {
                     ) : task.completed ? (
                       <FaCheck size={15} />
                     ) : (
-                      '+10'
+                      `$${task.coins}`
                     )}
                   </div>
                 </div>
@@ -540,7 +593,7 @@ export default function Pet() {
                   opacity: foodInventory[foodOptions[foodIndex]] === 0 ? 0.6 : 1,
                 }}
               />
-              <div className="absolute text-sm bottom-1 left-1/2 transform -translate-x-1/2 text-white bg-white/10 px-2 items-center justify-center text-center">
+              <div className='absolute text-sm bottom-1 left-1/2 transform -translate-x-1/2 text-white bg-white/10 px-2 items-center justify-center text-center'>
                 {`${foodInventory[foodOptions[foodIndex]]}`}
               </div>
             </div>

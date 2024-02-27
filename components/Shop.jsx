@@ -11,9 +11,9 @@ const SHOP_SECTIONS = {
     FOOD: 'FOOD',
     LOCATIONS: 'LOCATIONS',
     TOYS: 'TOYS',
-    FASHION: 'FASHION',
+    COSMETICS: 'COSMETICS',
     SPECIAL: 'SPECIAL',
-    CURRENCY: 'CURRENCY',
+    GAMES: 'GAMES',
 };
 
 export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodItems, setFoodItems, favoriteFood, locations, setLocations, setCurrBg }) => {
@@ -97,9 +97,9 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
             return () => clearTimeout(timer);
         }
 
-        setCoinCurrentlyDecreasing(false);
         setCurrCoins(tempCoins);
         setTargetCoins(tempCoins);
+        setCoinCurrentlyDecreasing(false);
 
     }, [tempCoins, currCoins, tempTargetCoins, setCurrCoins, setTargetCoins]);
 
@@ -107,7 +107,7 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
         <div className="fixed bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-screen h-screen bg-black/90 z-50">
             <div className="fixed bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-[80vw] h-[90vh] bg-black/90 z-[51] rounded-xl flex justify-center items-center text-center border-8 border-white">
 
-                <div onClick={onClose} className="fixed top-2 right-2 p-4 rounded-full cursor-pointer hover:bg-white/10">
+                <div onClick={() => { if (!coinCurrentlyDecreasing) onClose(); }} className="fixed top-2 right-2 p-4 rounded-full cursor-pointer hover:bg-white/10">
                     <ImCross size={20} />
                 </div>
                 <div onClick={handleShowMainShop} className={`${(currentSection === SHOP_SECTIONS.MAIN) ? 'hidden' : 'block'} fixed top-2 left-2 p-3 rounded-full cursor-pointer hover:bg-white/10`}>
@@ -171,7 +171,9 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                                 {!itemDetails.owned && (
                                     <div className="absolute top-0 left-0 w-full h-full bg-black/80 flex flex-col items-center justify-center rounded-xl">
                                         <FaLock className='my-4' size={30} />
-                                        <span className="text-white text-xl">Unlock {itemDetails.location}</span>
+                                        <span className="text-white text-xl">
+                                            {itemDetails.location === 'all' ? `Level ${itemDetails.level}` : `Unlock ${itemDetails.location}`}
+                                        </span>
                                     </div>
                                 )}
                             </div>
@@ -213,7 +215,7 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                     </div>
                 )}
 
-                {currentSection === SHOP_SECTIONS.FASHION && (
+                {currentSection === SHOP_SECTIONS.COSMETICS && (
                     <div className='flex flex-col w-full h-full items-center justify-center text-center'>
                         <div className='py-4 text-2xl'>
                             coming soon!
@@ -229,7 +231,7 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                     </div>
                 )}
 
-                {currentSection === SHOP_SECTIONS.CURRENCY && (
+                {currentSection === SHOP_SECTIONS.GAMES && (
                     <div className='flex flex-col w-full h-full items-center justify-center text-center'>
                         <div className='py-4 text-2xl'>
                             coming soon!
