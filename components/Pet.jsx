@@ -310,6 +310,7 @@ export default function Pet() {
   const [frameIndex, setFrameIndex] = useState(0);
   const [idleCount, setIdleCount] = useState(0);
   const [currentAnimation, setCurrentAnimation] = useState('idle');
+  const [isPetting, setIsPetting] = useState(false);
 
   // Functions for animating sequences
   function generateSequence(basePath, count) {
@@ -324,6 +325,10 @@ export default function Pet() {
     },
     yawn: {
       sequence: generateSequence('/assets/sprites/cat/01/cat-01-yawn/cat-01-yawn', 14),
+      loopCount: 1,
+    },
+    pet_head: {
+      sequence: generateSequence('/assets/sprites/cat/01/cat-01-pet-head/cat-01-pet-head', 50),
       loopCount: 1,
     },
     eat: {
@@ -366,6 +371,20 @@ export default function Pet() {
       setFrameIndex(0);
     }
   }, [frameIndex, currentAnimation, idleCount]);
+
+  const petHead = () => {
+    if (!isFeeding && !isPetting) {
+      setIsPetting(true);
+      setCurrentAnimation('pet_head');
+      setFrameIndex(0);
+
+      setTimeout(() => {
+        setCurrentAnimation('idle');
+        setFrameIndex(0);
+        setIsPetting(false);
+      }, animations.pet_head.sequence.length * 100);
+    }
+  };
 
 
   /* Countdown Timer */
@@ -550,6 +569,8 @@ export default function Pet() {
                     width={currLevel >= 5 ? 200 : 180}
                     height={currLevel >= 5 ? 200 : 180}
                     unoptimized={true}
+                    onClick={petHead}
+                    className='cursor-pointer'
                   />
                 </div>
                 {showFood && (
