@@ -319,8 +319,8 @@ export default function Pet() {
   // List of animations
   const animations = useMemo(() => ({
     idle: {
-      sequence: generateSequence('/assets/sprites/cat/01/cat-01-idle/cat-01-idle', 10),
-      loopCount: 10,
+      sequence: generateSequence('/assets/sprites/cat/01/cat-01-idle/cat-01-idle', 20),
+      loopCount: 5,
     },
     yawn: {
       sequence: generateSequence('/assets/sprites/cat/01/cat-01-yawn/cat-01-yawn', 14),
