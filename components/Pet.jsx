@@ -229,13 +229,16 @@ export default function Pet() {
   const [foodItems, setFoodItems] = useState({
     onigiri: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, show: true },
     saba: { price: 10, quantity: 2, xp: 25, owned: false, location: 'all', level: 5, show: true },
+
     maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, show: true },
     tori: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, show: true },
     tataki: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, show: true },
     akami: { price: 10, quantity: 2, xp: 20, owned: true, location: 'living room', level: 0, show: true },
-    uni: { price: 10, quantity: 2, xp: 20, owned: false, location: 'city', level: 0, show: true },
-    tamago: { price: 15, quantity: 2, xp: 25, owned: false, location: 'city', level: 0, show: true },
-    cheesecake: { price: 15, quantity: 2, xp: 25, owned: false, location: 'city', level: 0, show: true },
+
+    tamago: { price: 10, quantity: 2, xp: 20, owned: false, location: 'city', level: 0, show: true },
+    taco: { price: 12, quantity: 2, xp: 25, owned: false, location: 'city', level: 0, show: true },
+    cheesecake: { price: 15, quantity: 2, xp: 30, owned: false, location: 'city', level: 0, show: true },
+    uni: { price: 20, quantity: 2, xp: 35, owned: false, location: 'city', level: 0, show: true },
   });
 
   const [currFood, setCurrFood] = useState('onigiri');
