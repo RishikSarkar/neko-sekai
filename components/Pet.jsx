@@ -331,7 +331,7 @@ export default function Pet() {
   const [foodInventory, setFoodInventory] = useState({});
 
   const [foodIndex, setFoodIndex] = useState(0);
-  const [favoriteFood, setFavoriteFood] = useState('akami');
+  const [favoriteFood, setFavoriteFood] = useState('caviar');
 
   // Update food lists for display. Ensures that only owned and showed items are displayed
   useEffect(() => {
