@@ -172,7 +172,9 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                                     <div className='absolute top-0 left-0 w-full h-full bg-black/80 flex flex-col items-center justify-center rounded-xl'>
                                         <FaLock className='my-4' size={30} />
                                         <span className='text-white text-xl'>
-                                            {itemDetails.location === 'all' ? `Level ${itemDetails.level}` : `Unlock ${itemDetails.location}`}
+                                            {itemDetails.level > 0 ? `level ${itemDetails.level}` :
+                                                itemDetails.task > 0 ? `${itemDetails.task} tasks` :
+                                                    itemDetails.location !== 'all' ? `unlock ${itemDetails.location}` : ''}
                                         </span>
                                     </div>
                                 )}

@@ -2,6 +2,9 @@
 
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import Image from 'next/image';
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+import { getAnalytics } from 'firebase/analytics';
 import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
 import { FaCheck } from 'react-icons/fa6';
 import { MdEdit, MdOutlineAttachMoney } from 'react-icons/md';
@@ -9,6 +12,16 @@ import { Shop } from './Shop';
 import { Customize } from './Customize';
 
 export default function Pet() {
+  const firebaseConfig = {
+    apiKey: "AIzaSyCKGgP2Uth6c2lSOkxI1CAe-nriLAD-wtQ",
+    authDomain: "neko-sekai.firebaseapp.com",
+    projectId: "neko-sekai",
+    storageBucket: "neko-sekai.appspot.com",
+    messagingSenderId: "769025457059",
+    appId: "1:769025457059:web:b4d8ca47a7e1305f53f816",
+    measurementId: "G-6XFVS2RNQN"
+  };
+
   const [currUser, setCurrUser] = useState('friendlyBOT');
 
 
@@ -98,7 +111,6 @@ export default function Pet() {
     increaseCoins((level - 1) * 5 + 20)
 
     const rewards = levelRewards[level];
-    console.log(level);
 
     let status = 'unlocked ';
 
@@ -168,6 +180,56 @@ export default function Pet() {
     { id: 5, name: 'task 5', completed: false, editing: false, tempName: 'task 5', coins: 10 },
   ]);
 
+  const [totalTasksCompleted, setTotalTasksCompleted] = useState(0);
+  const [taskStatus, setTaskStatus] = useState('');
+
+  const taskRewards = {
+    15: {
+      food: 'caviar',
+      location: null,
+      fashion: null,
+    },
+  };
+
+  const obtainTaskRewards = () => {
+    const rewards = taskRewards[totalTasksCompleted + 1];
+
+    let status = 'unlocked ';
+
+    if (rewards) {
+      if (rewards.food) {
+        setFoodItems(prevItems => ({
+          ...prevItems,
+          [rewards.food]: {
+            ...prevItems[rewards.food],
+            owned: true,
+          },
+        }));
+
+        status += "new food";
+      }
+
+      if (rewards.location) {
+        setLocations(prevLocations => ({
+          ...prevLocations,
+          [rewards.location]: {
+            ...prevLocations[rewards.location],
+            owned: true,
+          },
+        }));
+
+        status += "new location";
+      }
+
+      status += "!"
+      setTaskStatus(status);
+
+      setTimeout(() => {
+        setTaskStatus('');
+      }, 2000);
+    }
+  };
+
   // Marks respective task as complete and initiates currency increase
   const completeTask = useCallback((taskId) => {
     setTasks(tasks => tasks.map(task => {
@@ -177,6 +239,9 @@ export default function Pet() {
       }
       return task;
     }));
+
+    setTotalTasksCompleted(totalTasksCompleted + 1);
+    obtainTaskRewards();
   }, [increaseCoins]);
 
   // Allow task text to be changed
@@ -227,18 +292,19 @@ export default function Pet() {
 
   // List of food items
   const [foodItems, setFoodItems] = useState({
-    onigiri: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, show: true },
-    saba: { price: 10, quantity: 2, xp: 25, owned: false, location: 'all', level: 5, show: true },
+    onigiri: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, show: true },
+    saba: { price: 10, quantity: 2, xp: 25, owned: false, location: 'all', level: 5, task: 0, show: true },
+    caviar: { price: 50, quantity: 2, xp: 100, owned: false, location: 'all', level: 0, task: 15, show: true },
 
-    maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, show: true },
-    tori: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, show: true },
-    tataki: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, show: true },
-    akami: { price: 10, quantity: 2, xp: 20, owned: true, location: 'living room', level: 0, show: true },
+    maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, show: true },
+    tori: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, show: true },
+    tataki: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, show: true },
+    akami: { price: 10, quantity: 2, xp: 20, owned: true, location: 'living room', level: 0, task: 0, show: true },
 
-    tamago: { price: 10, quantity: 2, xp: 20, owned: false, location: 'city', level: 0, show: true },
-    taco: { price: 12, quantity: 2, xp: 25, owned: false, location: 'city', level: 0, show: true },
-    cheesecake: { price: 15, quantity: 2, xp: 30, owned: false, location: 'city', level: 0, show: true },
-    uni: { price: 20, quantity: 2, xp: 35, owned: false, location: 'city', level: 0, show: true },
+    tamago: { price: 10, quantity: 2, xp: 20, owned: false, location: 'city', level: 0, task: 0, show: true },
+    taco: { price: 12, quantity: 2, xp: 25, owned: false, location: 'city', level: 0, task: 0, show: true },
+    cheesecake: { price: 15, quantity: 2, xp: 30, owned: false, location: 'city', level: 0, task: 0, show: true },
+    uni: { price: 20, quantity: 2, xp: 35, owned: false, location: 'city', level: 0, task: 0, show: true },
   });
 
   const [currFood, setCurrFood] = useState('onigiri');
