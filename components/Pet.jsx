@@ -148,6 +148,24 @@ export default function Pet() {
     }
   };
 
+  // const levelUpAnimation = () => {
+  //   if (isFeeding) {
+  //     setTimeout(() => {
+  //       setCurrentAnimation('level_up');
+  //       setFrameIndex(0);
+  //     }, animations.eat.sequence.length * 100);
+  //   }
+  //   else {
+  //     setCurrentAnimation('level_up');
+  //     setFrameIndex(0);
+  //   }
+
+  //     setTimeout(() => {
+  //       setCurrentAnimation('idle');
+  //       setFrameIndex(0);
+  //     }, animations.level_up.sequence.length * 100);
+  // };
+
   // Enables level increase based on gained XP
   const increaseLevel = (food) => {
     const foodXP = foodItems[food].xp;
@@ -160,6 +178,7 @@ export default function Pet() {
     if (newProgress >= levelXPNeeded) {
       setCurrLevel(currLevel + 1);
       obtainLevelRewards(currLevel + 1)
+      // levelUpAnimation();
 
       setLevelXPNeeded(levelXPNeeded + 10);
       setLevelProgress(newProgress - levelXPNeeded);
@@ -184,7 +203,7 @@ export default function Pet() {
   const [taskStatus, setTaskStatus] = useState('');
 
   const taskRewards = {
-    15: {
+    5: {
       food: 'caviar',
       location: null,
       fashion: null,
@@ -393,8 +412,8 @@ export default function Pet() {
       sequence: generateSequence('/assets/sprites/cat/01/cat-01-yawn/cat-01-yawn', 14),
       loopCount: 1,
     },
-    pet_head: {
-      sequence: generateSequence('/assets/sprites/cat/01/cat-01-pet-head/cat-01-pet-head', 50),
+    brush: {
+      sequence: generateSequence('/assets/sprites/cat/01/cat-01-brush/cat-01-brush', 50),
       loopCount: 1,
     },
     eat: {
@@ -402,6 +421,9 @@ export default function Pet() {
     },
     food: {
       sequence: generateSequence('/assets/food/' + currFood + '/' + currFood, 35),
+    },
+    level_up: {
+      sequence: generateSequence('/assets/sprites/cat/01/cat-01-level-up/cat-01-level-up', 22),
     },
   }), [currFood]);
 
@@ -441,14 +463,14 @@ export default function Pet() {
   const petHead = () => {
     if (!isFeeding && !isPetting) {
       setIsPetting(true);
-      setCurrentAnimation('pet_head');
+      setCurrentAnimation('brush');
       setFrameIndex(0);
 
       setTimeout(() => {
         setCurrentAnimation('idle');
         setFrameIndex(0);
         setIsPetting(false);
-      }, animations.pet_head.sequence.length * 100);
+      }, animations.brush.sequence.length * 100);
     }
   };
 
