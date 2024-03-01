@@ -796,6 +796,8 @@ export default function Pet() {
 
       {showCustomize &&
         <Customize onClose={() => setShowCustomize(false)}
+          currFood={currFood}
+          setCurrFood={setCurrFood}
           foodItems={foodItems}
           setFoodItems={setFoodItems}
           favoriteFood={favoriteFood}

@@ -12,7 +12,7 @@ const CUSTOMIZE_SECTIONS = {
     COSMETICS: 'COSMETICS',
 };
 
-export const Customize = ({ onClose, foodItems, setFoodItems, favoriteFood, locations, setLocations, currBg, setCurrBg }) => {
+export const Customize = ({ onClose, currFood, setCurrFood, foodItems, setFoodItems, favoriteFood, locations, setLocations, currBg, setCurrBg }) => {
     const [currentSection, setCurrentSection] = useState(CUSTOMIZE_SECTIONS.MAIN);
 
     const handleChangeSection = (section) => {
@@ -22,6 +22,8 @@ export const Customize = ({ onClose, foodItems, setFoodItems, favoriteFood, loca
     const handleShowMainCustomize = () => {
         setCurrentSection(CUSTOMIZE_SECTIONS.MAIN);
     }
+
+    const shownItemCount = Object.values(foodItems).filter(item => item.show && item.owned).length;
 
     const handleShowFoodItem = (itemName) => {
         setFoodItems(prevItems => ({
@@ -34,14 +36,26 @@ export const Customize = ({ onClose, foodItems, setFoodItems, favoriteFood, loca
     };
 
     const handleHideFoodItem = (itemName) => {
-        setFoodItems(prevItems => ({
-            ...prevItems,
-            [itemName]: {
-                ...prevItems[itemName],
-                show: false,
-            },
-        }));
+        if (shownItemCount > 1) {
+            setFoodItems(prevItems => ({
+                ...prevItems,
+                [itemName]: {
+                    ...prevItems[itemName],
+                    show: false,
+                },
+            }));
+        }
     };
+
+    useEffect(() => {
+        if (!foodItems[currFood]?.show) {
+            const firstShownItem = Object.entries(foodItems).find(([_, itemDetails]) => itemDetails.show && itemDetails.owned);
+            if (firstShownItem) {
+                const [firstShownItemName] = firstShownItem;
+                setCurrFood(firstShownItemName);
+            }
+        }
+    }, [foodItems, currFood, setCurrFood]);
 
 
 
