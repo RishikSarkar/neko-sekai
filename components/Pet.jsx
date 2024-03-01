@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import Image from 'next/image';
+import Cookies from 'js-cookie';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAnalytics } from 'firebase/analytics';
@@ -657,10 +658,193 @@ export default function Pet() {
   const [showShop, setShowShop] = useState(false);
   const [showCustomize, setShowCustomize] = useState(false);
 
+
+  /* Cookies */
+
+  function saveGame(state) {
+    const { petName, currCoins, locations, foodItems, favoriteFood, currLevel, levelProgress, totalCoinsEarned, totalTasksCompleted } = state;
+
+    Cookies.set('gameState', JSON.stringify({
+      currUser,
+      currCoins,
+      petName,
+      totalCoinsEarned,
+      currLevel,
+      levelProgress,
+      levelXPNeeded,
+      tasks,
+      totalTasksCompleted,
+      currBg,
+      locations,
+      foodItems,
+      currFood,
+      foodIndex,
+      favoriteFood
+    }), { expires: 7 });
+  }
+
+  function loadGame() {
+    const gameStateString = Cookies.get('gameState');
+    return gameStateString ? JSON.parse(gameStateString) : null;
+  }
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        const gameState = {
+          currUser,
+          currCoins,
+          petName,
+          totalCoinsEarned,
+          currLevel,
+          levelProgress,
+          levelXPNeeded,
+          tasks,
+          totalTasksCompleted,
+          currBg,
+          locations,
+          foodItems,
+          currFood,
+          foodIndex,
+          favoriteFood
+        };
+        saveGame(gameState);
+        console.log("Game progress saved.");
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [currUser, currCoins, petName, totalCoinsEarned, currLevel, levelProgress, levelXPNeeded, tasks, totalTasksCompleted, currBg, locations, foodItems, currFood, foodIndex, favoriteFood]);
+
+  useEffect(() => {
+    const loadedGameState = loadGame();
+
+    if (loadedGameState) {
+      const {
+        currUser,
+        currCoins,
+        petName,
+        totalCoinsEarned,
+        currLevel,
+        levelProgress,
+        levelXPNeeded,
+        tasks,
+        totalTasksCompleted,
+        currBg,
+        locations,
+        foodItems,
+        currFood,
+        foodIndex,
+        favoriteFood,
+      } = loadedGameState;
+
+      setCurrUser(currUser || 'friendlyBOT');
+      setCurrCoins(currCoins || 0);
+      setPetName(petName || 'Poofy');
+      setTotalCoinsEarned(totalCoinsEarned || 0);
+      setCurrLevel(currLevel || 1);
+      setLevelProgress(levelProgress || 0);
+      setLevelXPNeeded(levelXPNeeded || 100);
+      setTasks(tasks || [
+        { id: 1, name: 'task 1', completed: false, editing: false, tempName: 'task 1', coins: 10 },
+        { id: 2, name: 'task 2', completed: false, editing: false, tempName: 'task 2', coins: 10 },
+        { id: 3, name: 'task 3', completed: false, editing: false, tempName: 'task 3', coins: 10 },
+        { id: 4, name: 'task 4', completed: false, editing: false, tempName: 'task 4', coins: 10 },
+        { id: 5, name: 'task 5', completed: false, editing: false, tempName: 'task 5', coins: 10 },
+      ]);
+      setTotalTasksCompleted(totalTasksCompleted || 0);
+      setCurrBg(currBg || 'livingroom/01/livingroom-01');
+      setLocations(locations || {
+        livingroom: { name: 'living room', price: 0, owned: true, bg: 'livingroom/01/livingroom-01' },
+        city: { name: 'city', price: 100, owned: false, bg: 'city/01/city-01' },
+      });
+      setFoodItems(foodItems || {
+        onigiri: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+        ika: { price: 10, quantity: 2, xp: 25, owned: false, location: 'all', level: 0, task: 10, earn: 0, show: true },
+        saba: { price: 20, quantity: 2, xp: 40, owned: false, location: 'all', level: 5, task: 0, earn: 0, show: true },
+        caviar: { price: 100, quantity: 2, xp: 150, owned: false, location: 'all', level: 0, task: 0, earn: 1000, show: true },
+
+        maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+        tori: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+        tataki: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+        akami: { price: 10, quantity: 2, xp: 200, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+
+        tamago: { price: 10, quantity: 2, xp: 20, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
+        taco: { price: 12, quantity: 2, xp: 25, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
+        cheesecake: { price: 15, quantity: 2, xp: 30, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
+        uni: { price: 20, quantity: 2, xp: 35, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
+      });
+      setCurrFood(currFood || 'onigiri');
+      setFoodIndex(foodIndex || 0);
+      setFavoriteFood(favoriteFood || 'akami');
+    }
+  }, []);
+
+  function clearGameCookies() {
+    const cookieNames = ['currUser', 'currCoins', 'petName', 'totalCoinsEarned', 'currLevel', 'levelProgress', 'levelXPNeeded', 'tasks', 'totalTasksCompleted', 'currBg', 'locations', 'foodItems', 'currFood', 'foodIndex', 'favoriteFood'];
+    cookieNames.forEach(cookieName => Cookies.remove(cookieName));
+    console.log('All game cookies have been cleared.');
+  }
+
+  function handleResetClick() {
+    const confirmed = window.confirm('Reset Progress?');
+    if (confirmed) {
+      clearGameCookies();
+
+      setCurrUser('friendlyBOT');
+      setCurrCoins(0);
+      setPetName('Poofy');
+      setTotalCoinsEarned(0);
+      setCurrLevel(1);
+      setLevelProgress(0);
+      setLevelXPNeeded(100);
+      setTasks([
+        { id: 1, name: 'task 1', completed: false, editing: false, tempName: 'task 1', coins: 10 },
+        { id: 2, name: 'task 2', completed: false, editing: false, tempName: 'task 2', coins: 10 },
+        { id: 3, name: 'task 3', completed: false, editing: false, tempName: 'task 3', coins: 10 },
+        { id: 4, name: 'task 4', completed: false, editing: false, tempName: 'task 4', coins: 10 },
+        { id: 5, name: 'task 5', completed: false, editing: false, tempName: 'task 5', coins: 10 },
+      ]);
+      setTotalTasksCompleted(0);
+      setCurrBg('livingroom/01/livingroom-01');
+      setLocations({
+        livingroom: { name: 'living room', price: 0, owned: true, bg: 'livingroom/01/livingroom-01' },
+        city: { name: 'city', price: 100, owned: false, bg: 'city/01/city-01' },
+      });
+      setFoodItems({
+        onigiri: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+        ika: { price: 10, quantity: 2, xp: 25, owned: false, location: 'all', level: 0, task: 10, earn: 0, show: true },
+        saba: { price: 20, quantity: 2, xp: 40, owned: false, location: 'all', level: 5, task: 0, earn: 0, show: true },
+        caviar: { price: 100, quantity: 2, xp: 150, owned: false, location: 'all', level: 0, task: 0, earn: 1000, show: true },
+
+        maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+        tori: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+        tataki: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+        akami: { price: 10, quantity: 2, xp: 200, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+
+        tamago: { price: 10, quantity: 2, xp: 20, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
+        taco: { price: 12, quantity: 2, xp: 25, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
+        cheesecake: { price: 15, quantity: 2, xp: 30, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
+        uni: { price: 20, quantity: 2, xp: 35, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
+      });
+      setCurrFood('onigiri');
+      setFoodIndex(0);
+      setFavoriteFood('akami');
+    }
+  }
+
+
   return (
     <div id='pet' className='bg-white w-full h-screen font-square select-none'>
       <div className='w-full h-full flex flex-col items-center justify-center text-center'>
 
+        <div className='fixed top-0 left-0 h-[15vh] w-[40vw] grid grid-cols-3 gap-4 border-8 border-black z-50'>
+          <div onClick={handleResetClick} className='col-span-1 px-8 flex justify-center items-center text-white text-xl cursor-pointer'>
+            Reset
+          </div>
+        </div>
 
         <div className='fixed top-0 right-0 h-[15vh] w-[40vw] grid grid-cols-3 gap-4 border-8 border-black z-50'>
 
