@@ -174,7 +174,8 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                                         <span className='text-white text-xl'>
                                             {itemDetails.level > 0 ? `level ${itemDetails.level}` :
                                                 itemDetails.task > 0 ? `${itemDetails.task} tasks` :
-                                                    itemDetails.location !== 'all' ? `unlock ${itemDetails.location}` : ''}
+                                                    itemDetails.earn > 0 ? `earn $${itemDetails.earn}` :
+                                                        itemDetails.location !== 'all' ? `unlock ${itemDetails.location}` : ''}
                                         </span>
                                     </div>
                                 )}

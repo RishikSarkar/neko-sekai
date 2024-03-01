@@ -23,7 +23,7 @@ export default function Pet() {
   };
 
   const [currUser, setCurrUser] = useState('friendlyBOT');
-
+  const [notification, setNotification] = useState('');
 
   /* Currency */
 
@@ -31,12 +31,15 @@ export default function Pet() {
   const [targetCoins, setTargetCoins] = useState(0);
   const [coinIncrease, setCoinIncrease] = useState(0);
   const [coinCurrentlyIncreasing, setCoinCurrentlyIncreasing] = useState(false);
+  const [totalCoinsEarned, setTotalCoinsEarned] = useState(0);
 
   // Animation for currency increase
   useEffect(() => {
     if (currCoins < targetCoins) {
       const timer = setTimeout(() => {
         setCurrCoins(currCoins + 1);
+        setTotalCoinsEarned(totalCoinsEarned + 1);
+        obtainEarnRewards(totalCoinsEarned);
       }, 500 / coinIncrease);
 
       return () => clearTimeout(timer);
@@ -50,6 +53,53 @@ export default function Pet() {
     setCoinIncrease(coins);
     setCoinCurrentlyIncreasing(true);
     setTargetCoins(currCoins + coins);
+  };
+
+  const earnRewards = {
+    1000: {
+      food: 'caviar',
+      location: null,
+      fashion: null,
+    },
+  };
+
+  const obtainEarnRewards = () => {
+    const rewards = earnRewards[totalCoinsEarned + 1];
+
+    let status = 'unlocked ';
+
+    if (rewards) {
+      if (rewards.food) {
+        setFoodItems(prevItems => ({
+          ...prevItems,
+          [rewards.food]: {
+            ...prevItems[rewards.food],
+            owned: true,
+          },
+        }));
+
+        status += "new food";
+      }
+
+      if (rewards.location) {
+        setLocations(prevLocations => ({
+          ...prevLocations,
+          [rewards.location]: {
+            ...prevLocations[rewards.location],
+            owned: true,
+          },
+        }));
+
+        status += "new location";
+      }
+
+      status += "!"
+      setNotification(status);
+
+      setTimeout(() => {
+        setNotification('');
+      }, 2000);
+    }
   };
 
 
@@ -79,7 +129,8 @@ export default function Pet() {
 
   // Remove later
   const cheatCode = () => {
-    setCurrCoins(999999);
+    // setCurrCoins(999999);
+    // setTotalCoinsEarned(999999);
     setFoodItems(prevItems => {
       const updatedItems = Object.fromEntries(
         Object.entries(prevItems).map(([key, value]) => [
@@ -110,7 +161,7 @@ export default function Pet() {
   };
 
   const obtainLevelRewards = (level) => {
-    increaseCoins((level - 1) * 5 + 20)
+    const coinsEarned = (level - 1) * 5 + 20;
 
     const rewards = levelRewards[level];
 
@@ -148,6 +199,8 @@ export default function Pet() {
         setLevelStatus('');
       }, 2000);
     }
+
+    return coinsEarned;
   };
 
   const levelUpAnimation = () => {
@@ -173,16 +226,18 @@ export default function Pet() {
 
     let tempCurrLevel = currLevel;
     let tempLevelXPNeeded = levelXPNeeded;
+    let totalCoinsEarned = 0;
 
     while (newProgress >= tempLevelXPNeeded) {
       tempCurrLevel += 1;
       newProgress -= tempLevelXPNeeded;
       tempLevelXPNeeded += 10;
-      obtainLevelRewards(tempCurrLevel);
+      totalCoinsEarned += obtainLevelRewards(tempCurrLevel);
     }
 
     if (tempCurrLevel > currLevel) {
       setLevelUpOccurred(true);
+      increaseCoins(totalCoinsEarned);
     }
 
     setCurrLevel(tempCurrLevel);
@@ -203,11 +258,10 @@ export default function Pet() {
   ]);
 
   const [totalTasksCompleted, setTotalTasksCompleted] = useState(0);
-  const [taskStatus, setTaskStatus] = useState('');
 
   const taskRewards = {
-    5: {
-      food: 'caviar',
+    10: {
+      food: 'ika',
       location: null,
       fashion: null,
     },
@@ -244,10 +298,10 @@ export default function Pet() {
       }
 
       status += "!"
-      setTaskStatus(status);
+      setNotification(status);
 
       setTimeout(() => {
-        setTaskStatus('');
+        setNotification('');
       }, 2000);
     }
   };
@@ -314,19 +368,20 @@ export default function Pet() {
 
   // List of food items
   const [foodItems, setFoodItems] = useState({
-    onigiri: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, show: true },
-    saba: { price: 10, quantity: 2, xp: 25, owned: false, location: 'all', level: 5, task: 0, show: true },
-    caviar: { price: 50, quantity: 2, xp: 100, owned: true, location: 'all', level: 0, task: 15, show: true },
+    onigiri: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+    ika: { price: 10, quantity: 2, xp: 25, owned: false, location: 'all', level: 0, task: 10, earn: 0, show: true },
+    saba: { price: 20, quantity: 2, xp: 40, owned: false, location: 'all', level: 5, task: 0, earn: 0, show: true },
+    caviar: { price: 100, quantity: 2, xp: 150, owned: false, location: 'all', level: 0, task: 0, earn: 1000, show: true },
 
-    maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, show: true },
-    tori: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, show: true },
-    tataki: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, show: true },
-    akami: { price: 10, quantity: 2, xp: 20, owned: true, location: 'living room', level: 0, task: 0, show: true },
+    maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+    tori: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+    tataki: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+    akami: { price: 10, quantity: 2, xp: 200, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
 
-    tamago: { price: 10, quantity: 2, xp: 20, owned: false, location: 'city', level: 0, task: 0, show: true },
-    taco: { price: 12, quantity: 2, xp: 25, owned: false, location: 'city', level: 0, task: 0, show: true },
-    cheesecake: { price: 15, quantity: 2, xp: 30, owned: false, location: 'city', level: 0, task: 0, show: true },
-    uni: { price: 20, quantity: 2, xp: 35, owned: false, location: 'city', level: 0, task: 0, show: true },
+    tamago: { price: 10, quantity: 2, xp: 20, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
+    taco: { price: 12, quantity: 2, xp: 25, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
+    cheesecake: { price: 15, quantity: 2, xp: 30, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
+    uni: { price: 20, quantity: 2, xp: 35, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
   });
 
   const [currFood, setCurrFood] = useState('onigiri');
@@ -365,7 +420,7 @@ export default function Pet() {
 
   // Feed pet with currently selected food
   const feedPet = () => {
-    if (!isFeeding && foodInventory[currFood] > 0) {
+    if (!isFeeding && foodInventory[currFood] > 0 && !showLevelUpArrow) {
       setIsFeeding(true);
       setCurrentAnimation('eat');
       setFrameIndex(0);
