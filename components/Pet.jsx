@@ -98,6 +98,8 @@ export default function Pet() {
   const [levelProgress, setLevelProgress] = useState(0);
   const [levelXPNeeded, setLevelXPNeeded] = useState(100);
   const [levelStatus, setLevelStatus] = useState('');
+  const [levelUpOccurred, setLevelUpOccurred] = useState(false);
+  const [showLevelUpArrow, setShowLevelUpArrow] = useState(false);
 
   const levelRewards = {
     5: {
@@ -148,23 +150,17 @@ export default function Pet() {
     }
   };
 
-  // const levelUpAnimation = () => {
-  //   if (isFeeding) {
-  //     setTimeout(() => {
-  //       setCurrentAnimation('level_up');
-  //       setFrameIndex(0);
-  //     }, animations.eat.sequence.length * 100);
-  //   }
-  //   else {
-  //     setCurrentAnimation('level_up');
-  //     setFrameIndex(0);
-  //   }
+  const levelUpAnimation = () => {
+    setCurrentAnimation('level_up');
+    setShowLevelUpArrow(true);
+    setFrameIndex(0);
 
-  //     setTimeout(() => {
-  //       setCurrentAnimation('idle');
-  //       setFrameIndex(0);
-  //     }, animations.level_up.sequence.length * 100);
-  // };
+    setTimeout(() => {
+      setCurrentAnimation('idle');
+      setFrameIndex(0);
+      setShowLevelUpArrow(false);
+    }, animations.level_up.sequence.length * 100);
+  };
 
   // Enables level increase based on gained XP
   const increaseLevel = (food) => {
@@ -183,6 +179,10 @@ export default function Pet() {
       newProgress -= tempLevelXPNeeded;
       tempLevelXPNeeded += 10;
       obtainLevelRewards(tempCurrLevel);
+    }
+
+    if (tempCurrLevel > currLevel) {
+      setLevelUpOccurred(true);
     }
 
     setCurrLevel(tempCurrLevel);
@@ -316,7 +316,7 @@ export default function Pet() {
   const [foodItems, setFoodItems] = useState({
     onigiri: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, show: true },
     saba: { price: 10, quantity: 2, xp: 25, owned: false, location: 'all', level: 5, task: 0, show: true },
-    caviar: { price: 50, quantity: 2, xp: 100, owned: false, location: 'all', level: 0, task: 15, show: true },
+    caviar: { price: 50, quantity: 2, xp: 100, owned: true, location: 'all', level: 0, task: 15, show: true },
 
     maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, show: true },
     tori: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, show: true },
@@ -334,7 +334,7 @@ export default function Pet() {
   const [foodInventory, setFoodInventory] = useState({});
 
   const [foodIndex, setFoodIndex] = useState(0);
-  const [favoriteFood, setFavoriteFood] = useState('caviar');
+  const [favoriteFood, setFavoriteFood] = useState('akami');
 
   // Update food lists for display. Ensures that only owned and showed items are displayed
   useEffect(() => {
@@ -384,6 +384,13 @@ export default function Pet() {
     }
   };
 
+  useEffect(() => {
+    if (!isFeeding && levelUpOccurred) {
+      levelUpAnimation();
+      setLevelUpOccurred(false);
+    }
+  }, [isFeeding, levelUpOccurred]);
+
   // Switches carousel display
   const changeFood = (direction) => {
     setFoodIndex(prevIndex => {
@@ -428,6 +435,9 @@ export default function Pet() {
     level_up: {
       sequence: generateSequence('/assets/sprites/cat/01/cat-01-level-up/cat-01-level-up', 22),
     },
+    level_up_arrow: {
+      sequence: generateSequence('/assets/miscellaneous/level-up-arrow/level-up-arrow', 22),
+    },
   }), [currFood]);
 
   // Constant looping of current animation
@@ -458,6 +468,8 @@ export default function Pet() {
       } else if (currentAnimation === 'eat') {
         setShowFood(false);
         setIsFeeding(false);
+      } else if (currentAnimation === 'level_up') {
+        setShowLevelUpArrow(false);
       }
       setFrameIndex(0);
     }
@@ -671,6 +683,17 @@ export default function Pet() {
                       alt='Food'
                       width={200}
                       height={200}
+                      unoptimized={true}
+                    />
+                  </div>
+                )}
+                {showLevelUpArrow && (
+                  <div className='z-40 absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50 text-black'>
+                    <Image
+                      src={animations.level_up_arrow.sequence[frameIndex]}
+                      alt='^'
+                      width={400}
+                      height={400}
                       unoptimized={true}
                     />
                   </div>
