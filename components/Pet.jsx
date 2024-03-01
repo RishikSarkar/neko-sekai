@@ -175,16 +175,19 @@ export default function Pet() {
       newProgress += foodXP;
     }
 
-    if (newProgress >= levelXPNeeded) {
-      setCurrLevel(currLevel + 1);
-      obtainLevelRewards(currLevel + 1)
-      // levelUpAnimation();
+    let tempCurrLevel = currLevel;
+    let tempLevelXPNeeded = levelXPNeeded;
 
-      setLevelXPNeeded(levelXPNeeded + 10);
-      setLevelProgress(newProgress - levelXPNeeded);
-    } else {
-      setLevelProgress(newProgress);
+    while (newProgress >= tempLevelXPNeeded) {
+      tempCurrLevel += 1;
+      newProgress -= tempLevelXPNeeded;
+      tempLevelXPNeeded += 10;
+      obtainLevelRewards(tempCurrLevel);
     }
+
+    setCurrLevel(tempCurrLevel);
+    setLevelXPNeeded(tempLevelXPNeeded);
+    setLevelProgress(newProgress);
   };
 
 
