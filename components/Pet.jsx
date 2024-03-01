@@ -342,6 +342,8 @@ export default function Pet() {
       .filter(([_, itemDetails]) => itemDetails.owned && itemDetails.show)
       .map(([itemName, _]) => itemName);
 
+    const newFoodIndex = filteredFoodOptions.findIndex(item => item === currFood);
+
     setFoodOptions(filteredFoodOptions);
 
     const filteredFoodInventory = filteredFoodOptions.reduce((acc, itemName) => {
@@ -350,7 +352,11 @@ export default function Pet() {
     }, {});
 
     setFoodInventory(filteredFoodInventory);
-  }, [foodItems]);
+
+    if (newFoodIndex !== -1) {
+      setFoodIndex(newFoodIndex);
+    }
+  }, [foodItems, currFood]);
 
   // Updates current food to selected item in carousel
   useEffect(() => {
