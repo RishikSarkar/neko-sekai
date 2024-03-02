@@ -256,6 +256,7 @@ export default function Pet() {
     { id: 3, name: 'task 3', completed: false, editing: false, tempName: 'task 3', coins: 10 },
     { id: 4, name: 'task 4', completed: false, editing: false, tempName: 'task 4', coins: 10 },
     { id: 5, name: 'task 5', completed: false, editing: false, tempName: 'task 5', coins: 10 },
+    { id: 6, name: 'task 6', completed: false, editing: false, tempName: 'task 6', coins: 10 },
   ]);
 
   const [totalTasksCompleted, setTotalTasksCompleted] = useState(0);
@@ -753,6 +754,7 @@ export default function Pet() {
         { id: 3, name: 'task 3', completed: false, editing: false, tempName: 'task 3', coins: 10 },
         { id: 4, name: 'task 4', completed: false, editing: false, tempName: 'task 4', coins: 10 },
         { id: 5, name: 'task 5', completed: false, editing: false, tempName: 'task 5', coins: 10 },
+        { id: 6, name: 'task 6', completed: false, editing: false, tempName: 'task 6', coins: 10 },
       ]);
       setTotalTasksCompleted(totalTasksCompleted || 0);
       setCurrBg(currBg || 'livingroom/01/livingroom-01');
@@ -806,6 +808,7 @@ export default function Pet() {
         { id: 3, name: 'task 3', completed: false, editing: false, tempName: 'task 3', coins: 10 },
         { id: 4, name: 'task 4', completed: false, editing: false, tempName: 'task 4', coins: 10 },
         { id: 5, name: 'task 5', completed: false, editing: false, tempName: 'task 5', coins: 10 },
+        { id: 6, name: 'task 6', completed: false, editing: false, tempName: 'task 6', coins: 10 },
       ]);
       setTotalTasksCompleted(0);
       setCurrBg('livingroom/01/livingroom-01');
@@ -874,7 +877,7 @@ export default function Pet() {
 
         <div className='w-full h-[60vh] items-center justify-center text-center grid grid-cols-4 gap-8'>
 
-          <div className='h-full col-span-1 bg-black/90 border-8 border-black ml-8 items-center justify-center text-black rounded-xl'>
+          <div className='h-full max-h-[60vh] col-span-1 bg-black/90 border-8 border-black ml-8 items-center justify-center text-black rounded-xl'>
             <div className='h-full px-4'>
               <div className='text-2xl text-black bg-white py-4 my-4 rounded-xl flex items-center justify-between'>
                 {petNameEditing ? (
@@ -949,7 +952,7 @@ export default function Pet() {
             <div className='w-full h-[10%] bg-black' />
           </div>
 
-          <div className='h-full col-span-1 bg-black/90 border-8 border-black mr-8 items-center justify-center text-black rounded-xl'>
+          <div className='h-full max-h-[60vh] overflow-y-scroll col-span-1 bg-black/90 border-8 border-black mr-8 items-center justify-center text-black rounded-xl'>
             <div className='h-full px-4'>
               <div className='text-2xl bg-white py-2 my-4 rounded-xl'>
                 Tasks
@@ -961,7 +964,7 @@ export default function Pet() {
                     {task.editing ? (
                       <input type='text' className='w-full bg-transparent px-2 selection:text-white selection:bg-black focus:outline-none' value={task.tempName} onChange={(e) => handleTaskNameChange(e, task.id)} onBlur={() => handleTaskBlur(task.id)} onKeyDown={(e) => { if (e.key === 'Enter') { handleTaskBlur(task.id); } }} autoFocus />
                     ) : (
-                      <span className='px-2'>{task.name}</span>
+                      <span className='px-2 max-h-[10vh] overflow-y-scroll overflow-x-scroll'>{task.name}</span>
                     )}
                   </div>
                   <div onClick={() => { if (task.name === `task ${task.id}`) { toggleTaskEditMode(task.id); } else if (!task.completed && !coinCurrentlyIncreasing) { completeTask(task.id); } }} className={`${task.completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
