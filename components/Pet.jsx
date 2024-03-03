@@ -400,7 +400,7 @@ export default function Pet() {
     maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
     tori: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
     tataki: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
-    akami: { price: 10, quantity: 2, xp: 2000, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+    akami: { price: 10, quantity: 2, xp: 20, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
 
     tamago: { price: 10, quantity: 2, xp: 20, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
     taco: { price: 12, quantity: 2, xp: 25, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
@@ -817,7 +817,7 @@ export default function Pet() {
         maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
         tori: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
         tataki: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
-        akami: { price: 10, quantity: 2, xp: 2000, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+        akami: { price: 10, quantity: 2, xp: 20, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
 
         tamago: { price: 10, quantity: 2, xp: 20, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
         taco: { price: 12, quantity: 2, xp: 25, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
@@ -881,7 +881,7 @@ export default function Pet() {
         maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
         tori: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
         tataki: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
-        akami: { price: 10, quantity: 2, xp: 2000, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+        akami: { price: 10, quantity: 2, xp: 20, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
 
         tamago: { price: 10, quantity: 2, xp: 20, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
         taco: { price: 12, quantity: 2, xp: 25, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
