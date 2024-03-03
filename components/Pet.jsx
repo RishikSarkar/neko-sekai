@@ -357,7 +357,7 @@ export default function Pet() {
   };
 
   const addNewTask = (level) => {
-    if (level % 2 === 0) {
+    if ((level - 1) % 2 === 0) {
       setTasks(prevTasks => {
         const newTaskId = prevTasks.length + 1;
         const newTask = {
@@ -775,17 +775,30 @@ export default function Pet() {
       setLevelProgress(levelProgress || 0);
       setLevelXPNeeded(levelXPNeeded || 100);
 
+      let initialTasks = [
+        { id: 1, name: 'task 1', completed: false, editing: false, tempName: 'task 1', coins: 10 },
+        { id: 2, name: 'task 2', completed: false, editing: false, tempName: 'task 2', coins: 10 },
+        { id: 3, name: 'task 3', completed: false, editing: false, tempName: 'task 3', coins: 10 },
+        { id: 4, name: 'task 4', completed: false, editing: false, tempName: 'task 4', coins: 10 },
+        { id: 5, name: 'task 5', completed: false, editing: false, tempName: 'task 5', coins: 10 },
+      ];
+
       if (lastPlayed !== currentDate) {
-        resetTasksForNewDay();
-      } else {
-        setTasks(tasks || [
-          { id: 1, name: 'task 1', completed: false, editing: false, tempName: 'task 1', coins: 10 },
-          { id: 2, name: 'task 2', completed: false, editing: false, tempName: 'task 2', coins: 10 },
-          { id: 3, name: 'task 3', completed: false, editing: false, tempName: 'task 3', coins: 10 },
-          { id: 4, name: 'task 4', completed: false, editing: false, tempName: 'task 4', coins: 10 },
-          { id: 5, name: 'task 5', completed: false, editing: false, tempName: 'task 5', coins: 10 },
-        ]);
+        if (tasks && tasks.length > initialTasks.length) {
+          initialTasks = tasks.map(task => ({
+            ...task,
+            name: `task ${task.id}`,
+            completed: false,
+            editing: false,
+            tempName: `task ${task.id}`
+          }));
+        }
       }
+      else {
+        initialTasks = tasks || initialTasks;
+      }
+
+      setTasks(initialTasks);
 
       setTotalTasksCompleted(totalTasksCompleted || 0);
       setCurrBg(currBg || 'livingroom/01/livingroom-01');
@@ -1004,11 +1017,11 @@ export default function Pet() {
 
               {tasks.map((task) => (
                 <div key={task.id} className='grid grid-cols-5 gap-2'>
-                  <div className={`${task.completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-2 my-2 rounded-xl rounded-r-none flex items-center ease-in duration-100`}>
+                  <div className={`${task.completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-2 my-2 rounded-xl rounded-r-none flex ease-in duration-100  max-h-[10vh] overflow-auto`}>
                     {task.editing ? (
                       <input type='text' className='w-full bg-transparent px-2 selection:text-white selection:bg-black focus:outline-none' value={task.tempName} onChange={(e) => handleTaskNameChange(e, task.id)} onBlur={() => handleTaskBlur(task.id)} onKeyDown={(e) => { if (e.key === 'Enter') { handleTaskBlur(task.id); } }} autoFocus />
                     ) : (
-                      <span className='px-2 max-h-[10vh] overflow-y-scroll overflow-x-scroll'>{task.name}</span>
+                      <span className='px-2'>{task.name}</span>
                     )}
                   </div>
                   <div onClick={() => { if (task.name === `task ${task.id}`) { toggleTaskEditMode(task.id); } else if (!task.completed && !coinCurrentlyIncreasing) { completeTask(task.id); } }} className={`${task.completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
@@ -1022,6 +1035,10 @@ export default function Pet() {
                   </div>
                 </div>
               ))}
+
+              <div className='text-white text-sm py-1'>
+                new task at level {currLevel + (currLevel % 2 + 1)}!
+              </div>
 
             </div>
           </div>
