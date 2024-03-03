@@ -14,13 +14,13 @@ import { Customize } from './Customize';
 
 export default function Pet() {
   const firebaseConfig = {
-    apiKey: "AIzaSyCKGgP2Uth6c2lSOkxI1CAe-nriLAD-wtQ",
-    authDomain: "neko-sekai.firebaseapp.com",
-    projectId: "neko-sekai",
-    storageBucket: "neko-sekai.appspot.com",
-    messagingSenderId: "769025457059",
-    appId: "1:769025457059:web:b4d8ca47a7e1305f53f816",
-    measurementId: "G-6XFVS2RNQN"
+    apiKey: 'AIzaSyCKGgP2Uth6c2lSOkxI1CAe-nriLAD-wtQ',
+    authDomain: 'neko-sekai.firebaseapp.com',
+    projectId: 'neko-sekai',
+    storageBucket: 'neko-sekai.appspot.com',
+    messagingSenderId: '769025457059',
+    appId: '1:769025457059:web:b4d8ca47a7e1305f53f816',
+    measurementId: 'G-6XFVS2RNQN'
   };
 
   const [currUser, setCurrUser] = useState('friendlyBOT');
@@ -79,7 +79,7 @@ export default function Pet() {
           },
         }));
 
-        status += "new food";
+        status += 'new food';
       }
 
       if (rewards.location) {
@@ -91,10 +91,10 @@ export default function Pet() {
           },
         }));
 
-        status += "new location";
+        status += 'new location';
       }
 
-      status += "!"
+      status += '!'
       setNotification(status);
 
       setTimeout(() => {
@@ -178,7 +178,7 @@ export default function Pet() {
           },
         }));
 
-        status += "new food";
+        status += 'new food';
       }
 
       if (rewards.location) {
@@ -190,10 +190,10 @@ export default function Pet() {
           },
         }));
 
-        status += "new location";
+        status += 'new location';
       }
 
-      status += "!"
+      status += '!'
       setLevelStatus(status);
 
       setTimeout(() => {
@@ -285,7 +285,7 @@ export default function Pet() {
           },
         }));
 
-        status += "new food";
+        status += 'new food';
       }
 
       if (rewards.location) {
@@ -297,10 +297,10 @@ export default function Pet() {
           },
         }));
 
-        status += "new location";
+        status += 'new location';
       }
 
-      status += "!"
+      status += '!'
       setNotification(status);
 
       setTimeout(() => {
@@ -400,7 +400,7 @@ export default function Pet() {
     maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
     tori: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
     tataki: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
-    akami: { price: 10, quantity: 2, xp: 20, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+    akami: { price: 10, quantity: 2, xp: 2000, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
 
     tamago: { price: 10, quantity: 2, xp: 20, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
     taco: { price: 12, quantity: 2, xp: 25, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
@@ -733,7 +733,7 @@ export default function Pet() {
           favoriteFood
         };
         saveGame(gameState);
-        console.log("Game progress saved.");
+        console.log('Game progress saved.');
       }
     };
 
@@ -817,7 +817,7 @@ export default function Pet() {
         maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
         tori: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
         tataki: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
-        akami: { price: 10, quantity: 2, xp: 20, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+        akami: { price: 10, quantity: 2, xp: 2000, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
 
         tamago: { price: 10, quantity: 2, xp: 20, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
         taco: { price: 12, quantity: 2, xp: 25, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
@@ -853,6 +853,7 @@ export default function Pet() {
 
       setCurrUser('friendlyBOT');
       setCurrCoins(0);
+      setTargetCoins(0);
       setPetName('Poofy');
       setTotalCoinsEarned(0);
       setCurrLevel(1);
@@ -880,7 +881,7 @@ export default function Pet() {
         maki: { price: 5, quantity: 2, xp: 10, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
         tori: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
         tataki: { price: 7, quantity: 2, xp: 15, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
-        akami: { price: 10, quantity: 2, xp: 20, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
+        akami: { price: 10, quantity: 2, xp: 2000, owned: true, location: 'living room', level: 0, task: 0, earn: 0, show: true },
 
         tamago: { price: 10, quantity: 2, xp: 20, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
         taco: { price: 12, quantity: 2, xp: 25, owned: false, location: 'city', level: 0, task: 0, earn: 0, show: true },
@@ -898,13 +899,17 @@ export default function Pet() {
     <div id='pet' className='bg-white w-full h-screen font-square select-none'>
       <div className='w-full h-full flex flex-col items-center justify-center text-center'>
 
-        <div className='fixed top-0 left-0 h-[15vh] w-[40vw] grid grid-cols-3 gap-4 border-8 border-black z-50'>
+        <div className='fixed top-0 left-0 h-[15vh] w-full grid grid-cols-7 gap-4 border-8 border-black z-50'>
+
           <div onClick={handleResetClick} className='col-span-1 px-8 flex justify-center items-center text-white text-xl cursor-pointer'>
             Reset
           </div>
-        </div>
 
-        <div className='fixed top-0 right-0 h-[15vh] w-[40vw] grid grid-cols-3 gap-4 border-8 border-black z-50'>
+          <div className='col-span-2' />
+
+          <div className='col-span-1 bg-black flex justify-center items-center text-white/80 text-sm px-4'>
+            <span className='animate-pulse'>{notification}</span>
+          </div>
 
           <div className='col-span-1 px-8 flex flex-col justify-center items-center text-white text-xl'>
             <span className='text-lg'>time left</span>
@@ -928,6 +933,7 @@ export default function Pet() {
           <div onClick={cheatCode} className='col-span-1 px-8 flex justify-center items-center text-white text-xl'>
             {`${currUser}`}
           </div>
+
         </div>
 
 
@@ -1045,7 +1051,9 @@ export default function Pet() {
         </div>
 
 
-        <div className='fixed bottom-0 h-[15vh] w-[40vw] grid grid-cols-3 gap-4 border-8 border-black z-50'>
+        <div className='fixed bottom-0 h-[15vh] w-full grid grid-cols-7 gap-4 border-8 border-black z-50'>
+
+          <div className='col-span-2' />
 
           <div onClick={() => setShowShop(true)} className='col-span-1 bg-black hover:bg-white/10 cursor-pointer flex justify-center items-center text-white text-3xl rounded-xl ease-in duration-100'>
             shop
@@ -1078,6 +1086,9 @@ export default function Pet() {
               <FaCaretRight className='text-white' size={20} />
             </div>
           </div>
+
+          <div className='col-span-2' />
+
         </div>
 
       </div>
