@@ -682,33 +682,33 @@ export default function Pet() {
   const [showCustomize, setShowCustomize] = useState(false);
 
 
-  /* Cookies */
+  /* Local Storage */
 
   function saveGame(state) {
     const { petName, currCoins, locations, foodItems, favoriteFood, currLevel, levelProgress, totalCoinsEarned, totalTasksCompleted } = state;
 
-    Cookies.set('gameState', JSON.stringify({
-      currUser,
-      currCoins,
-      petName,
-      totalCoinsEarned,
-      currLevel,
-      levelProgress,
-      levelXPNeeded,
-      tasks,
-      totalTasksCompleted,
-      currBg,
-      locations,
-      foodItems,
-      currFood,
-      foodIndex,
-      favoriteFood,
+    localStorage.setItem('gameState', JSON.stringify({
+      currUser: currUser,
+      currCoins: currCoins,
+      petName: petName,
+      totalCoinsEarned: totalCoinsEarned,
+      currLevel: currLevel,
+      levelProgress: levelProgress,
+      levelXPNeeded: levelXPNeeded,
+      tasks: tasks,
+      totalTasksCompleted: totalTasksCompleted,
+      currBg: currBg,
+      locations: locations,
+      foodItems: foodItems,
+      currFood: currFood,
+      foodIndex: foodIndex,
+      favoriteFood: favoriteFood,
       lastPlayed: new Date().toLocaleDateString(),
-    }), { expires: 7 });
+    }));
   }
 
   function loadGame() {
-    const gameStateString = Cookies.get('gameState');
+    const gameStateString = localStorage.getItem('gameState');
     return gameStateString ? JSON.parse(gameStateString) : null;
   }
 
@@ -842,9 +842,8 @@ export default function Pet() {
   }, []);
 
   function clearGameCookies() {
-    const cookieNames = ['currUser', 'currCoins', 'petName', 'totalCoinsEarned', 'currLevel', 'levelProgress', 'levelXPNeeded', 'tasks', 'totalTasksCompleted', 'currBg', 'locations', 'foodItems', 'currFood', 'foodIndex', 'favoriteFood'];
-    cookieNames.forEach(cookieName => Cookies.remove(cookieName));
-    console.log('All game cookies have been cleared.');
+    localStorage.removeItem('gameState');
+    console.log('Game progress cleared from local storage.');
   }
 
   function handleResetClick() {
