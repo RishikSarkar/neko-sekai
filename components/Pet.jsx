@@ -213,7 +213,7 @@ export default function Pet() {
       setCurrentAnimation('idle');
       setFrameIndex(0);
       setShowLevelUpArrow(false);
-    }, animations.level_up.sequence.length * 100);
+    }, animations.base.level_up.sequence.length * 100);
   };
 
   // Enables level increase based on gained XP
@@ -465,7 +465,7 @@ export default function Pet() {
         setFrameIndex(0);
         setShowFood(false);
         setIsFeeding(false);
-      }, animations.eat.sequence.length * 100);
+      }, animations.base.eat.sequence.length * 100);
     }
   };
 
@@ -485,6 +485,35 @@ export default function Pet() {
   };
 
 
+  /* Cosmetics */
+
+  const [cosmetics, setCosmetics] = useState({
+    head: {
+      'pointed-hat': { price: 0, owned: true, name: 'pointy hat', location: 'living room', level: 0, task: 0, earn: 0 },
+    },
+    face: {
+      'glasses-01': { price: 0, owned: true, name: 'glasses 1', location: 'living room', level: 0, task: 0, earn: 0 },
+    },
+    body: {
+    },
+    equipped: {
+      head: 'pointed-hat',
+      face: 'glasses-01',
+      body: null,
+    },
+  });
+
+  const equipCosmetic = (type, itemName) => {
+    setCosmetics(prev => ({
+      ...prev,
+      equipped: {
+        ...prev.equipped,
+        [type]: prev.equipped[type] === itemName ? null : itemName,
+      }
+    }));
+  };
+
+
   /* Animations */
 
   const [frameIndex, setFrameIndex] = useState(0);
@@ -498,36 +527,68 @@ export default function Pet() {
   }
 
   // List of animations
-  const animations = useMemo(() => ({
-    idle: {
-      sequence: generateSequence('/assets/sprites/cat/01/cat-01-idle/cat-01-idle', 20),
-      loopCount: 5,
-    },
-    yawn: {
-      sequence: generateSequence('/assets/sprites/cat/01/cat-01-yawn/cat-01-yawn', 14),
-      loopCount: 1,
-    },
-    brush: {
-      sequence: generateSequence('/assets/sprites/cat/01/cat-01-brush/cat-01-brush', 50),
-      loopCount: 1,
-    },
-    eat: {
-      sequence: generateSequence('/assets/sprites/cat/01/cat-01-eat/cat-01-eat', 35),
-    },
-    food: {
-      sequence: generateSequence('/assets/food/' + currFood + '/' + currFood, 35),
-    },
-    level_up: {
-      sequence: generateSequence('/assets/sprites/cat/01/cat-01-level-up/cat-01-level-up', 22),
-    },
-    level_up_arrow: {
-      sequence: generateSequence('/assets/miscellaneous/level-up-arrow/level-up-arrow', 22),
-    },
-  }), [currFood]);
+  const animations = useMemo(() => {
+    const baseAnimations = {
+      idle: {
+        sequence: generateSequence('/assets/sprites/cat/01/cat-01-idle/cat-01-idle', 20),
+        loopCount: 5,
+      },
+      yawn: {
+        sequence: generateSequence('/assets/sprites/cat/01/cat-01-yawn/cat-01-yawn', 14),
+        loopCount: 1,
+      },
+      brush: {
+        sequence: generateSequence('/assets/sprites/cat/01/cat-01-brush/cat-01-brush', 50),
+        loopCount: 1,
+      },
+      eat: {
+        sequence: generateSequence('/assets/sprites/cat/01/cat-01-eat/cat-01-eat', 35),
+      },
+      food: {
+        sequence: generateSequence('/assets/food/' + currFood + '/' + currFood, 35),
+      },
+      level_up: {
+        sequence: generateSequence('/assets/sprites/cat/01/cat-01-level-up/cat-01-level-up', 22),
+      },
+      level_up_arrow: {
+        sequence: generateSequence('/assets/miscellaneous/level-up-arrow/level-up-arrow', 22),
+      },
+    };
+
+    let cosmeticAnimations = {};
+
+    Object.keys(cosmetics.equipped).forEach(type => {
+      const itemName = cosmetics.equipped[type];
+      if (itemName) {
+        cosmeticAnimations[type] = {
+          idle: {
+            sequence: generateSequence(`/assets/cosmetics/${type}/${itemName}/${itemName}-idle/${itemName}-idle`, 20),
+            loopCount: 5,
+          },
+          yawn: {
+            sequence: generateSequence(`/assets/cosmetics/${type}/${itemName}/${itemName}-yawn/${itemName}-yawn`, 14),
+            loopCount: 1,
+          },
+          brush: type !== 'head' ? {
+            sequence: generateSequence(`/assets/cosmetics/${type}/${itemName}/${itemName}-brush/${itemName}-brush`, 50),
+            loopCount: 1,
+          } : undefined,
+          eat: {
+            sequence: generateSequence(`/assets/cosmetics/${type}/${itemName}/${itemName}-eat/${itemName}-eat`, 35)
+          },
+          level_up: {
+            sequence: generateSequence(`/assets/cosmetics/${type}/${itemName}/${itemName}-level-up/${itemName}-level-up`, 22)
+          },
+        };
+      }
+    });
+
+    return { base: baseAnimations, cosmetics: cosmeticAnimations };
+  }, [cosmetics, currFood]);
 
   // Constant looping of current animation
   useEffect(() => {
-    const currentSequence = animations[currentAnimation].sequence;
+    const currentSequence = animations.base[currentAnimation].sequence;
     const intervalId = setInterval(() => {
       setFrameIndex(prevIndex => {
         const nextIndex = (prevIndex + 1) % currentSequence.length;
@@ -540,9 +601,9 @@ export default function Pet() {
 
   // Enables animation switching
   useEffect(() => {
-    if (frameIndex === animations[currentAnimation].sequence.length - 1) {
+    if (frameIndex === animations.base[currentAnimation].sequence.length - 1) {
       if (currentAnimation === 'idle') {
-        if (idleCount + 1 < animations.idle.loopCount) {
+        if (idleCount + 1 < animations.base.idle.loopCount) {
           setIdleCount(count => count + 1);
         } else {
           setCurrentAnimation('yawn');
@@ -570,7 +631,7 @@ export default function Pet() {
         setCurrentAnimation('idle');
         setFrameIndex(0);
         setIsPetting(false);
-      }, animations.brush.sequence.length * 100);
+      }, animations.base.brush.sequence.length * 100);
     }
   };
 
@@ -970,26 +1031,55 @@ export default function Pet() {
           </div>
 
           <div className='h-full border-[20px] col-span-2 border-black rounded-xl'>
-
             <div className='h-[90%] flex bg-white items-end justify-center'>
-
               <div className='z-10 relative w-full h-full bg-black/20'>
-                <Image src={`/assets/backgrounds/${currBg}-${bgTime}.gif`} fill />
-                <div className='z-20 absolute bottom-1 left-1/2 transform -translate-x-1/2'>
+
+                <Image
+                  src={`/assets/backgrounds/${currBg}-${bgTime}.gif`}
+                  fill
+                />
+
+                <div
+                  className='z-20 absolute bottom-1 left-1/2 transform -translate-x-1/2'
+                  style={{
+                    width: `${currLevel >= 5 ? 200 : 180}px`,
+                    height: `${currLevel >= 5 ? 200 : 180}px`
+                  }}>
+
                   <Image
-                    src={animations[currentAnimation].sequence[frameIndex]}
+                    src={animations.base[currentAnimation].sequence[frameIndex]}
                     alt='Pet'
-                    width={currLevel >= 5 ? 200 : 180}
-                    height={currLevel >= 5 ? 200 : 180}
+                    fill
                     unoptimized={true}
                     onClick={petHead}
-                    className='cursor-pointer'
+                    className='cursor-pointer absolute'
                   />
+
+                  {Object.keys(cosmetics.equipped).map(type => {
+                    const itemName = cosmetics.equipped[type];
+                    const shouldRenderAnimation = currentAnimation === 'brush' ? type !== 'head' : true;
+                    if (itemName && animations.cosmetics[type] && animations.cosmetics[type][currentAnimation] && animations.cosmetics[type][currentAnimation].sequence && shouldRenderAnimation) {
+                      return (
+                        <Image
+                          key={type}
+                          src={animations.cosmetics[type][currentAnimation].sequence[frameIndex]}
+                          alt={`${type}`}
+                          fill
+                          unoptimized={true}
+                          onClick={petHead}
+                          className='cursor-pointer absolute'
+                        />
+                      );
+                    }
+                    return null;
+                  })}
+
                 </div>
+
                 {showFood && (
                   <div className='z-40 absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50 text-black'>
                     <Image
-                      src={animations.food.sequence[frameIndex]}
+                      src={animations.base.food.sequence[frameIndex]}
                       alt='Food'
                       width={200}
                       height={200}
@@ -997,10 +1087,11 @@ export default function Pet() {
                     />
                   </div>
                 )}
+
                 {showLevelUpArrow && (
                   <div className='z-40 absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50 text-black'>
                     <Image
-                      src={animations.level_up_arrow.sequence[frameIndex]}
+                      src={animations.base.level_up_arrow.sequence[frameIndex]}
                       alt='^'
                       width={400}
                       height={400}
@@ -1008,10 +1099,12 @@ export default function Pet() {
                     />
                   </div>
                 )}
-              </div>
 
+              </div>
             </div>
+
             <div className='w-full h-[10%] bg-black' />
+
           </div>
 
           <div className='h-full max-h-[60vh] overflow-y-scroll col-span-1 bg-black/90 border-8 border-black mr-8 items-center justify-center text-black rounded-xl'>
@@ -1118,6 +1211,8 @@ export default function Pet() {
           setLocations={setLocations}
           currBg={currBg}
           setCurrBg={setCurrBg}
+          cosmetics={cosmetics}
+          equipCosmetic={equipCosmetic}
         />
       }
 

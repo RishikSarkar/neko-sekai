@@ -12,7 +12,7 @@ const CUSTOMIZE_SECTIONS = {
     COSMETICS: 'COSMETICS',
 };
 
-export const Customize = ({ onClose, currFood, setCurrFood, foodItems, setFoodItems, favoriteFood, locations, setLocations, currBg, setCurrBg }) => {
+export const Customize = ({ onClose, currFood, setCurrFood, foodItems, setFoodItems, favoriteFood, locations, setLocations, currBg, setCurrBg, cosmetics, equipCosmetic }) => {
     const [currentSection, setCurrentSection] = useState(CUSTOMIZE_SECTIONS.MAIN);
 
     const handleChangeSection = (section) => {
@@ -57,6 +57,7 @@ export const Customize = ({ onClose, currFood, setCurrFood, foodItems, setFoodIt
         }
     }, [foodItems, currFood, setCurrFood]);
 
+    const [activeCosmeticType, setActiveCosmeticType] = useState(null);
 
 
     return (
@@ -167,9 +168,97 @@ export const Customize = ({ onClose, currFood, setCurrFood, foodItems, setFoodIt
 
                 {currentSection === CUSTOMIZE_SECTIONS.COSMETICS && (
                     <div className='flex flex-col w-full h-full items-center justify-center text-center'>
-                        <div className='py-4 text-2xl'>
-                            coming soon!
+
+                        <div className='my-2 w-[40vw] bg-white/10 hover:bg-white/20 ease-in duration-100 rounded-xl items-center justify-center flex flex-col cursor-pointer' onClick={() => setActiveCosmeticType(activeCosmeticType !== 'head' ? 'head' : null)}>
+                            <div className='py-4 text-xl'>
+                                head
+                            </div>
+                            {activeCosmeticType === 'head' && (
+                                <div onClick={(e) => { e.stopPropagation() }} className='flex w-full h-auto max-h-[40vh] rounded-xl rounded-t-none overflow-y-scroll grid grid-cols-3 gap-4 p-4 items-center justify-center text-center text-2xl border-4 border-black/10 bg-white ease-in duration-100 cursor-default'>
+                                    {Object.entries(cosmetics.head).map(([itemName, itemDetails]) => (
+                                        <div key={itemName} onClick={(e) => { e.stopPropagation(); equipCosmetic('head', itemName); }} className='relative col-span-1 flex flex-col items-center justify-center text-center bg-black border-4 border-white/90 rounded-xl cursor-pointer'>
+                                            <Image
+                                                src={`/assets/cosmetics/head/icons/${itemName}.png`}
+                                                alt={itemName}
+                                                width={100}
+                                                height={100}
+                                                unoptimized={true}
+                                            />
+                                            {/* <span className='text-white text-sm pb-4'>{itemDetails.name}</span> */}
+
+                                            {cosmetics.equipped.head === itemName ? (
+                                                <div className='absolute top-1 right-1 rounded-full m-2 text-white z-[99]'>
+                                                    <LuCheckCircle2 size={30} />
+                                                </div>
+                                            ) : (
+                                                <div className='absolute inset-0 bg-black/70 flex items-center justify-center rounded-xl cursor-pointer'></div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
+
+                        <div className='my-2 w-[40vw] bg-white/10 hover:bg-white/20 ease-in duration-100 rounded-xl items-center justify-center flex flex-col cursor-pointer' onClick={() => setActiveCosmeticType(activeCosmeticType !== 'face' ? 'face' : null)}>
+                            <div className='py-4 text-xl'>
+                                face
+                            </div>
+                            {activeCosmeticType === 'face' && (
+                                <div onClick={(e) => { e.stopPropagation() }} className='flex w-full h-auto max-h-[40vh] rounded-xl rounded-t-none overflow-y-scroll grid grid-cols-3 gap-4 p-4 items-center justify-center text-center text-2xl border-4 border-black/10 bg-white ease-in duration-100 cursor-default'>
+                                    {Object.entries(cosmetics.face).map(([itemName, itemDetails]) => (
+                                        <div key={itemName} onClick={(e) => { e.stopPropagation(); equipCosmetic('face', itemName); }} className='relative col-span-1 flex flex-col items-center justify-center text-center bg-black border-4 border-white/90 rounded-xl cursor-pointer'>
+                                            <Image
+                                                src={`/assets/cosmetics/face/icons/${itemName}.png`}
+                                                alt={itemName}
+                                                width={100}
+                                                height={100}
+                                                unoptimized={true}
+                                            />
+                                            {/* <span className='text-white text-sm pb-4'>{itemDetails.name}</span> */}
+
+                                            {cosmetics.equipped.face === itemName ? (
+                                                <div className='absolute top-1 right-1 rounded-full m-2 text-white z-[99]'>
+                                                    <LuCheckCircle2 size={30} />
+                                                </div>
+                                            ) : (
+                                                <div className='absolute inset-0 bg-black/70 flex items-center justify-center rounded-xl cursor-pointer'></div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        <div className='my-2 w-[40vw] bg-white/10 hover:bg-white/20 ease-in duration-100 rounded-xl items-center justify-center flex flex-col cursor-pointer' onClick={() => setActiveCosmeticType(activeCosmeticType !== 'body' ? 'body' : null)}>
+                            <div className='py-4 text-xl'>
+                                body
+                            </div>
+                            {activeCosmeticType === 'body' && (
+                                <div onClick={(e) => { e.stopPropagation() }} className='flex w-full h-auto max-h-[40vh] rounded-xl rounded-t-none overflow-y-scroll grid grid-cols-3 gap-4 p-4 items-center justify-center text-center text-2xl border-4 border-black/10 bg-white ease-in duration-100 cursor-default'>
+                                    {Object.entries(cosmetics.body).map(([itemName, itemDetails]) => (
+                                        <div key={itemName} onClick={(e) => { e.stopPropagation(); equipCosmetic('body', itemName); }} className='relative col-span-1 flex flex-col items-center justify-center text-center bg-black border-4 border-white/90 rounded-xl cursor-pointer'>
+                                            <Image
+                                                src={`/assets/cosmetics/body/icons/${itemName}.png`}
+                                                alt={itemName}
+                                                width={100}
+                                                height={100}
+                                                unoptimized={true}
+                                            />
+                                            {/* <span className='text-white text-sm pb-4'>{itemDetails.name}</span> */}
+
+                                            {cosmetics.equipped.body === itemName ? (
+                                                <div className='absolute top-1 right-1 rounded-full m-2 text-white z-[99]'>
+                                                    <LuCheckCircle2 size={30} />
+                                                </div>
+                                            ) : (
+                                                <div className='absolute inset-0 bg-black/70 flex items-center justify-center rounded-xl cursor-pointer'></div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
                     </div>
                 )}
 
