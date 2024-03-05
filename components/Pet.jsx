@@ -493,13 +493,14 @@ export default function Pet() {
     },
     face: {
       'glasses-01': { price: 0, owned: true, name: 'glasses 1', location: 'living room', level: 0, task: 0, earn: 0 },
+      'shades-01': { price: 100, owned: true, name: 'glasses 1', location: 'living room', level: 0, task: 0, earn: 0 },
     },
     body: {
       'shirt-01': { price: 0, owned: true, name: 'shirt 1', location: 'living room', level: 0, task: 0, earn: 0 },
     },
     equipped: {
       head: 'pointed-hat',
-      face: 'glasses-01',
+      face: 'shades-01',
       body: 'shirt-01',
     },
   });
@@ -911,6 +912,7 @@ export default function Pet() {
         },
         face: {
           'glasses-01': { price: 0, owned: true, name: 'glasses 1', location: 'living room', level: 0, task: 0, earn: 0 },
+          'shades-01': { price: 100, owned: true, name: 'glasses 1', location: 'living room', level: 0, task: 0, earn: 0 },
         },
         body: {
           'shirt-01': { price: 0, owned: true, name: 'shirt 1', location: 'living room', level: 0, task: 0, earn: 0 },
@@ -987,6 +989,7 @@ export default function Pet() {
         },
         face: {
           'glasses-01': { price: 0, owned: true, name: 'glasses 1', location: 'living room', level: 0, task: 0, earn: 0 },
+          'shades-01': { price: 100, owned: true, name: 'glasses 1', location: 'living room', level: 0, task: 0, earn: 0 },
         },
         body: {
           'shirt-01': { price: 0, owned: true, name: 'shirt 1', location: 'living room', level: 0, task: 0, earn: 0 },
