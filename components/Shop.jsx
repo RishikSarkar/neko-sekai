@@ -16,7 +16,7 @@ const SHOP_SECTIONS = {
     GAMES: 'GAMES',
 };
 
-export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodItems, setFoodItems, favoriteFood, locations, setLocations, setCurrBg }) => {
+export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodItems, setFoodItems, favoriteFood, locations, setLocations, setCurrBg, cosmetics, setCosmetics, equipCosmetic }) => {
     const [coinDecrease, setCoinDecrease] = useState(0);
     const [tempCoins, setTempCoins] = useState(currCoins);
     const [tempTargetCoins, setTempTargetCoins] = useState(currCoins);
@@ -103,6 +103,30 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
 
     }, [tempCoins, currCoins, tempTargetCoins, setCurrCoins, setTargetCoins]);
 
+    const [activeCosmeticType, setActiveCosmeticType] = useState(null);
+
+    const handleCosmeticPurchase = (type, cosmeticName) => {
+        const itemDetails = cosmetics[type][cosmeticName];
+
+        if (itemDetails.unlocked && !itemDetails.owned && currCoins >= itemDetails.price) {
+            decreaseCoins(itemDetails.price);
+
+            const newCosmetics = {
+                ...cosmetics,
+                [type]: {
+                    ...cosmetics[type],
+                    [cosmeticName]: {
+                        ...itemDetails,
+                        owned: true,
+                    },
+                },
+            };
+
+            setCosmetics(newCosmetics);
+
+            equipCosmetic(type, cosmeticName);
+        }
+    };
     return (
         <div className='fixed bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-screen h-screen bg-black/90 z-50'>
             <div className='fixed bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-[80vw] h-[90vh] bg-black/90 z-[51] rounded-xl flex justify-center items-center text-center border-8 border-white'>
@@ -164,7 +188,7 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                                 <span className='text-white text-xs'>Owned: {itemDetails.quantity}</span>
                                 <button
                                     onClick={() => { if (!coinCurrentlyDecreasing) { handleFoodPurchase(itemName) } }}
-                                    className={`${itemDetails.owned ? 'block' : 'hidden'} absolute top-1 right-1 rounded-full hover:bg-white/20 m-2 text-white transition duration-100 ease-in`}
+                                    className={`${itemDetails.owned ? 'block' : 'hidden'} absolute top-1 right-1 rounded-full hover:bg-white/20 m-2 text-white transition duration-100 ease-in cursor-pointer`}
                                 >
                                     <LuPlusCircle size={40} />
                                 </button>
@@ -201,7 +225,7 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                                 <span className='text-white text-sm'>{itemDetails.owned ? 'owned' : `Price: $${itemDetails.price}`}</span>
                                 <button
                                     onClick={() => { if (!coinCurrentlyDecreasing) { handleLocationPurchase(itemName) } }}
-                                    className={`${itemDetails.owned ? 'hidden' : 'block'} absolute top-1 right-1 rounded-full hover:bg-white/20 m-2 text-white transition duration-100 ease-in`}
+                                    className={`${itemDetails.owned ? 'hidden' : 'block'} absolute top-1 right-1 rounded-full hover:bg-white/20 m-2 text-white transition duration-100 ease-in cursor-pointer`}
                                 >
                                     <LuPlusCircle size={40} />
                                 </button>
@@ -220,9 +244,133 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
 
                 {currentSection === SHOP_SECTIONS.COSMETICS && (
                     <div className='flex flex-col w-full h-full items-center justify-center text-center'>
-                        <div className='py-4 text-2xl'>
-                            coming soon!
+
+                        <div className='my-2 w-[60vw] bg-white/10 hover:bg-white/20 ease-in duration-100 rounded-xl items-center justify-center flex flex-col cursor-pointer' onClick={() => setActiveCosmeticType(activeCosmeticType !== 'head' ? 'head' : null)}>
+                            <div className='py-4 text-xl'>
+                                head
+                            </div>
+                            {activeCosmeticType === 'head' && (
+                                <div onClick={(e) => { e.stopPropagation() }} className='flex w-full h-auto max-h-[33vh] rounded-xl rounded-t-none overflow-y-scroll grid grid-cols-4 gap-4 p-4 items-center justify-center text-center text-2xl border-4 border-black/10 bg-white ease-in duration-100 cursor-default'>
+                                    {Object.entries(cosmetics.head).map(([itemName, itemDetails]) => (
+                                        <div key={itemName} className='relative col-span-1 flex flex-col items-center justify-center text-center bg-black border-4 border-white/90 rounded-xl'>
+                                            <Image
+                                                className='pt-2'
+                                                src={`/assets/cosmetics/head/icons/${itemName}.png`}
+                                                alt={itemName}
+                                                width={100}
+                                                height={100}
+                                                unoptimized={true}
+                                            />
+
+                                            <span className='text-white text-lg pb-2 font-bold'>{itemDetails.name}</span>
+                                            <span className='text-white text-sm pb-6'>{itemDetails.owned ? 'owned' : `Price: $${itemDetails.price}`}</span>
+                                            <button
+                                                onClick={() => { if (!coinCurrentlyDecreasing) { handleCosmeticPurchase('head', itemName) } }}
+                                                className={`${itemDetails.owned ? 'hidden' : 'block'} absolute top-1 right-1 rounded-full hover:bg-white/20 m-2 text-white transition duration-100 ease-in cursor-pointer`}
+                                            >
+                                                <LuPlusCircle size={40} />
+                                            </button>
+                                            {!itemDetails.unlocked && (
+                                                <div className='absolute top-0 left-0 w-full h-full bg-black/80 flex flex-col items-center justify-center rounded-xl'>
+                                                    <FaLock className='my-4' size={30} />
+                                                    <span className='text-white text-xl'>
+                                                        {itemDetails.level > 0 ? `level ${itemDetails.level}` :
+                                                            itemDetails.task > 0 ? `${itemDetails.task} tasks` :
+                                                                itemDetails.earn > 0 ? `earn $${itemDetails.earn}` :
+                                                                    itemDetails.location !== 'all' ? `unlock ${itemDetails.location}` : ''}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
+
+                        <div className='my-2 w-[60vw] bg-white/10 hover:bg-white/20 ease-in duration-100 rounded-xl items-center justify-center flex flex-col cursor-pointer' onClick={() => setActiveCosmeticType(activeCosmeticType !== 'face' ? 'face' : null)}>
+                            <div className='py-4 text-xl'>
+                                face
+                            </div>
+                            {activeCosmeticType === 'face' && (
+                                <div onClick={(e) => { e.stopPropagation() }} className='flex w-full h-auto max-h-[33vh] rounded-xl rounded-t-none overflow-y-scroll grid grid-cols-4 gap-4 p-4 items-center justify-center text-center text-2xl border-4 border-black/10 bg-white ease-in duration-100 cursor-default'>
+                                    {Object.entries(cosmetics.face).map(([itemName, itemDetails]) => (
+                                        <div key={itemName} className='relative col-span-1 flex flex-col items-center justify-center text-center bg-black border-4 border-white/90 rounded-xl'>
+                                            <Image
+                                                className='pt-2'
+                                                src={`/assets/cosmetics/face/icons/${itemName}.png`}
+                                                alt={itemName}
+                                                width={100}
+                                                height={100}
+                                                unoptimized={true}
+                                            />
+
+                                            <span className='text-white text-lg pb-2 font-bold'>{itemDetails.name}</span>
+                                            <span className='text-white text-sm pb-6'>{itemDetails.owned ? 'owned' : `Price: $${itemDetails.price}`}</span>
+                                            <button
+                                                onClick={() => { if (!coinCurrentlyDecreasing) { handleCosmeticPurchase('face', itemName) } }}
+                                                className={`${itemDetails.owned ? 'hidden' : 'block'} absolute top-1 right-1 rounded-full hover:bg-white/20 m-2 text-white transition duration-100 ease-in cursor-pointer`}
+                                            >
+                                                <LuPlusCircle size={40} />
+                                            </button>
+                                            {!itemDetails.unlocked && (
+                                                <div className='absolute top-0 left-0 w-full h-full bg-black/80 flex flex-col items-center justify-center rounded-xl'>
+                                                    <FaLock className='my-4' size={30} />
+                                                    <span className='text-white text-xl'>
+                                                        {itemDetails.level > 0 ? `level ${itemDetails.level}` :
+                                                            itemDetails.task > 0 ? `${itemDetails.task} tasks` :
+                                                                itemDetails.earn > 0 ? `earn $${itemDetails.earn}` :
+                                                                    itemDetails.location !== 'all' ? `unlock ${itemDetails.location}` : ''}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        <div className='my-2 w-[60vw] bg-white/10 hover:bg-white/20 ease-in duration-100 rounded-xl items-center justify-center flex flex-col cursor-pointer' onClick={() => setActiveCosmeticType(activeCosmeticType !== 'body' ? 'body' : null)}>
+                            <div className='py-4 text-xl'>
+                                body
+                            </div>
+                            {activeCosmeticType === 'body' && (
+                                <div onClick={(e) => { e.stopPropagation() }} className='flex w-full h-auto max-h-[33vh] rounded-xl rounded-t-none overflow-y-scroll grid grid-cols-4 gap-4 p-4 items-center justify-center text-center text-2xl border-4 border-black/10 bg-white ease-in duration-100 cursor-default'>
+                                    {Object.entries(cosmetics.body).map(([itemName, itemDetails]) => (
+                                        <div key={itemName} className='relative col-span-1 flex flex-col items-center justify-center text-center bg-black border-4 border-white/90 rounded-xl'>
+                                            <Image
+                                                className='pt-2'
+                                                src={`/assets/cosmetics/body/icons/${itemName}.png`}
+                                                alt={itemName}
+                                                width={100}
+                                                height={100}
+                                                unoptimized={true}
+                                            />
+
+                                            <span className='text-white text-lg pb-2 font-bold'>{itemDetails.name}</span>
+                                            <span className='text-white text-sm pb-6'>{itemDetails.owned ? 'owned' : `Price: $${itemDetails.price}`}</span>
+                                            <button
+                                                onClick={() => { if (!coinCurrentlyDecreasing) { handleCosmeticPurchase('body', itemName) } }}
+                                                className={`${itemDetails.owned ? 'hidden' : 'block'} absolute top-1 right-1 rounded-full hover:bg-white/20 m-2 text-white transition duration-100 ease-in cursor-pointer`}
+                                            >
+                                                <LuPlusCircle size={40} />
+                                            </button>
+                                            {!itemDetails.unlocked && (
+                                                <div className='absolute top-0 left-0 w-full h-full bg-black/80 flex flex-col items-center justify-center rounded-xl'>
+                                                    <FaLock className='my-4' size={30} />
+                                                    <span className='text-white text-xl'>
+                                                        {itemDetails.level > 0 ? `level ${itemDetails.level}` :
+                                                            itemDetails.task > 0 ? `${itemDetails.task} tasks` :
+                                                                itemDetails.earn > 0 ? `earn $${itemDetails.earn}` :
+                                                                    itemDetails.location !== 'all' ? `unlock ${itemDetails.location}` : ''}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
                     </div>
                 )}
 

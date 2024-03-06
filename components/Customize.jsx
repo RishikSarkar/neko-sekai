@@ -175,7 +175,7 @@ export const Customize = ({ onClose, currFood, setCurrFood, foodItems, setFoodIt
                             </div>
                             {activeCosmeticType === 'head' && (
                                 <div onClick={(e) => { e.stopPropagation() }} className='flex w-full h-auto max-h-[40vh] rounded-xl rounded-t-none overflow-y-scroll grid grid-cols-3 gap-4 p-4 items-center justify-center text-center text-2xl border-4 border-black/10 bg-white ease-in duration-100 cursor-default'>
-                                    {Object.entries(cosmetics.head).map(([itemName, itemDetails]) => (
+                                    {Object.entries(cosmetics.head).filter(([_, itemDetails]) => itemDetails.owned).map(([itemName, itemDetails]) => (
                                         <div key={itemName} onClick={(e) => { e.stopPropagation(); equipCosmetic('head', itemName); }} className='relative col-span-1 flex flex-col items-center justify-center text-center bg-black border-4 border-white/90 rounded-xl cursor-pointer'>
                                             <Image
                                                 src={`/assets/cosmetics/head/icons/${itemName}.png`}
@@ -205,7 +205,7 @@ export const Customize = ({ onClose, currFood, setCurrFood, foodItems, setFoodIt
                             </div>
                             {activeCosmeticType === 'face' && (
                                 <div onClick={(e) => { e.stopPropagation() }} className='flex w-full h-auto max-h-[40vh] rounded-xl rounded-t-none overflow-y-scroll grid grid-cols-3 gap-4 p-4 items-center justify-center text-center text-2xl border-4 border-black/10 bg-white ease-in duration-100 cursor-default'>
-                                    {Object.entries(cosmetics.face).map(([itemName, itemDetails]) => (
+                                    {Object.entries(cosmetics.face).filter(([_, itemDetails]) => itemDetails.owned).map(([itemName, itemDetails]) => (
                                         <div key={itemName} onClick={(e) => { e.stopPropagation(); equipCosmetic('face', itemName); }} className='relative col-span-1 flex flex-col items-center justify-center text-center bg-black border-4 border-white/90 rounded-xl cursor-pointer'>
                                             <Image
                                                 src={`/assets/cosmetics/face/icons/${itemName}.png`}
@@ -235,7 +235,7 @@ export const Customize = ({ onClose, currFood, setCurrFood, foodItems, setFoodIt
                             </div>
                             {activeCosmeticType === 'body' && (
                                 <div onClick={(e) => { e.stopPropagation() }} className='flex w-full h-auto max-h-[40vh] rounded-xl rounded-t-none overflow-y-scroll grid grid-cols-3 gap-4 p-4 items-center justify-center text-center text-2xl border-4 border-black/10 bg-white ease-in duration-100 cursor-default'>
-                                    {Object.entries(cosmetics.body).map(([itemName, itemDetails]) => (
+                                    {Object.entries(cosmetics.body).filter(([_, itemDetails]) => itemDetails.owned).map(([itemName, itemDetails]) => (
                                         <div key={itemName} onClick={(e) => { e.stopPropagation(); equipCosmetic('body', itemName); }} className='relative col-span-1 flex flex-col items-center justify-center text-center bg-black border-4 border-white/90 rounded-xl cursor-pointer'>
                                             <Image
                                                 src={`/assets/cosmetics/body/icons/${itemName}.png`}

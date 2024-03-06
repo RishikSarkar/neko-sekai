@@ -488,19 +488,19 @@ export default function Pet() {
 
   const [cosmetics, setCosmetics] = useState({
     head: {
-      'pointed-hat': { price: 0, owned: true, name: 'pointy hat', location: 'living room', level: 0, task: 0, earn: 0 },
-      'cap-01': { price: 0, owned: true, name: 'cap 1', location: 'living room', level: 0, task: 0, earn: 0 },
+      'pointed-hat': { price: 0, unlocked: true, owned: true, name: 'pointy hat', location: 'living room', level: 0, task: 0, earn: 0 },
+      'cap-01': { price: 50, unlocked: true, owned: false, name: 'cap 1', location: 'living room', level: 0, task: 0, earn: 0 },
     },
     face: {
-      'glasses-01': { price: 0, owned: true, name: 'glasses 1', location: 'living room', level: 0, task: 0, earn: 0 },
-      'shades-01': { price: 100, owned: true, name: 'glasses 1', location: 'living room', level: 0, task: 0, earn: 0 },
+      'glasses-01': { price: 0, unlocked: true, owned: true, name: 'glasses 1', location: 'living room', level: 0, task: 0, earn: 0 },
+      'shades-01': { price: 50, unlocked: true, owned: false, name: 'shades 1', location: 'living room', level: 0, task: 0, earn: 0 },
     },
     body: {
-      'shirt-01': { price: 0, owned: true, name: 'shirt 1', location: 'living room', level: 0, task: 0, earn: 0 },
+      'shirt-01': { price: 0, unlocked: true, owned: true, name: 'shirt 1', location: 'living room', level: 0, task: 0, earn: 0 },
     },
     equipped: {
       head: 'pointed-hat',
-      face: 'shades-01',
+      face: 'glasses-01',
       body: 'shirt-01',
     },
   });
@@ -907,15 +907,15 @@ export default function Pet() {
 
       setCosmetics(cosmetics || {
         head: {
-          'pointed-hat': { price: 0, owned: true, name: 'pointy hat', location: 'living room', level: 0, task: 0, earn: 0 },
-          'cap-01': { price: 0, owned: true, name: 'cap 1', location: 'living room', level: 0, task: 0, earn: 0 },
+          'pointed-hat': { price: 0, unlocked: true, owned: true, name: 'pointy hat', location: 'living room', level: 0, task: 0, earn: 0 },
+          'cap-01': { price: 50, unlocked: true, owned: false, name: 'cap 1', location: 'living room', level: 0, task: 0, earn: 0 },
         },
         face: {
-          'glasses-01': { price: 0, owned: true, name: 'glasses 1', location: 'living room', level: 0, task: 0, earn: 0 },
-          'shades-01': { price: 100, owned: true, name: 'glasses 1', location: 'living room', level: 0, task: 0, earn: 0 },
+          'glasses-01': { price: 0, unlocked: true, owned: true, name: 'glasses 1', location: 'living room', level: 0, task: 0, earn: 0 },
+          'shades-01': { price: 50, unlocked: true, owned: false, name: 'shades 1', location: 'living room', level: 0, task: 0, earn: 0 },
         },
         body: {
-          'shirt-01': { price: 0, owned: true, name: 'shirt 1', location: 'living room', level: 0, task: 0, earn: 0 },
+          'shirt-01': { price: 0, unlocked: true, owned: true, name: 'shirt 1', location: 'living room', level: 0, task: 0, earn: 0 },
         },
         equipped: {
           head: 'pointed-hat',
@@ -984,15 +984,15 @@ export default function Pet() {
 
       setCosmetics({
         head: {
-          'pointed-hat': { price: 0, owned: true, name: 'pointy hat', location: 'living room', level: 0, task: 0, earn: 0 },
-          'cap-01': { price: 0, owned: true, name: 'cap 1', location: 'living room', level: 0, task: 0, earn: 0 },
+          'pointed-hat': { price: 0, unlocked: true, owned: true, name: 'pointy hat', location: 'living room', level: 0, task: 0, earn: 0 },
+          'cap-01': { price: 50, unlocked: true, owned: false, name: 'cap 1', location: 'living room', level: 0, task: 0, earn: 0 },
         },
         face: {
-          'glasses-01': { price: 0, owned: true, name: 'glasses 1', location: 'living room', level: 0, task: 0, earn: 0 },
-          'shades-01': { price: 100, owned: true, name: 'glasses 1', location: 'living room', level: 0, task: 0, earn: 0 },
+          'glasses-01': { price: 0, unlocked: true, owned: true, name: 'glasses 1', location: 'living room', level: 0, task: 0, earn: 0 },
+          'shades-01': { price: 50, unlocked: true, owned: false, name: 'shades 1', location: 'living room', level: 0, task: 0, earn: 0 },
         },
         body: {
-          'shirt-01': { price: 0, owned: true, name: 'shirt 1', location: 'living room', level: 0, task: 0, earn: 0 },
+          'shirt-01': { price: 0, unlocked: true, owned: true, name: 'shirt 1', location: 'living room', level: 0, task: 0, earn: 0 },
         },
         equipped: {
           head: 'pointed-hat',
@@ -1245,6 +1245,9 @@ export default function Pet() {
           locations={locations}
           setLocations={setLocations}
           setCurrBg={setCurrBg}
+          cosmetics={cosmetics}
+          setCosmetics={setCosmetics}
+          equipCosmetic={equipCosmetic}
         />
       }
 
