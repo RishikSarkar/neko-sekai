@@ -79,6 +79,21 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
             }, {});
 
             setFoodItems(newFoodItems);
+
+            const newCosmetics = Object.keys(cosmetics).reduce((newCosmeticType, type) => {
+                newCosmeticType[type] = Object.keys(cosmetics[type]).reduce((acc, itemName) => {
+                    const item = cosmetics[type][itemName];
+                    if (item.location === locationName) {
+                        acc[itemName] = { ...item, unlocked: true };
+                    } else {
+                        acc[itemName] = item;
+                    }
+                    return acc;
+                }, {});
+                return newCosmeticType;
+            }, {});
+
+            setCosmetics(newCosmetics);
         };
     }
 
@@ -131,10 +146,10 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
         <div className='fixed bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-screen h-screen bg-black/90 z-50'>
             <div className='fixed bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-[80vw] h-[90vh] bg-black/90 z-[51] rounded-xl flex justify-center items-center text-center border-8 border-white'>
 
-                <div onClick={() => { if (!coinCurrentlyDecreasing) onClose(); }} className='fixed top-2 right-2 p-4 rounded-full cursor-pointer hover:bg-white/10'>
+                <div onClick={() => { if (!coinCurrentlyDecreasing) onClose(); }} className='fixed top-2 right-2 p-4 rounded-full cursor-pointer hover:bg-white/10 text-white'>
                     <ImCross size={20} />
                 </div>
-                <div onClick={handleShowMainShop} className={`${(currentSection === SHOP_SECTIONS.MAIN) ? 'hidden' : 'block'} fixed top-2 left-2 p-3 rounded-full cursor-pointer hover:bg-white/10`}>
+                <div onClick={handleShowMainShop} className={`${(currentSection === SHOP_SECTIONS.MAIN) ? 'hidden' : 'block'} fixed top-2 left-2 p-3 rounded-full cursor-pointer hover:bg-white/10 text-white`}>
                     <IoMdArrowRoundBack size={30} />
                 </div>
 
@@ -167,7 +182,7 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                 }
 
                 {currentSection === SHOP_SECTIONS.FOOD && (
-                    <div className='flex w-[60vw] h-auto max-h-[50vh] overflow-y-scroll grid grid-cols-4 gap-4 p-4 items-center justify-center text-center text-2xl border-4 border-black/10 rounded-xl bg-white'>
+                    <div className='flex w-[60vw] h-auto max-h-[50vh] overflow-y-scroll grid grid-cols-4 gap-4 p-4 items-center justify-center text-center text-2xl border-4 border-black/10 rounded-xl bg-white text-white'>
                         {Object.entries(foodItems).map(([itemName, itemDetails]) => (
                             <div key={itemName} className='relative col-span-1 flex flex-col items-center justify-center text-center bg-black border-4 border-white/90 rounded-xl p-8'>
                                 <Image
@@ -209,7 +224,7 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                 )}
 
                 {currentSection === SHOP_SECTIONS.LOCATIONS && (
-                    <div className='flex w-[60vw] h-auto max-h-[50vh] overflow-y-scroll grid grid-cols-2 gap-4 p-4 items-center justify-center text-center text-2xl border-4 border-black/10 rounded-xl bg-white'>
+                    <div className='flex w-[60vw] h-auto max-h-[50vh] overflow-y-scroll grid grid-cols-2 gap-4 p-4 items-center justify-center text-center text-2xl border-4 border-black/10 rounded-xl bg-white text-white'>
                         {Object.entries(locations).map(([itemName, itemDetails]) => (
                             <div key={itemName} className='relative col-span-1 flex flex-col items-center justify-center text-center bg-black border-4 border-white/90 rounded-xl p-8'>
                                 <div className={`${itemDetails.owned ? 'opacity-50' : 'opacity-100'} bg-white/90 rounded-xl overflow-hidden border-4 border-white/90`}>
@@ -235,7 +250,7 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                 )}
 
                 {currentSection === SHOP_SECTIONS.TOYS && (
-                    <div className='flex flex-col w-full h-full items-center justify-center text-center'>
+                    <div className='flex flex-col w-full h-full items-center justify-center text-center text-white'>
                         <div className='py-4 text-2xl'>
                             coming soon!
                         </div>
@@ -243,7 +258,7 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                 )}
 
                 {currentSection === SHOP_SECTIONS.COSMETICS && (
-                    <div className='flex flex-col w-full h-full items-center justify-center text-center'>
+                    <div className='flex flex-col w-full h-full items-center justify-center text-center text-white'>
 
                         <div className='my-2 w-[60vw] bg-white/10 hover:bg-white/20 ease-in duration-100 rounded-xl items-center justify-center flex flex-col cursor-pointer' onClick={() => setActiveCosmeticType(activeCosmeticType !== 'head' ? 'head' : null)}>
                             <div className='py-4 text-xl'>
@@ -375,8 +390,8 @@ export const Shop = ({ onClose, currCoins, setCurrCoins, setTargetCoins, foodIte
                 )}
 
                 {currentSection === SHOP_SECTIONS.SPECIAL && (
-                    <div className='flex flex-col w-full h-full items-center justify-center text-center'>
-                        <div className='py-4 text-2xl'>
+                    <div className='flex flex-col w-full h-full items-center justify-center text-center text-white'>
+                        <div className='py-4 text-2xl text-white'>
                             coming soon!
                         </div>
                     </div>

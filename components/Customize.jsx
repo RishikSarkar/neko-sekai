@@ -64,16 +64,16 @@ export const Customize = ({ onClose, currFood, setCurrFood, foodItems, setFoodIt
         <div className='fixed bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-screen h-screen bg-black/90 z-50'>
             <div className='fixed bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-[60vw] h-[90vh] bg-black/90 z-[51] rounded-xl flex justify-center items-center text-center border-8 border-white'>
 
-                <div onClick={onClose} className='fixed top-2 right-2 p-4 rounded-full cursor-pointer hover:bg-white/10'>
+                <div onClick={onClose} className='fixed top-2 right-2 p-4 rounded-full cursor-pointer hover:bg-white/10 text-white'>
                     <ImCross size={20} />
                 </div>
-                <div onClick={handleShowMainCustomize} className={`${(currentSection === CUSTOMIZE_SECTIONS.MAIN) ? 'hidden' : 'block'} fixed top-2 left-2 p-3 rounded-full cursor-pointer hover:bg-white/10`}>
+                <div onClick={handleShowMainCustomize} className={`${(currentSection === CUSTOMIZE_SECTIONS.MAIN) ? 'hidden' : 'block'} fixed top-2 left-2 p-3 rounded-full cursor-pointer hover:bg-white/10 text-white`}>
                     <IoMdArrowRoundBack size={30} />
                 </div>
 
                 {currentSection === CUSTOMIZE_SECTIONS.MAIN &&
                     (
-                        <div className='flex w-[40vw] h-[50vh] grid grid-cols-2 gap-8 items-center justify-center text-center text-2xl rounded-xl'>
+                        <div className='flex w-[40vw] h-[50vh] grid grid-cols-2 gap-8 items-center justify-center text-center text-2xl rounded-xl text-white'>
                             {Object.values(CUSTOMIZE_SECTIONS).filter(section => section !== CUSTOMIZE_SECTIONS.MAIN).map((section) => (
                                 <div key={section} onClick={() => handleChangeSection(section)} className='col-span-1 flex w-full h-full border-4 border-black/10 rounded-xl items-center justify-center text-center cursor-pointer bg-white text-black hover:bg-white/80 ease-in duration-100'>
                                     {section.toLowerCase()}
@@ -84,7 +84,7 @@ export const Customize = ({ onClose, currFood, setCurrFood, foodItems, setFoodIt
                 }
 
                 {currentSection === CUSTOMIZE_SECTIONS.FOOD && (
-                    <div className='flex flex-col w-full h-full items-center justify-center text-center'>
+                    <div className='flex flex-col w-full h-full items-center justify-center text-center text-white'>
                         <div className='py-4 text-2xl'>
                             select food items to display
                         </div>
@@ -129,7 +129,7 @@ export const Customize = ({ onClose, currFood, setCurrFood, foodItems, setFoodIt
                 )}
 
                 {currentSection === CUSTOMIZE_SECTIONS.LOCATIONS && (
-                    <div className='flex flex-col w-full h-full items-center justify-center text-center'>
+                    <div className='flex flex-col w-full h-full items-center justify-center text-center text-white'>
                         <div className='py-4 text-2xl'>
                             set location
                         </div>
@@ -159,7 +159,7 @@ export const Customize = ({ onClose, currFood, setCurrFood, foodItems, setFoodIt
                 )}
 
                 {currentSection === CUSTOMIZE_SECTIONS.TOYS && (
-                    <div className='flex flex-col w-full h-full items-center justify-center text-center'>
+                    <div className='flex flex-col w-full h-full items-center justify-center text-center text-white'>
                         <div className='py-4 text-2xl'>
                             coming soon!
                         </div>
@@ -167,7 +167,7 @@ export const Customize = ({ onClose, currFood, setCurrFood, foodItems, setFoodIt
                 )}
 
                 {currentSection === CUSTOMIZE_SECTIONS.COSMETICS && (
-                    <div className='flex flex-col w-full h-full items-center justify-center text-center'>
+                    <div className='flex flex-col w-full h-full items-center justify-center text-center text-white'>
 
                         <div className='my-2 w-[40vw] bg-white/10 hover:bg-white/20 ease-in duration-100 rounded-xl items-center justify-center flex flex-col cursor-pointer' onClick={() => setActiveCosmeticType(activeCosmeticType !== 'head' ? 'head' : null)}>
                             <div className='py-4 text-xl'>

@@ -497,6 +497,7 @@ export default function Pet() {
     },
     body: {
       'shirt-01': { price: 0, unlocked: true, owned: true, name: 'shirt 1', location: 'living room', level: 0, task: 0, earn: 0 },
+      'futuristic-01': { price: 100, unlocked: false, owned: false, name: 'hi-tech 1', location: 'city', level: 0, task: 0, earn: 0 },
     },
     equipped: {
       head: 'pointed-hat',
@@ -916,6 +917,7 @@ export default function Pet() {
         },
         body: {
           'shirt-01': { price: 0, unlocked: true, owned: true, name: 'shirt 1', location: 'living room', level: 0, task: 0, earn: 0 },
+          'futuristic-01': { price: 100, unlocked: false, owned: false, name: 'hi-tech 1', location: 'city', level: 0, task: 0, earn: 0 },
         },
         equipped: {
           head: 'pointed-hat',
@@ -993,6 +995,7 @@ export default function Pet() {
         },
         body: {
           'shirt-01': { price: 0, unlocked: true, owned: true, name: 'shirt 1', location: 'living room', level: 0, task: 0, earn: 0 },
+          'futuristic-01': { price: 100, unlocked: false, owned: false, name: 'hi-tech 1', location: 'city', level: 0, task: 0, earn: 0 },
         },
         equipped: {
           head: 'pointed-hat',
