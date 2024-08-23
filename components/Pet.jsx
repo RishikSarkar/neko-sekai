@@ -1007,269 +1007,305 @@ export default function Pet() {
   }
 
 
+  const [isLandscape, setIsLandscape] = useState(true);
+
+  useEffect(() => {
+    const checkOrientation = () => {
+      setIsLandscape(window.innerWidth > window.innerHeight);
+    };
+
+    checkOrientation();
+    window.addEventListener('resize', checkOrientation);
+
+    return () => window.removeEventListener('resize', checkOrientation);
+  }, []);
+
+  const landscapePrompt = (
+    <div className="fixed inset-0 bg-black text-white text-center font-square select-none flex items-center justify-center p-12 text-xl z-50">
+      please use landscape mode for the best experience!
+    </div>
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLandscape(window.innerWidth > window.innerHeight);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+
   return (
-    <div id='pet' className='bg-white w-full h-screen font-square select-none'>
-      <div className='w-full h-full flex flex-col items-center justify-center text-center'>
+    <div>
+      {!isLandscape && landscapePrompt}
+      {isLandscape && (
+        <div>
+          <div id='pet' className='bg-white w-full h-screen font-square select-none'>
+            <div className='w-full h-full flex flex-col items-center justify-center text-center'>
 
-        <div className='fixed top-0 left-0 h-[15vh] w-full grid grid-cols-7 gap-4 border-8 border-black z-50'>
+              <div className='fixed top-0 left-0 h-[15vh] w-full grid grid-cols-7 gap-4 border-8 border-black z-50'>
 
-          <div onClick={handleResetClick} className='col-span-1 px-8 flex justify-center items-center text-white text-xl cursor-pointer'>
-            Reset
-          </div>
-
-          <div className='col-span-2' />
-
-          <div className='col-span-1 bg-black flex justify-center items-center text-white/80 text-sm px-4'>
-            <span className='animate-pulse'>{notification}</span>
-          </div>
-
-          <div className='col-span-1 px-8 flex flex-col justify-center items-center text-white text-xl'>
-            <span className='text-lg'>time left</span>
-            <span>{timeLeft}</span>
-          </div>
-
-          <div className='col-span-1 px-8 flex grid grid-cols-5 justify-center bg-white/10 items-center text-white text-xl border-l-8 border-r-8 border-white/10'>
-            <div className='col-span-1'>
-              <MdOutlineAttachMoney size={30} />
-            </div>
-            <div className='col-span-3'>
-              {`${currCoins}`}
-            </div>
-            <div className='col-span-1'>
-              <span className={`${coinCurrentlyIncreasing ? 'block' : 'hidden'} text-sm text-white/50`}>
-                +{`${coinIncrease}`}
-              </span>
-            </div>
-          </div>
-
-          <div onClick={cheatCode} className='col-span-1 px-8 flex justify-center items-center text-white text-xl'>
-            {`${currUser}`}
-          </div>
-
-        </div>
-
-
-        <div className='w-full h-[60vh] items-center justify-center text-center grid grid-cols-4 gap-8'>
-
-          <div className='h-full max-h-[60vh] col-span-1 bg-black/90 border-8 border-black ml-8 items-center justify-center text-black rounded-xl'>
-            <div className='h-full px-4'>
-              <div className='text-2xl text-black bg-white py-4 my-4 rounded-xl flex items-center justify-between'>
-                {petNameEditing ? (
-                  <input type='text' value={tempPetName} onChange={handlePetNameChange} onBlur={handlePetBlur} autoFocus className='text-2xl text-center mx-4 w-full animate-pulse font-bold selection:text-white selection:bg-black focus:outline-none' onKeyDown={(event) => { if (event.key === 'Enter') { handlePetBlur(); } }} />
-                ) : (
-                  <>
-                    <span className='flex-1 text-center ml-16 mr-8 truncate font-bold'>{petName}</span>
-                    <MdEdit onClick={togglePetEditMode} className='mr-4 cursor-pointer' size={16} />
-                  </>
-                )}
-              </div>
-              <div className='text-lg bg-white py-4 px-4 my-4 rounded-xl'>
-                level {currLevel}
-                <div className='w-full border-4 border-black bg-black/10 mt-2'>
-                  <div className='bg-black/50 text-[10px] py-1 leading-none text-center text-white ease-in duration-200' style={{ width: `${(levelProgress / levelXPNeeded) * 100}%` }} />
+                <div onClick={handleResetClick} className='col-span-1 px-8 flex justify-center items-center text-white text-xl cursor-pointer'>
+                  Reset
                 </div>
-                <div className='text-xs py-1'>
-                  {levelStatus || `${levelProgress}/${levelXPNeeded} XP`}
+
+                <div className='col-span-2' />
+
+                <div className='col-span-1 bg-black flex justify-center items-center text-white/80 text-sm px-4'>
+                  <span className='animate-pulse'>{notification}</span>
                 </div>
+
+                <div className='col-span-1 px-8 flex flex-col justify-center items-center text-white text-xl'>
+                  <span className='text-lg'>time left</span>
+                  <span>{timeLeft}</span>
+                </div>
+
+                <div className='col-span-1 px-8 flex grid grid-cols-5 justify-center bg-white/10 items-center text-white text-xl border-l-8 border-r-8 border-white/10'>
+                  <div className='col-span-1'>
+                    <MdOutlineAttachMoney size={30} />
+                  </div>
+                  <div className='col-span-3'>
+                    {`${currCoins}`}
+                  </div>
+                  <div className='col-span-1'>
+                    <span className={`${coinCurrentlyIncreasing ? 'block' : 'hidden'} text-sm text-white/50`}>
+                      +{`${coinIncrease}`}
+                    </span>
+                  </div>
+                </div>
+
+                <div onClick={cheatCode} className='col-span-1 px-8 flex justify-center items-center text-white text-xl'>
+                  {`${currUser}`}
+                </div>
+
               </div>
-              <div className='text-lg bg-white py-4 my-4 rounded-xl bg-white'>
-                favorite food: <span className='font-bold text-black/80 animate-pulse'>{favoriteFood}</span>
-              </div>
-              <div onClick={() => setShowCustomize(true)} className='text-lg bg-white py-8 my-4 rounded-xl cursor-pointer hover:bg-white/80 ease-in duration-100'>
-                customize
-              </div>
-            </div>
-          </div>
 
-          <div className='h-full border-[20px] col-span-2 border-black rounded-xl'>
-            <div className='h-[90%] flex bg-white items-end justify-center'>
-              <div className='z-10 relative w-full h-full bg-black/20'>
 
-                <Image
-                  src={`/assets/backgrounds/${currBg}-${bgTime}.gif`}
-                  fill
-                />
+              <div className='w-full h-[60vh] items-center justify-center text-center grid grid-cols-4 gap-8'>
 
-                <div
-                  className='z-20 absolute bottom-1 left-1/2 transform -translate-x-1/2'
-                  style={{
-                    width: `${currLevel >= 5 ? 200 : 180}px`,
-                    height: `${currLevel >= 5 ? 200 : 180}px`
-                  }}>
+                <div className='h-full max-h-[60vh] col-span-1 bg-black/90 border-8 border-black ml-8 items-center justify-center text-black rounded-xl'>
+                  <div className='h-full px-4'>
+                    <div className='text-2xl text-black bg-white py-4 my-4 rounded-xl flex items-center justify-between'>
+                      {petNameEditing ? (
+                        <input type='text' value={tempPetName} onChange={handlePetNameChange} onBlur={handlePetBlur} autoFocus className='text-2xl text-center mx-4 w-full animate-pulse font-bold selection:text-white selection:bg-black focus:outline-none' onKeyDown={(event) => { if (event.key === 'Enter') { handlePetBlur(); } }} />
+                      ) : (
+                        <>
+                          <span className='flex-1 text-center ml-16 mr-8 truncate font-bold'>{petName}</span>
+                          <MdEdit onClick={togglePetEditMode} className='mr-4 cursor-pointer' size={16} />
+                        </>
+                      )}
+                    </div>
+                    <div className='text-lg bg-white py-4 px-4 my-4 rounded-xl'>
+                      level {currLevel}
+                      <div className='w-full border-4 border-black bg-black/10 mt-2'>
+                        <div className='bg-black/50 text-[10px] py-1 leading-none text-center text-white ease-in duration-200' style={{ width: `${(levelProgress / levelXPNeeded) * 100}%` }} />
+                      </div>
+                      <div className='text-xs py-1'>
+                        {levelStatus || `${levelProgress}/${levelXPNeeded} XP`}
+                      </div>
+                    </div>
+                    <div className='text-lg bg-white py-4 my-4 rounded-xl bg-white'>
+                      favorite food: <span className='font-bold text-black/80 animate-pulse'>{favoriteFood}</span>
+                    </div>
+                    <div onClick={() => setShowCustomize(true)} className='text-lg bg-white py-8 my-4 rounded-xl cursor-pointer hover:bg-white/80 ease-in duration-100'>
+                      customize
+                    </div>
+                  </div>
+                </div>
 
-                  <Image
-                    src={animations.base[currentAnimation].sequence[frameIndex]}
-                    alt='Pet'
-                    fill
-                    unoptimized={true}
-                    onClick={petHead}
-                    className='cursor-pointer absolute'
-                  />
+                <div className='h-full border-[20px] col-span-2 border-black rounded-xl'>
+                  <div className='h-[90%] flex bg-white items-end justify-center'>
+                    <div className='z-10 relative w-full h-full bg-black/20'>
 
-                  {Object.keys(cosmetics.equipped).map(type => {
-                    const itemName = cosmetics.equipped[type];
-                    const shouldRenderAnimation = currentAnimation === 'brush' ? type !== 'head' : true;
-                    if (itemName && animations.cosmetics[type] && animations.cosmetics[type][currentAnimation] && animations.cosmetics[type][currentAnimation].sequence && shouldRenderAnimation) {
-                      return (
+                      <Image
+                        src={`/assets/backgrounds/${currBg}-${bgTime}.gif`}
+                        fill
+                      />
+
+                      <div
+                        className='z-20 absolute bottom-1 left-1/2 transform -translate-x-1/2'
+                        style={{
+                          width: `${currLevel >= 5 ? 200 : 180}px`,
+                          height: `${currLevel >= 5 ? 200 : 180}px`
+                        }}>
+
                         <Image
-                          key={type}
-                          src={animations.cosmetics[type][currentAnimation].sequence[frameIndex]}
-                          alt={`${type}`}
+                          src={animations.base[currentAnimation].sequence[frameIndex]}
+                          alt='Pet'
                           fill
                           unoptimized={true}
                           onClick={petHead}
                           className='cursor-pointer absolute'
                         />
-                      );
-                    }
-                    return null;
-                  })}
+
+                        {Object.keys(cosmetics.equipped).map(type => {
+                          const itemName = cosmetics.equipped[type];
+                          const shouldRenderAnimation = currentAnimation === 'brush' ? type !== 'head' : true;
+                          if (itemName && animations.cosmetics[type] && animations.cosmetics[type][currentAnimation] && animations.cosmetics[type][currentAnimation].sequence && shouldRenderAnimation) {
+                            return (
+                              <Image
+                                key={type}
+                                src={animations.cosmetics[type][currentAnimation].sequence[frameIndex]}
+                                alt={`${type}`}
+                                fill
+                                unoptimized={true}
+                                onClick={petHead}
+                                className='cursor-pointer absolute'
+                              />
+                            );
+                          }
+                          return null;
+                        })}
+
+                      </div>
+
+                      {showFood && (
+                        <div className='z-40 absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50 text-black'>
+                          <Image
+                            src={animations.base.food.sequence[frameIndex]}
+                            alt='Food'
+                            width={200}
+                            height={200}
+                            unoptimized={true}
+                          />
+                        </div>
+                      )}
+
+                      {showLevelUpArrow && (
+                        <div className='z-40 absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50 text-black'>
+                          <Image
+                            src={animations.base.level_up_arrow.sequence[frameIndex]}
+                            alt='^'
+                            width={400}
+                            height={400}
+                            unoptimized={true}
+                          />
+                        </div>
+                      )}
+
+                    </div>
+                  </div>
+
+                  <div className='w-full h-[10%] bg-black' />
 
                 </div>
 
-                {showFood && (
-                  <div className='z-40 absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50 text-black'>
-                    <Image
-                      src={animations.base.food.sequence[frameIndex]}
-                      alt='Food'
-                      width={200}
-                      height={200}
-                      unoptimized={true}
-                    />
-                  </div>
-                )}
+                <div className='h-full max-h-[60vh] overflow-y-scroll col-span-1 bg-black/90 border-8 border-black mr-8 items-center justify-center text-black rounded-xl'>
+                  <div className='h-full px-4'>
+                    <div className='text-2xl bg-white py-2 my-4 rounded-xl'>
+                      Tasks
+                    </div>
 
-                {showLevelUpArrow && (
-                  <div className='z-40 absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50 text-black'>
+                    {tasks.map((task) => (
+                      <div key={task.id} className='grid grid-cols-5 gap-2'>
+                        <div className={`${task.completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-2 my-2 rounded-xl rounded-r-none flex ease-in duration-100  max-h-[10vh] overflow-auto`}>
+                          {task.editing ? (
+                            <input type='text' className='w-full bg-transparent px-2 selection:text-white selection:bg-black focus:outline-none' value={task.tempName} onChange={(e) => handleTaskNameChange(e, task.id)} onBlur={() => handleTaskBlur(task.id)} onKeyDown={(e) => { if (e.key === 'Enter') { handleTaskBlur(task.id); } }} autoFocus />
+                          ) : (
+                            <span className='px-2'>{task.name}</span>
+                          )}
+                        </div>
+                        <div onClick={() => { if (task.name === `task ${task.id}`) { toggleTaskEditMode(task.id); } else if (!task.completed && !coinCurrentlyIncreasing) { completeTask(task.id); } }} className={`${task.completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
+                          {task.name === `task ${task.id}` && !task.completed ? (
+                            <MdEdit size={15} />
+                          ) : task.completed ? (
+                            <FaCheck size={15} />
+                          ) : (
+                            `$${task.coins}`
+                          )}
+                        </div>
+                      </div>
+                    ))}
+
+                    <div className='text-white text-sm py-1'>
+                      new task at level {currLevel + (currLevel % 2 + 1)}!
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+
+              <div className='fixed bottom-0 h-[15vh] w-full grid grid-cols-7 gap-4 border-8 border-black z-50'>
+
+                <div className='col-span-2' />
+
+                <div onClick={() => setShowShop(true)} className='col-span-1 bg-black hover:bg-white/10 cursor-pointer flex justify-center items-center text-white text-3xl rounded-xl ease-in duration-100'>
+                  shop
+                </div>
+
+                <div onClick={feedPet} className={`${(isFeeding || foodInventory[currFood] === 0) ? 'bg-white/80 cursor-not-allowed' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 flex justify-center items-center text-black text-3xl rounded-xl ease-in duration-100`}>
+                  feed
+                </div>
+
+                <div className='col-span-1 flex justify-between items-center bg-black relative'>
+                  <div onClick={() => { if (!isFeeding) { changeFood(-1); } }} className={`${isFeeding ? 'cursor-not-allowed' : 'cursor-pointer'} flex justify-start pl-4 w-full`}>
+                    <FaCaretLeft className='text-white' size={20} />
+                  </div>
+                  <div className='text-center ease-in'>
                     <Image
-                      src={animations.base.level_up_arrow.sequence[frameIndex]}
-                      alt='^'
+                      src={`/assets/food/icons/${foodOptions[foodIndex]}.png`}
+                      alt={foodOptions[foodIndex]}
                       width={400}
                       height={400}
                       unoptimized={true}
+                      style={{
+                        opacity: foodInventory[foodOptions[foodIndex]] === 0 ? 0.6 : 1,
+                      }}
                     />
+                    <div className='absolute text-sm bottom-1 left-1/2 transform -translate-x-1/2 text-white bg-white/10 px-2 items-center justify-center text-center'>
+                      {`${foodInventory[foodOptions[foodIndex]]}`}
+                    </div>
                   </div>
-                )}
-
-              </div>
-            </div>
-
-            <div className='w-full h-[10%] bg-black' />
-
-          </div>
-
-          <div className='h-full max-h-[60vh] overflow-y-scroll col-span-1 bg-black/90 border-8 border-black mr-8 items-center justify-center text-black rounded-xl'>
-            <div className='h-full px-4'>
-              <div className='text-2xl bg-white py-2 my-4 rounded-xl'>
-                Tasks
-              </div>
-
-              {tasks.map((task) => (
-                <div key={task.id} className='grid grid-cols-5 gap-2'>
-                  <div className={`${task.completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-2 my-2 rounded-xl rounded-r-none flex ease-in duration-100  max-h-[10vh] overflow-auto`}>
-                    {task.editing ? (
-                      <input type='text' className='w-full bg-transparent px-2 selection:text-white selection:bg-black focus:outline-none' value={task.tempName} onChange={(e) => handleTaskNameChange(e, task.id)} onBlur={() => handleTaskBlur(task.id)} onKeyDown={(e) => { if (e.key === 'Enter') { handleTaskBlur(task.id); } }} autoFocus />
-                    ) : (
-                      <span className='px-2'>{task.name}</span>
-                    )}
-                  </div>
-                  <div onClick={() => { if (task.name === `task ${task.id}`) { toggleTaskEditMode(task.id); } else if (!task.completed && !coinCurrentlyIncreasing) { completeTask(task.id); } }} className={`${task.completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
-                    {task.name === `task ${task.id}` && !task.completed ? (
-                      <MdEdit size={15} />
-                    ) : task.completed ? (
-                      <FaCheck size={15} />
-                    ) : (
-                      `$${task.coins}`
-                    )}
+                  <div onClick={() => { if (!isFeeding) { changeFood(1); } }} className={`${isFeeding ? 'cursor-not-allowed' : 'cursor-pointer'} flex justify-end pr-4 w-full`}>
+                    <FaCaretRight className='text-white' size={20} />
                   </div>
                 </div>
-              ))}
 
-              <div className='text-white text-sm py-1'>
-                new task at level {currLevel + (currLevel % 2 + 1)}!
+                <div className='col-span-2' />
+
               </div>
 
             </div>
-          </div>
 
-        </div>
-
-
-        <div className='fixed bottom-0 h-[15vh] w-full grid grid-cols-7 gap-4 border-8 border-black z-50'>
-
-          <div className='col-span-2' />
-
-          <div onClick={() => setShowShop(true)} className='col-span-1 bg-black hover:bg-white/10 cursor-pointer flex justify-center items-center text-white text-3xl rounded-xl ease-in duration-100'>
-            shop
-          </div>
-
-          <div onClick={feedPet} className={`${(isFeeding || foodInventory[currFood] === 0) ? 'bg-white/80 cursor-not-allowed' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 flex justify-center items-center text-black text-3xl rounded-xl ease-in duration-100`}>
-            feed
-          </div>
-
-          <div className='col-span-1 flex justify-between items-center bg-black relative'>
-            <div onClick={() => { if (!isFeeding) { changeFood(-1); } }} className={`${isFeeding ? 'cursor-not-allowed' : 'cursor-pointer'} flex justify-start pl-4 w-full`}>
-              <FaCaretLeft className='text-white' size={20} />
-            </div>
-            <div className='text-center ease-in'>
-              <Image
-                src={`/assets/food/icons/${foodOptions[foodIndex]}.png`}
-                alt={foodOptions[foodIndex]}
-                width={400}
-                height={400}
-                unoptimized={true}
-                style={{
-                  opacity: foodInventory[foodOptions[foodIndex]] === 0 ? 0.6 : 1,
-                }}
+            {showShop &&
+              <Shop onClose={() => setShowShop(false)}
+                currCoins={currCoins}
+                setCurrCoins={setCurrCoins}
+                setTargetCoins={setTargetCoins}
+                foodItems={foodItems}
+                setFoodItems={setFoodItems}
+                favoriteFood={favoriteFood}
+                locations={locations}
+                setLocations={setLocations}
+                setCurrBg={setCurrBg}
+                cosmetics={cosmetics}
+                setCosmetics={setCosmetics}
+                equipCosmetic={equipCosmetic}
               />
-              <div className='absolute text-sm bottom-1 left-1/2 transform -translate-x-1/2 text-white bg-white/10 px-2 items-center justify-center text-center'>
-                {`${foodInventory[foodOptions[foodIndex]]}`}
-              </div>
-            </div>
-            <div onClick={() => { if (!isFeeding) { changeFood(1); } }} className={`${isFeeding ? 'cursor-not-allowed' : 'cursor-pointer'} flex justify-end pr-4 w-full`}>
-              <FaCaretRight className='text-white' size={20} />
-            </div>
+            }
+
+            {showCustomize &&
+              <Customize onClose={() => setShowCustomize(false)}
+                currFood={currFood}
+                setCurrFood={setCurrFood}
+                foodItems={foodItems}
+                setFoodItems={setFoodItems}
+                favoriteFood={favoriteFood}
+                locations={locations}
+                setLocations={setLocations}
+                currBg={currBg}
+                setCurrBg={setCurrBg}
+                cosmetics={cosmetics}
+                equipCosmetic={equipCosmetic}
+              />
+            }
+
           </div>
-
-          <div className='col-span-2' />
-
         </div>
-
-      </div>
-
-      {showShop &&
-        <Shop onClose={() => setShowShop(false)}
-          currCoins={currCoins}
-          setCurrCoins={setCurrCoins}
-          setTargetCoins={setTargetCoins}
-          foodItems={foodItems}
-          setFoodItems={setFoodItems}
-          favoriteFood={favoriteFood}
-          locations={locations}
-          setLocations={setLocations}
-          setCurrBg={setCurrBg}
-          cosmetics={cosmetics}
-          setCosmetics={setCosmetics}
-          equipCosmetic={equipCosmetic}
-        />
-      }
-
-      {showCustomize &&
-        <Customize onClose={() => setShowCustomize(false)}
-          currFood={currFood}
-          setCurrFood={setCurrFood}
-          foodItems={foodItems}
-          setFoodItems={setFoodItems}
-          favoriteFood={favoriteFood}
-          locations={locations}
-          setLocations={setLocations}
-          currBg={currBg}
-          setCurrBg={setCurrBg}
-          cosmetics={cosmetics}
-          equipCosmetic={equipCosmetic}
-        />
-      }
-
+      )}
     </div>
   );
 }
