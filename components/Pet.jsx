@@ -1046,7 +1046,7 @@ export default function Pet() {
 
               <div className='fixed top-0 left-0 h-[15vh] w-full grid grid-cols-7 gap-4 border-8 border-black z-50'>
 
-                <div onClick={handleResetClick} className='col-span-1 px-8 flex justify-center items-center text-white text-xl cursor-pointer'>
+                <div onClick={handleResetClick} className='col-span-1 lg:px-8 flex justify-center items-center text-white lg:text-xl cursor-pointer px-0 text-sm'>
                   Reset
                 </div>
 
@@ -1056,26 +1056,29 @@ export default function Pet() {
                   <span className='animate-pulse'>{notification}</span>
                 </div>
 
-                <div className='col-span-1 px-8 flex flex-col justify-center items-center text-white text-xl'>
-                  <span className='text-lg'>time left</span>
+                <div className='col-span-1 lg:px-8 flex flex-col justify-center items-center text-white lg:text-xl px-0 text-sm'>
+                  <span className='lg:text-lg text-xs'>time left</span>
                   <span>{timeLeft}</span>
                 </div>
 
-                <div className='col-span-1 px-8 flex grid grid-cols-5 justify-center bg-white/10 items-center text-white text-xl border-l-8 border-r-8 border-white/10'>
-                  <div className='col-span-1'>
+                <div className='col-span-1 lg:px-8 px-2 flex grid grid-cols-5 justify-center bg-white/10 items-center text-white lg:text-xl text-sm border-l-8 border-r-8 border-white/10'>
+                  <div className='col-span-1 hidden lg:block'>
                     <MdOutlineAttachMoney size={30} />
+                  </div>
+                  <div className='col-span-1 lg:hidden block'>
+                    <MdOutlineAttachMoney size={20} />
                   </div>
                   <div className='col-span-3'>
                     {`${currCoins}`}
                   </div>
                   <div className='col-span-1'>
-                    <span className={`${coinCurrentlyIncreasing ? 'block' : 'hidden'} text-sm text-white/50`}>
+                    <span className={`${coinCurrentlyIncreasing ? 'block' : 'hidden'} lg:text-sm text-xs text-white/50`}>
                       +{`${coinIncrease}`}
                     </span>
                   </div>
                 </div>
 
-                <div onClick={cheatCode} className='col-span-1 px-8 flex justify-center items-center text-white text-xl'>
+                <div onClick={cheatCode} className='col-span-1 lg:px-8 px-0 flex justify-center items-center text-white lg:text-xl text-sm'>
                   {`${currUser}`}
                 </div>
 
@@ -1085,30 +1088,30 @@ export default function Pet() {
               <div className='w-full h-[60vh] items-center justify-center text-center grid grid-cols-4 gap-8'>
 
                 <div className='h-full max-h-[60vh] col-span-1 bg-black/90 border-8 border-black ml-8 items-center justify-center text-black rounded-xl'>
-                  <div className='h-full px-4'>
-                    <div className='text-2xl text-black bg-white py-4 my-4 rounded-xl flex items-center justify-between'>
+                  <div className='h-full lg:px-4 mx-1 lg:mx-0'>
+                    <div className='lg:text-2xl text-md text-black bg-white lg:py-4 py-1 lg:my-4 my-1 rounded-xl flex items-center justify-between'>
                       {petNameEditing ? (
-                        <input type='text' value={tempPetName} onChange={handlePetNameChange} onBlur={handlePetBlur} autoFocus className='text-2xl text-center mx-4 w-full animate-pulse font-bold selection:text-white selection:bg-black focus:outline-none' onKeyDown={(event) => { if (event.key === 'Enter') { handlePetBlur(); } }} />
+                        <input type='text' value={tempPetName} onChange={handlePetNameChange} onBlur={handlePetBlur} autoFocus className='lg:text-2xl text-sm text-center lg:mx-4 w-full animate-pulse font-bold selection:text-white selection:bg-black focus:outline-none' onKeyDown={(event) => { if (event.key === 'Enter') { handlePetBlur(); } }} />
                       ) : (
                         <>
-                          <span className='flex-1 text-center ml-16 mr-8 truncate font-bold'>{petName}</span>
-                          <MdEdit onClick={togglePetEditMode} className='mr-4 cursor-pointer' size={16} />
+                          <span className='flex-1 text-center lg:ml-16 ml-2 lg:mr-8 mr-1 truncate font-bold'>{petName}</span>
+                          <MdEdit onClick={togglePetEditMode} className='lg:mr-4 mr-1 cursor-pointer' size={16} />
                         </>
                       )}
                     </div>
-                    <div className='text-lg bg-white py-4 px-4 my-4 rounded-xl'>
+                    <div className='lg:text-lg text-sm bg-white lg:py-4 py-1 lg:px-4 px-1 lg:my-4 my-2 rounded-xl'>
                       level {currLevel}
-                      <div className='w-full border-4 border-black bg-black/10 mt-2'>
+                      <div className='w-full lg:border-4 border-2 border-black bg-black/10 lg:mt-2 mt-1'>
                         <div className='bg-black/50 text-[10px] py-1 leading-none text-center text-white ease-in duration-200' style={{ width: `${(levelProgress / levelXPNeeded) * 100}%` }} />
                       </div>
-                      <div className='text-xs py-1'>
+                      <div className='lg:text-xs text-[10px] lg:py-1'>
                         {levelStatus || `${levelProgress}/${levelXPNeeded} XP`}
                       </div>
                     </div>
-                    <div className='text-lg bg-white py-4 my-4 rounded-xl bg-white'>
+                    <div className='lg:text-lg text-sm bg-white lg:py-4 py-1 lg:my-4 rounded-xl bg-white'>
                       favorite food: <span className='font-bold text-black/80 animate-pulse'>{favoriteFood}</span>
                     </div>
-                    <div onClick={() => setShowCustomize(true)} className='text-lg bg-white py-8 my-4 rounded-xl cursor-pointer hover:bg-white/80 ease-in duration-100'>
+                    <div onClick={() => setShowCustomize(true)} className='lg:text-lg text-sm bg-white lg:py-8 py-4 lg:my-4 my-2 rounded-xl cursor-pointer hover:bg-white/80 ease-in duration-100'>
                       customize
                     </div>
                   </div>
@@ -1116,7 +1119,7 @@ export default function Pet() {
 
                 <div className='h-full border-[20px] col-span-2 border-black rounded-xl'>
                   <div className='h-[90%] flex bg-white items-end justify-center'>
-                    <div className='z-10 relative w-full h-full bg-black/20'>
+                    <div className='z-10 hidden lg:block relative w-full h-full bg-black/20'>
 
                       <Image
                         src={`/assets/backgrounds/${currBg}-${bgTime}.gif`}
@@ -1185,6 +1188,76 @@ export default function Pet() {
                       )}
 
                     </div>
+
+                    <div className='lg:hidden block z-10 relative w-full h-full bg-black/20'>
+
+                      <Image
+                        src={`/assets/backgrounds/${currBg}-${bgTime}.gif`}
+                        fill
+                      />
+
+                      <div
+                        className='z-20 absolute bottom-1 left-1/2 transform -translate-x-1/2'
+                        style={{
+                          width: `${currLevel >= 5 ? 120 : 100}px`,
+                          height: `${currLevel >= 5 ? 120 : 100}px`
+                        }}>
+
+                        <Image
+                          src={animations.base[currentAnimation].sequence[frameIndex]}
+                          alt='Pet'
+                          fill
+                          unoptimized={true}
+                          onClick={petHead}
+                          className='cursor-pointer absolute'
+                        />
+
+                        {Object.keys(cosmetics.equipped).map(type => {
+                          const itemName = cosmetics.equipped[type];
+                          const shouldRenderAnimation = currentAnimation === 'brush' ? type !== 'head' : true;
+                          if (itemName && animations.cosmetics[type] && animations.cosmetics[type][currentAnimation] && animations.cosmetics[type][currentAnimation].sequence && shouldRenderAnimation) {
+                            return (
+                              <Image
+                                key={type}
+                                src={animations.cosmetics[type][currentAnimation].sequence[frameIndex]}
+                                alt={`${type}`}
+                                fill
+                                unoptimized={true}
+                                onClick={petHead}
+                                className='cursor-pointer absolute'
+                              />
+                            );
+                          }
+                          return null;
+                        })}
+
+                      </div>
+
+                      {showFood && (
+                        <div className='z-40 absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50 text-black'>
+                          <Image
+                            src={animations.base.food.sequence[frameIndex]}
+                            alt='Food'
+                            width={120}
+                            height={120}
+                            unoptimized={true}
+                          />
+                        </div>
+                      )}
+
+                      {showLevelUpArrow && (
+                        <div className='z-40 absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50 text-black'>
+                          <Image
+                            src={animations.base.level_up_arrow.sequence[frameIndex]}
+                            alt='^'
+                            width={240}
+                            height={240}
+                            unoptimized={true}
+                          />
+                        </div>
+                      )}
+
+                    </div>
                   </div>
 
                   <div className='w-full h-[10%] bg-black' />
@@ -1192,21 +1265,21 @@ export default function Pet() {
                 </div>
 
                 <div className='h-full max-h-[60vh] overflow-y-scroll col-span-1 bg-black/90 border-8 border-black mr-8 items-center justify-center text-black rounded-xl'>
-                  <div className='h-full px-4'>
-                    <div className='text-2xl bg-white py-2 my-4 rounded-xl'>
+                  <div className='h-full lg:px-4 px-1'>
+                    <div className='lg:text-2xl text-md bg-white lg:py-2 py-1 lg:my-4 my-1 rounded-xl'>
                       Tasks
                     </div>
 
                     {tasks.map((task) => (
-                      <div key={task.id} className='grid grid-cols-5 gap-2'>
-                        <div className={`${task.completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 text-lg text-left py-2 px-2 my-2 rounded-xl rounded-r-none flex ease-in duration-100  max-h-[10vh] overflow-auto`}>
+                      <div key={task.id} className='grid grid-cols-5 lg:gap-2 gap-1'>
+                        <div className={`${task.completed ? 'line-through bg-white/20 text-white' : 'bg-white/90'} col-span-4 lg:text-lg text-sm text-left lg:py-2 py-1 lg:px-2 px-1 lg:my-2 my-1 rounded-xl rounded-r-none flex items-center ease-in duration-100 lg:h-12 h-8 max-h-[10vh] overflow-auto`}>
                           {task.editing ? (
-                            <input type='text' className='w-full bg-transparent px-2 selection:text-white selection:bg-black focus:outline-none' value={task.tempName} onChange={(e) => handleTaskNameChange(e, task.id)} onBlur={() => handleTaskBlur(task.id)} onKeyDown={(e) => { if (e.key === 'Enter') { handleTaskBlur(task.id); } }} autoFocus />
+                            <input type='text' className='w-full bg-transparent lg:px-2 px-1 selection:text-white selection:bg-black focus:outline-none' value={task.tempName} onChange={(e) => handleTaskNameChange(e, task.id)} onBlur={() => handleTaskBlur(task.id)} onKeyDown={(e) => { if (e.key === 'Enter') { handleTaskBlur(task.id); } }} autoFocus />
                           ) : (
-                            <span className='px-2'>{task.name}</span>
+                            <span className='lg:px-2 px-1'>{task.name}</span>
                           )}
                         </div>
-                        <div onClick={() => { if (task.name === `task ${task.id}`) { toggleTaskEditMode(task.id); } else if (!task.completed && !coinCurrentlyIncreasing) { completeTask(task.id); } }} className={`${task.completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center py-2 px-4 my-2 rounded-xl rounded-l-none flex items-center justify-center ease-in duration-100`}>
+                        <div onClick={() => { if (task.name === `task ${task.id}`) { toggleTaskEditMode(task.id); } else if (!task.completed && !coinCurrentlyIncreasing) { completeTask(task.id); } }} className={`${task.completed ? 'bg-white/20 text-white' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 text-sm text-center lg:py-2 py-1 lg:px-4 px-1 lg:my-2 my-1 rounded-xl rounded-l-none flex items-center justify-center lg:h-12 h-8 ease-in duration-100`}>
                           {task.name === `task ${task.id}` && !task.completed ? (
                             <MdEdit size={15} />
                           ) : task.completed ? (
@@ -1218,7 +1291,7 @@ export default function Pet() {
                       </div>
                     ))}
 
-                    <div className='text-white text-sm py-1'>
+                    <div className='text-white lg:text-sm text-xs py-1'>
                       new task at level {currLevel + (currLevel % 2 + 1)}!
                     </div>
 
@@ -1232,16 +1305,16 @@ export default function Pet() {
 
                 <div className='col-span-2' />
 
-                <div onClick={() => setShowShop(true)} className='col-span-1 bg-black hover:bg-white/10 cursor-pointer flex justify-center items-center text-white text-3xl rounded-xl ease-in duration-100'>
+                <div onClick={() => setShowShop(true)} className='col-span-1 bg-black hover:bg-white/10 cursor-pointer flex justify-center items-center text-white lg:text-3xl text-xl rounded-xl ease-in duration-100'>
                   shop
                 </div>
 
-                <div onClick={feedPet} className={`${(isFeeding || foodInventory[currFood] === 0) ? 'bg-white/80 cursor-not-allowed' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 flex justify-center items-center text-black text-3xl rounded-xl ease-in duration-100`}>
+                <div onClick={feedPet} className={`${(isFeeding || foodInventory[currFood] === 0) ? 'bg-white/80 cursor-not-allowed' : 'bg-white hover:bg-white/80 cursor-pointer'} col-span-1 flex justify-center items-center text-black lg:text-3xl text-xl rounded-xl ease-in duration-100`}>
                   feed
                 </div>
 
                 <div className='col-span-1 flex justify-between items-center bg-black relative'>
-                  <div onClick={() => { if (!isFeeding) { changeFood(-1); } }} className={`${isFeeding ? 'cursor-not-allowed' : 'cursor-pointer'} flex justify-start pl-4 w-full`}>
+                  <div onClick={() => { if (!isFeeding) { changeFood(-1); } }} className={`${isFeeding ? 'cursor-not-allowed' : 'cursor-pointer'} flex justify-start lg:pl-4 w-full`}>
                     <FaCaretLeft className='text-white' size={20} />
                   </div>
                   <div className='text-center ease-in'>
@@ -1255,7 +1328,7 @@ export default function Pet() {
                         opacity: foodInventory[foodOptions[foodIndex]] === 0 ? 0.6 : 1,
                       }}
                     />
-                    <div className='absolute text-sm bottom-1 left-1/2 transform -translate-x-1/2 text-white bg-white/10 px-2 items-center justify-center text-center'>
+                    <div className='absolute lg:text-sm text-xs bottom-1 lg:left-1/2 transform lg:-translate-x-1/2 translate-x-4 lg:translate-y-0 translate-y-1/2 text-white bg-white/10 lg:px-2 px-1 items-center justify-center text-center'>
                       {`${foodInventory[foodOptions[foodIndex]]}`}
                     </div>
                   </div>
