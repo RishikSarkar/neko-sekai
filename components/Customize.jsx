@@ -65,10 +65,10 @@ export const Customize = ({ onClose, currFood, setCurrFood, foodItems, setFoodIt
             <div className='fixed bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 lg:w-[60vw] w-[70vw] lg:h-[90vh] h-[80vh] bg-black/90 z-[51] rounded-xl flex justify-center items-center text-center lg:border-8 border-4 border-white'>
 
                 <div onClick={onClose} className='fixed top-2 right-2 p-4 rounded-full cursor-pointer hover:bg-white/10 text-white'>
-                    <ImCross size={20} />
+                    <ImCross className='lg:text-[20px] text-[15px]' />
                 </div>
                 <div onClick={handleShowMainCustomize} className={`${(currentSection === CUSTOMIZE_SECTIONS.MAIN) ? 'hidden' : 'block'} fixed top-2 left-2 p-3 rounded-full cursor-pointer hover:bg-white/10 text-white`}>
-                    <IoMdArrowRoundBack size={30} />
+                    <IoMdArrowRoundBack className='lg:text-[30px] text-[25px]' />
                 </div>
 
                 {currentSection === CUSTOMIZE_SECTIONS.MAIN &&
