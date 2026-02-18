@@ -1,0 +1,496 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Pet > matches snapshot 1`] = `
+<div>
+  <div>
+    <div>
+      <div
+        class="bg-white w-full h-screen font-square select-none"
+        id="pet"
+      >
+        <div
+          class="w-full h-full flex flex-col items-center justify-center text-center"
+        >
+          <div
+            class="fixed top-0 left-0 h-[15vh] w-full grid grid-cols-7 gap-4 border-8 border-black z-50"
+          >
+            <div
+              class="col-span-1 lg:px-8 flex justify-center items-center text-white lg:text-xl cursor-pointer px-0 text-sm"
+            >
+              Reset
+            </div>
+            <div
+              class="col-span-2"
+            />
+            <div
+              class="col-span-1 bg-black flex justify-center items-center text-white/80 text-sm px-4"
+            >
+              <span
+                class="animate-pulse"
+              />
+            </div>
+            <div
+              class="col-span-1 lg:px-8 flex flex-col justify-center items-center text-white lg:text-xl px-0 text-sm"
+            >
+              <span
+                class="lg:text-lg text-xs"
+              >
+                time left
+              </span>
+              <span />
+            </div>
+            <div
+              class="col-span-1 lg:px-8 px-2 flex grid grid-cols-5 justify-center bg-white/10 items-center text-white lg:text-xl text-sm border-l-8 border-r-8 border-white/10"
+            >
+              <div
+                class="col-span-1 hidden lg:block"
+              >
+                <svg
+                  fill="currentColor"
+                  height="30"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="30"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0V0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="col-span-1 lg:hidden block"
+              >
+                <svg
+                  fill="currentColor"
+                  height="20"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0V0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="col-span-3"
+              >
+                0
+              </div>
+              <div
+                class="col-span-1"
+              >
+                <span
+                  class="hidden lg:text-sm text-xs text-white/50"
+                >
+                  +
+                  0
+                </span>
+              </div>
+            </div>
+            <div
+              class="col-span-1 lg:px-8 px-0 flex justify-center items-center text-white lg:text-xl text-sm"
+            >
+              friendlyBOT
+            </div>
+          </div>
+          <div
+            class="w-full h-[60vh] items-center justify-center text-center grid grid-cols-4 gap-8"
+          >
+            <div
+              class="h-full max-h-[60vh] col-span-1 bg-black/90 border-8 border-black ml-8 items-center justify-center text-black rounded-xl"
+            >
+              <div
+                class="h-full lg:px-4 mx-1 lg:mx-0"
+              >
+                <div
+                  class="lg:text-2xl text-md text-black bg-white lg:py-4 py-1 lg:my-4 my-1 rounded-xl flex items-center justify-between"
+                >
+                  <span
+                    class="flex-1 text-center lg:ml-16 ml-2 lg:mr-8 mr-1 truncate font-bold"
+                  >
+                    Poofy
+                  </span>
+                  <svg
+                    class="lg:mr-4 mr-1 cursor-pointer"
+                    fill="currentColor"
+                    height="16"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="lg:text-lg text-sm bg-white lg:py-4 py-1 lg:px-4 px-1 lg:my-4 my-2 rounded-xl"
+                >
+                  level
+                   
+                  1
+                  <div
+                    class="w-full lg:border-4 border-2 border-black bg-black/10 lg:mt-2 mt-1"
+                  >
+                    <div
+                      class="bg-black/50 text-[10px] py-1 leading-none text-center text-white ease-in duration-200"
+                      style="width: 0%;"
+                    />
+                  </div>
+                  <div
+                    class="lg:text-xs text-[10px] lg:py-1"
+                  >
+                    0/100 XP
+                  </div>
+                </div>
+                <div
+                  class="lg:text-lg text-sm bg-white lg:py-4 py-1 lg:my-4 rounded-xl bg-white"
+                >
+                  favorite food
+                  : 
+                  <span
+                    class="font-bold text-black/80 animate-pulse"
+                  >
+                    akami
+                  </span>
+                </div>
+                <div
+                  class="lg:text-lg text-sm bg-white lg:py-8 py-4 lg:my-4 my-2 rounded-xl cursor-pointer hover:bg-white/80 ease-in duration-100"
+                >
+                  customize
+                </div>
+              </div>
+            </div>
+            <div
+              class="h-full border-[20px] col-span-2 border-black rounded-xl"
+            >
+              <div
+                class="h-[90%] flex bg-white items-end justify-center"
+              >
+                <div
+                  class="z-10 relative w-full h-full bg-black/20"
+                >
+                  <img
+                    alt=""
+                    src="/assets/backgrounds/livingroom/01/livingroom-01-night.gif"
+                  />
+                  <div
+                    class="z-20 absolute bottom-1 left-1/2 transform -translate-x-1/2 w-[100px] h-[100px] lg:w-[180px] lg:h-[180px]"
+                  >
+                    <img
+                      alt="Pet"
+                      class="cursor-pointer absolute"
+                      src="/assets/sprites/cat/01/cat-01-idle/cat-01-idle1.png"
+                    />
+                    <img
+                      alt="head"
+                      class="cursor-pointer absolute"
+                      src="/assets/cosmetics/head/pointed-hat/pointed-hat-idle/pointed-hat-idle1.png"
+                    />
+                    <img
+                      alt="face"
+                      class="cursor-pointer absolute"
+                      src="/assets/cosmetics/face/glasses-01/glasses-01-idle/glasses-01-idle1.png"
+                    />
+                    <img
+                      alt="body"
+                      class="cursor-pointer absolute"
+                      src="/assets/cosmetics/body/shirt-01/shirt-01-idle/shirt-01-idle1.png"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full h-[10%] bg-black"
+              />
+            </div>
+            <div
+              class="h-full max-h-[60vh] overflow-y-scroll col-span-1 bg-black/90 border-8 border-black mr-8 items-center justify-center text-black rounded-xl"
+            >
+              <div
+                class="h-full lg:px-4 px-1"
+              >
+                <div
+                  class="lg:text-2xl text-md bg-white lg:py-2 py-1 lg:my-4 my-1 rounded-xl"
+                >
+                  Tasks
+                </div>
+                <div
+                  class="grid grid-cols-5 lg:gap-2 gap-1"
+                >
+                  <div
+                    class="bg-white/90 col-span-4 lg:text-lg text-sm text-left lg:py-2 py-1 lg:px-2 px-1 lg:my-2 my-1 rounded-xl rounded-r-none flex items-center ease-in duration-100 lg:h-12 h-8 max-h-[10vh] overflow-auto"
+                  >
+                    <span
+                      class="lg:px-2 px-1"
+                    >
+                      task 1
+                    </span>
+                  </div>
+                  <div
+                    class="bg-white hover:bg-white/80 cursor-pointer col-span-1 text-sm text-center lg:py-2 py-1 lg:px-4 px-1 lg:my-2 my-1 rounded-xl rounded-l-none flex items-center justify-center lg:h-12 h-8 ease-in duration-100"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="15"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="15"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div
+                  class="grid grid-cols-5 lg:gap-2 gap-1"
+                >
+                  <div
+                    class="bg-white/90 col-span-4 lg:text-lg text-sm text-left lg:py-2 py-1 lg:px-2 px-1 lg:my-2 my-1 rounded-xl rounded-r-none flex items-center ease-in duration-100 lg:h-12 h-8 max-h-[10vh] overflow-auto"
+                  >
+                    <span
+                      class="lg:px-2 px-1"
+                    >
+                      task 2
+                    </span>
+                  </div>
+                  <div
+                    class="bg-white hover:bg-white/80 cursor-pointer col-span-1 text-sm text-center lg:py-2 py-1 lg:px-4 px-1 lg:my-2 my-1 rounded-xl rounded-l-none flex items-center justify-center lg:h-12 h-8 ease-in duration-100"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="15"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="15"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div
+                  class="grid grid-cols-5 lg:gap-2 gap-1"
+                >
+                  <div
+                    class="bg-white/90 col-span-4 lg:text-lg text-sm text-left lg:py-2 py-1 lg:px-2 px-1 lg:my-2 my-1 rounded-xl rounded-r-none flex items-center ease-in duration-100 lg:h-12 h-8 max-h-[10vh] overflow-auto"
+                  >
+                    <span
+                      class="lg:px-2 px-1"
+                    >
+                      task 3
+                    </span>
+                  </div>
+                  <div
+                    class="bg-white hover:bg-white/80 cursor-pointer col-span-1 text-sm text-center lg:py-2 py-1 lg:px-4 px-1 lg:my-2 my-1 rounded-xl rounded-l-none flex items-center justify-center lg:h-12 h-8 ease-in duration-100"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="15"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="15"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div
+                  class="grid grid-cols-5 lg:gap-2 gap-1"
+                >
+                  <div
+                    class="bg-white/90 col-span-4 lg:text-lg text-sm text-left lg:py-2 py-1 lg:px-2 px-1 lg:my-2 my-1 rounded-xl rounded-r-none flex items-center ease-in duration-100 lg:h-12 h-8 max-h-[10vh] overflow-auto"
+                  >
+                    <span
+                      class="lg:px-2 px-1"
+                    >
+                      task 4
+                    </span>
+                  </div>
+                  <div
+                    class="bg-white hover:bg-white/80 cursor-pointer col-span-1 text-sm text-center lg:py-2 py-1 lg:px-4 px-1 lg:my-2 my-1 rounded-xl rounded-l-none flex items-center justify-center lg:h-12 h-8 ease-in duration-100"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="15"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="15"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div
+                  class="grid grid-cols-5 lg:gap-2 gap-1"
+                >
+                  <div
+                    class="bg-white/90 col-span-4 lg:text-lg text-sm text-left lg:py-2 py-1 lg:px-2 px-1 lg:my-2 my-1 rounded-xl rounded-r-none flex items-center ease-in duration-100 lg:h-12 h-8 max-h-[10vh] overflow-auto"
+                  >
+                    <span
+                      class="lg:px-2 px-1"
+                    >
+                      task 5
+                    </span>
+                  </div>
+                  <div
+                    class="bg-white hover:bg-white/80 cursor-pointer col-span-1 text-sm text-center lg:py-2 py-1 lg:px-4 px-1 lg:my-2 my-1 rounded-xl rounded-l-none flex items-center justify-center lg:h-12 h-8 ease-in duration-100"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="15"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="15"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div
+                  class="text-white lg:text-sm text-xs py-1"
+                >
+                  new task at level 3!
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="fixed bottom-0 h-[15vh] w-full grid grid-cols-7 gap-4 border-8 border-black z-50"
+          >
+            <div
+              class="col-span-2"
+            />
+            <div
+              class="col-span-1 bg-black hover:bg-white/10 cursor-pointer flex justify-center items-center text-white lg:text-3xl text-xl rounded-xl ease-in duration-100"
+            >
+              shop
+            </div>
+            <div
+              class="bg-white hover:bg-white/80 cursor-pointer col-span-1 flex justify-center items-center text-black lg:text-3xl text-xl rounded-xl ease-in duration-100"
+            >
+              feed
+            </div>
+            <div
+              class="col-span-1 flex justify-between items-center bg-black relative"
+            >
+              <div
+                class="cursor-pointer flex justify-start lg:pl-4 w-full"
+              >
+                <svg
+                  class="text-white"
+                  fill="currentColor"
+                  height="20"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 192 512"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="text-center ease-in"
+              >
+                <img
+                  alt="onigiri"
+                  height="400"
+                  src="/assets/food/icons/onigiri.png"
+                  style="opacity: 1;"
+                  width="400"
+                />
+                <div
+                  class="absolute lg:text-sm text-xs bottom-1 lg:left-1/2 transform lg:-translate-x-1/2 translate-x-4 lg:translate-y-0 translate-y-1/2 text-white bg-white/10 lg:px-2 px-1 items-center justify-center text-center"
+                >
+                  2
+                </div>
+              </div>
+              <div
+                class="cursor-pointer flex justify-end pr-4 w-full"
+              >
+                <svg
+                  class="text-white"
+                  fill="currentColor"
+                  height="20"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 192 512"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
+              class="col-span-2"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

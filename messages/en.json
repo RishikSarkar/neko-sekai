@@ -1,0 +1,26 @@
+{
+  "common": {
+    "reset": "Reset",
+    "shop": "shop",
+    "feed": "feed",
+    "customize": "customize",
+    "tasks": "Tasks",
+    "timeLeft": "time left",
+    "level": "level",
+    "favoriteFood": "favorite food",
+    "newTaskAtLevel": "new task at level {level}!"
+  },
+  "pet": {
+    "defaultName": "Poofy",
+    "feedButton": "feed",
+    "shopButton": "shop"
+  },
+  "landscape": {
+    "prompt": "please use landscape mode for the best experience!"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "message": "The cat got into a bit of trouble. Try refreshing the page.",
+    "tryAgain": "Try again"
+  }
+}

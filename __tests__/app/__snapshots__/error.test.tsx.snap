@@ -1,0 +1,25 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Error > matches snapshot 1`] = `
+<div>
+  <div
+    class="min-h-screen bg-black text-white flex flex-col items-center justify-center p-8 text-center"
+  >
+    <h2
+      class="text-xl font-bold mb-4"
+    >
+      Something went wrong
+    </h2>
+    <p
+      class="text-white/80 mb-6 max-w-md"
+    >
+      The cat got into a bit of trouble. Try refreshing the page.
+    </p>
+    <button
+      class="px-6 py-3 bg-white text-black rounded-xl hover:bg-white/80 transition-colors"
+    >
+      Try again
+    </button>
+  </div>
+</div>
+`;

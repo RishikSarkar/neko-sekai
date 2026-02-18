@@ -1,0 +1,130 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Shop > matches snapshot 1`] = `
+<div>
+  <div
+    class="fixed bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-screen h-screen bg-black/90 z-50"
+  >
+    <div
+      class="fixed bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 lg:w-[80vw] w-[90vw] lg:h-[90vh] h-[80vh] bg-black/90 z-[51] rounded-xl flex justify-center items-center text-center lg:border-8 border-4 border-white"
+    >
+      <div
+        class="fixed top-2 right-2 p-4 rounded-full cursor-pointer hover:bg-white/10 text-white"
+      >
+        <svg
+          class="lg:text-[20px] text-[15px]"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          version="1.1"
+          viewBox="0 0 16 16"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15.854 12.854c-0-0-0-0-0-0l-4.854-4.854 4.854-4.854c0-0 0-0 0-0 0.052-0.052 0.090-0.113 0.114-0.178 0.066-0.178 0.028-0.386-0.114-0.529l-2.293-2.293c-0.143-0.143-0.351-0.181-0.529-0.114-0.065 0.024-0.126 0.062-0.178 0.114 0 0-0 0-0 0l-4.854 4.854-4.854-4.854c-0-0-0-0-0-0-0.052-0.052-0.113-0.090-0.178-0.114-0.178-0.066-0.386-0.029-0.529 0.114l-2.293 2.293c-0.143 0.143-0.181 0.351-0.114 0.529 0.024 0.065 0.062 0.126 0.114 0.178 0 0 0 0 0 0l4.854 4.854-4.854 4.854c-0 0-0 0-0 0-0.052 0.052-0.090 0.113-0.114 0.178-0.066 0.178-0.029 0.386 0.114 0.529l2.293 2.293c0.143 0.143 0.351 0.181 0.529 0.114 0.065-0.024 0.126-0.062 0.178-0.114 0-0 0-0 0-0l4.854-4.854 4.854 4.854c0 0 0 0 0 0 0.052 0.052 0.113 0.090 0.178 0.114 0.178 0.066 0.386 0.029 0.529-0.114l2.293-2.293c0.143-0.143 0.181-0.351 0.114-0.529-0.024-0.065-0.062-0.126-0.114-0.178z"
+          />
+        </svg>
+      </div>
+      <div
+        class="hidden fixed top-2 left-2 p-3 rounded-full cursor-pointer hover:bg-white/10 text-white"
+      >
+        <svg
+          class="lg:text-[30px] text-[25px]"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M401.4 224h-214l83-79.4c11.9-12.5 11.9-32.7 0-45.2s-31.2-12.5-43.2 0L89 233.4c-6 5.8-9 13.7-9 22.4v.4c0 8.7 3 16.6 9 22.4l138.1 134c12 12.5 31.3 12.5 43.2 0 11.9-12.5 11.9-32.7 0-45.2l-83-79.4h214c16.9 0 30.6-14.3 30.6-32 .1-18-13.6-32-30.5-32z"
+          />
+        </svg>
+      </div>
+      <div
+        class="fixed lg:top-6 top-2 left-1/2 transform -translate-x-1/2"
+      >
+        <div
+          class="col-span-1 md:px-6 px-1 md:py-2 py-1 flex grid grid-cols-5 justify-center bg-white/10 items-center text-white lg:text-xl text-md lg:border-l-8 border-l-4 lg:border-r-8 border-r-4 border-white/10"
+        >
+          <div
+            class="col-span-1"
+          >
+            <svg
+              class="lg:text-[30px] text-[20px]"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0V0z"
+                fill="none"
+              />
+              <path
+                d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"
+              />
+            </svg>
+          </div>
+          <div
+            class="col-span-3"
+          >
+            100
+          </div>
+          <div
+            class="col-span-1"
+          >
+            <span
+              class="hidden lg:text-sm text-xs text-white/50"
+            >
+              -
+              0
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex lg:w-[60vw] w-[70vw] lg:h-[50vh] h-[45vh] grid grid-cols-3 lg:gap-8 gap-4 items-center justify-center text-center lg:text-2xl text-lg rounded-xl"
+      >
+        <div
+          class="col-span-1 flex w-full h-full border-4 border-black/10 rounded-xl items-center justify-center text-center cursor-pointer bg-white text-black hover:bg-white/80 ease-in duration-100"
+        >
+          food
+        </div>
+        <div
+          class="col-span-1 flex w-full h-full border-4 border-black/10 rounded-xl items-center justify-center text-center cursor-pointer bg-white text-black hover:bg-white/80 ease-in duration-100"
+        >
+          locations
+        </div>
+        <div
+          class="col-span-1 flex w-full h-full border-4 border-black/10 rounded-xl items-center justify-center text-center cursor-pointer bg-white text-black hover:bg-white/80 ease-in duration-100"
+        >
+          toys
+        </div>
+        <div
+          class="col-span-1 flex w-full h-full border-4 border-black/10 rounded-xl items-center justify-center text-center cursor-pointer bg-white text-black hover:bg-white/80 ease-in duration-100"
+        >
+          cosmetics
+        </div>
+        <div
+          class="col-span-1 flex w-full h-full border-4 border-black/10 rounded-xl items-center justify-center text-center cursor-pointer bg-white text-black hover:bg-white/80 ease-in duration-100"
+        >
+          special
+        </div>
+        <div
+          class="col-span-1 flex w-full h-full border-4 border-black/10 rounded-xl items-center justify-center text-center cursor-pointer bg-white text-black hover:bg-white/80 ease-in duration-100"
+        >
+          games
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

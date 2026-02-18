@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Home page > matches snapshot 1`] = `
+<div>
+  <div>
+    <div
+      data-testid="pet-component"
+    >
+      Pet
+    </div>
+  </div>
+</div>
+`;
